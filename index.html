@@ -46,6 +46,8 @@
         
           <a class="main-nav-link" href="/archives">Archives</a>
         
+          <a class="main-nav-link" href="/Oracle">Oracle</a>
+        
       </nav>
       <nav id="sub-nav">
         
@@ -61,101 +63,6 @@
 </header>
       <div class="outer">
         <section id="main">
-  
-    <article id="post-Hello-World-Daniel" class="article article-type-post" itemscope="" itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/01/22/Hello-World-Daniel/" class="article-date">
-  <time datetime="2019-01-22T03:09:47.000Z" itemprop="datePublished">2019-01-22</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/22/Hello-World-Daniel/">Hello World Daniel</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>本文引自<a href="http://www.veryhuo.com/a/view/51706.html" target="_blank" rel="noopener">Nginx开启Gzip压缩大幅提高页面加载速度</a></p>
-</blockquote>
-<p>刚刚给博客加了一个500px相册插件，lightbox引入了很多js文件和css文件，页面一下子看起来非常臃肿，所以还是把Gzip打开了。</p>
-<p>环境：Debian 6</p>
-<blockquote>
-<ol>
-<li>Vim打开Nginx配置文件</li>
-</ol>
-</blockquote>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /usr/local/nginx/conf/nginx.conf</span><br></pre></td></tr></table></figure>
-<blockquote>
-<ol>
-<li>找到如下一段，进行修改</li>
-</ol>
-</blockquote>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">gzip on;</span><br><span class="line">gzip_min_length 1k;</span><br><span class="line">gzip_buffers 4 16k;</span><br><span class="line"><span class="meta">#</span>gzip_http_version 1.0;</span><br><span class="line">gzip_comp_level 2;</span><br><span class="line">gzip_types text/plain application/x-javascript text/css application/xml text/javascript application/x-httpd-php image/jpeg image/gif image/png;</span><br><span class="line">gzip_vary off;</span><br><span class="line">gzip_disable "MSIE [1-6]\.";</span><br></pre></td></tr></table></figure>
-<blockquote>
-<ol>
-<li>注解：</li>
-</ol>
-</blockquote>
-<p>第1行：开启Gzip</p>
-<p>第2行：不压缩临界值，大于1K的才压缩，一般不用改</p>
-<p>第3行：buffer，就是，嗯，算了不解释了，不用改</p>
-<p>第4行：用了反向代理的话，末端通信是HTTP/1.0，有需求的应该也不用看我这科普文了；有这句的话注释了就行了，默认是HTTP/1.1</p>
-<p>第5行：压缩级别，1-10，数字越大压缩的越好，时间也越长，看心情随便改吧</p>
-<p>第6行：进行压缩的文件类型，缺啥补啥就行了，<a href="http://www.veryhuo.com/z/javaxz/" target="_blank" rel="noopener"><strong>Java</strong></a>Script有两种写法，最好都写上吧，总有人抱怨js文件没有压缩，其实多写一种格式就行了</p>
-<p>第7行：跟Squid等缓存服务有关，on的话会在Header里增加”Vary: Accept-Encoding”，我不需要这玩意，自己对照情况看着办吧</p>
-<p>第8行：IE6对Gzip不怎么友好，不给它Gzip了</p>
-<blockquote>
-<ol>
-<li>:wq保存退出，重新加载Nginx</li>
-</ol>
-</blockquote>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/nginx/sbin/nginx -s reload</span><br></pre></td></tr></table></figure>
-<blockquote>
-<ol>
-<li>用curl测试Gzip是否成功开启</li>
-</ol>
-</blockquote>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">curl -I -H "Accept-Encoding: gzip, deflate" "http://www.slyar.com/blog/"</span><br><span class="line"></span><br><span class="line">HTTP/1.1 200 OK</span><br><span class="line">Server: nginx/1.0.15</span><br><span class="line">Date: Sun, 26 Aug 2012 18:13:09 GMT</span><br><span class="line">Content-Type: text/html; charset=UTF-8</span><br><span class="line">Connection: keep-alive</span><br><span class="line">X-Powered-By: PHP/5.2.17p1</span><br><span class="line">X-Pingback: http://www.slyar.com/blog/xmlrpc.php</span><br><span class="line">Content-Encoding: gzip</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>页面成功压缩</p>
-</blockquote>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">curl -I -H "Accept-Encoding: gzip, deflate" "http://www.slyar.com/blog/wp-content/plugins/photonic/include/css/photonic.css"</span><br><span class="line"></span><br><span class="line">HTTP/1.1 200 OK</span><br><span class="line">Server: nginx/1.0.15</span><br><span class="line">Date: Sun, 26 Aug 2012 18:21:25 GMT</span><br><span class="line">Content-Type: text/css</span><br><span class="line">Last-Modified: Sun, 26 Aug 2012 15:17:07 GMT</span><br><span class="line">Connection: keep-alive</span><br><span class="line">Expires: Mon, 27 Aug 2012 06:21:25 GMT</span><br><span class="line">Cache-Control: max-age=43200</span><br><span class="line">Content-Encoding: gzip</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>css文件成功压缩</p>
-</blockquote>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">curl -I -H "Accept-Encoding: gzip, deflate" "http://www.slyar.com/blog/wp-includes/js/jquery/jquery.js"</span><br><span class="line"></span><br><span class="line">HTTP/1.1 200 OK</span><br><span class="line">Server: nginx/1.0.15</span><br><span class="line">Date: Sun, 26 Aug 2012 18:21:38 GMT</span><br><span class="line">Content-Type: application/x-javascript</span><br><span class="line">Last-Modified: Thu, 12 Jul 2012 17:42:45 GMT</span><br><span class="line">Connection: keep-alive</span><br><span class="line">Expires: Mon, 27 Aug 2012 06:21:38 GMT</span><br><span class="line">Cache-Control: max-age=43200</span><br><span class="line">Content-Encoding: gzip</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>js文件成功压缩</p>
-</blockquote>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">curl -I -H "Accept-Encoding: gzip, deflate" "http://www.slyar.com/blog/wp-content/uploads/2012/08/2012-08-23_203542.png"</span><br><span class="line"></span><br><span class="line">HTTP/1.1 200 OK</span><br><span class="line">Server: nginx/1.0.15</span><br><span class="line">Date: Sun, 26 Aug 2012 18:22:45 GMT</span><br><span class="line">Content-Type: image/png</span><br><span class="line">Last-Modified: Thu, 23 Aug 2012 13:50:53 GMT</span><br><span class="line">Connection: keep-alive</span><br><span class="line">Expires: Tue, 25 Sep 2012 18:22:45 GMT</span><br><span class="line">Cache-Control: max-age=2592000</span><br><span class="line">Content-Encoding: gzip</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>图片成功压缩</p>
-</blockquote>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">curl -I -H "Accept-Encoding: gzip, deflate" "http://www.slyar.com/blog/wp-content/plugins/wp-multicollinks/wp-multicollinks.css"</span><br><span class="line"></span><br><span class="line">HTTP/1.1 200 OK</span><br><span class="line">Server: nginx/1.0.15</span><br><span class="line">Date: Sun, 26 Aug 2012 18:23:27 GMT</span><br><span class="line">Content-Type: text/css</span><br><span class="line">Content-Length: 180</span><br><span class="line">Last-Modified: Sat, 02 May 2009 08:46:15 GMT</span><br><span class="line">Connection: keep-alive</span><br><span class="line">Expires: Mon, 27 Aug 2012 06:23:27 GMT</span><br><span class="line">Cache-Control: max-age=43200</span><br><span class="line">Accept-Ranges: bytes</span><br></pre></td></tr></table></figure>
-<p>最后来个不到1K的文件，由于我的阈值是1K，所以没压缩</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/22/Hello-World-Daniel/" data-id="cjr772bhz0001gwvaepq84tki" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
   
     <article id="post-hello-world" class="article article-type-post" itemscope="" itemprop="blogPost">
   <div class="article-meta">
@@ -192,7 +99,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/22/hello-world/" data-id="cjr772bi90002gwvaweqtu439" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/01/22/hello-world/" data-id="cjr7e9tjw0000akvakj0vyth6" class="article-share-link">Share</a>
       
       
     </footer>
@@ -233,10 +140,6 @@
       <ul>
         
           <li>
-            <a href="/2019/01/22/Hello-World-Daniel/">Hello World Daniel</a>
-          </li>
-        
-          <li>
             <a href="/2019/01/22/hello-world/">Hello World</a>
           </li>
         
@@ -263,6 +166,8 @@
     <a href="/" class="mobile-nav-link">Home</a>
   
     <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/Oracle" class="mobile-nav-link">Oracle</a>
   
 </nav>
     
