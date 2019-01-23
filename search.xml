@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title><![CDATA[用户登录对账号和密码加解密]]></title>
+    <url>%2F2019%2F01%2F23%2F%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95%E5%AF%B9%E8%B4%A6%E5%8F%B7%E5%92%8C%E5%AF%86%E7%A0%81%E5%8A%A0%E8%A7%A3%E5%AF%86%2F</url>
+    <content type="text"><![CDATA[背景说明闲的无聊，F12看了下项目上的登录，一看账号和密码都是明文发送的，因此找了下网络上的一些文章，对项目进行了优化 背景目前的项目登录的时候都是明文的传递账号和密码，具体如下图所示 解决方案准备资源 jar包(使用Maven引入jar包，如果不是Maven项目可以去Maven仓库将jar下载下来，然后导入项目中) 12345&lt;dependency&gt; &lt;groupId&gt;org.bouncycastle&lt;/groupId&gt; &lt;artifactId&gt;bcprov-jdk16&lt;/artifactId&gt; &lt;version&gt;1.46&lt;/version&gt;&lt;/dependency&gt; 加密js文件在Github上找到这个项目https://github.com/travist/jsencrypt的bin目录下下载jsencrypt.min.js进行 具体步骤 （后台）创建一个RSA工具类(RSAUtil.java) 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778import org.apache.commons.codec.binary.Base64;import javax.crypto.Cipher;import java.security.*;import java.security.interfaces.RSAPublicKey;/** * @ClassName RASUtil * @Description TODO * @Date 2018/12/109:52 * @Version 1.0 **/public class RSAUtil&#123; //KeyPair is a simple holder for a key pair. private static final KeyPair keyPair = initKey(); /** * 初始化方法，产生key pair，提供provider和random * @return KeyPair instance */ private static KeyPair initKey() &#123; try &#123; //添加provider Provider provider = new org.bouncycastle.jce.provider.BouncyCastleProvider(); Security.addProvider(provider); //产生用于安全加密的随机数 SecureRandom random = new SecureRandom(); KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA", provider); generator.initialize(1024, random); return generator.generateKeyPair(); &#125; catch(Exception e) &#123; throw new RuntimeException(e); &#125; &#125; /** * 产生public key * @return public key字符串 */ public static String generateBase64PublicKey() &#123; PublicKey publicKey = (RSAPublicKey)keyPair.getPublic(); //encodeBase64(): Encodes binary data using the base64 //algorithm but does not chunk the output. //getEncoded():返回key的原始编码形式 return new String(Base64.encodeBase64(publicKey.getEncoded())); &#125; /** * 解密数据 * @param string 需要解密的字符串 * @return 破解之后的字符串 */ public static String decryptBase64(String string) &#123; //decodeBase64():将Base64数据解码为"八位字节”数据 return new String(decrypt(Base64.decodeBase64(string.getBytes()))); &#125; private static byte[] decrypt(byte[] byteArray) &#123; try &#123; Provider provider = new org.bouncycastle.jce.provider.BouncyCastleProvider(); Security.addProvider(provider); //Cipher: 提供加密和解密功能的实例 //transformation: "algorithm/mode/padding" Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding", provider); PrivateKey privateKey = keyPair.getPrivate(); //初始化 cipher.init(Cipher.DECRYPT_MODE, privateKey); //doFinal(): 加密或者解密数据 byte[] plainText = cipher.doFinal(byteArray); return plainText; &#125; catch(Exception e) &#123; throw new RuntimeException(e); &#125; &#125;&#125; （后台）编写一个生成公钥的接口 12345678910111213141516171819202122/** *@Description 生成公钥 *@param *@return java.lang.String *@date 2018/12/10 9:48 **/@RequestMapping("/genPubKey")@ResponseBodypublic String genPubKey()&#123; Map&lt;String,Object&gt; map = new HashMap&lt;String,Object&gt;(); map.put("code",-1); String publicKey = ""; try &#123; publicKey = RSAUtil.generateBase64PublicKey(); map.put("pubkey",publicKey); map.put("code",1); &#125; catch (Exception e) &#123; e.printStackTrace(); map.put("msg",e.getMessage()); &#125; return publicKey;&#125; （前台）登录界面引入jsencrypt.min.js，初始化登录页的同时初始化公钥 123456789101112131415161718192021//页面初始化，调取公钥var publicKey = &apos;&apos;;$(function()&#123; getPublicKey();&#125;)//调取后台生成公钥接口function getPublicKey()&#123; $.ajax(&#123; url: &quot;user/genPubKey&quot;, type: &quot;post&quot;, dataType: &quot;text&quot;, data:&#123;&#125;, success: function(data) &#123; if(data) publicKey = data; if(publicKey==null)&#123; alert(获取publicKey失败，请联系管理员！); &#125; &#125; &#125;);&#125; （前台）点击登录时，使用公钥生成私钥，加密账号和密码 1234567891011var uname = $.trim($(&quot;#userName&quot;).val());var upwd = $.trim($(&quot;#passWord&quot;).val());var encrypt = new JSEncrypt();if(publicKey)&#123;encrypt.setPublicKey(publicKey);//设置公钥到前端生成私钥uname = encrypt.encrypt(uname);//加密用户名upwd = encrypt.encrypt(upwd);//加密密码//通过ajax发送加密的账号和密码到后台.....&#125; （后台）后台账号和密码解密 12String loginID = RSAUtil.decryptBase64(username);String pwd = RSAUtil.decryptBase64(passwd); 总结前台页面加载时调用生成公钥方法生成公钥，然后用户点击登录时，获取用户名和密码，根据之前生成的公钥，进行私钥加密，传入后台的数据就是已经加密过的数据，然后我们在后台进行解密，得到用户输入的原始密码和账户]]></content>
+      <categories>
+        <category>后端</category>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>登录</tag>
+        <tag>加解密</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[js 操作页面打印操作（不使用插件）]]></title>
+    <url>%2F2019%2F01%2F23%2Fjs-%E6%93%8D%E4%BD%9C%E9%A1%B5%E9%9D%A2%E6%89%93%E5%8D%B0%E6%93%8D%E4%BD%9C%EF%BC%88%E4%B8%8D%E4%BD%BF%E7%94%A8%E6%8F%92%E4%BB%B6%EF%BC%89%2F</url>
+    <content type="text"><![CDATA[页面打印​ 打印之前没怎么接触过，最近项目有需求在系统中实现打印合同的功能，系统中的合同是用Bootstrap实现的html页面，因此就查阅资料，发现window.print方法可以在不使用外部打印插件的前提下，可以进行页面的打印操作，这种既简单又好操作，但是存在一个缺点是：页面内容的替换 实现原理实现原理很简单：是通过页面替换到window.document.body中的内容，然后就可以用window.print就可以打印window.document.body中的内容 实现代码123456789101112131415&lt;body&gt;...&lt;div id="print-content" class="container" style="clear: both;width: 210mm;height: 297mm"&gt; ....&lt;/div&gt;....&lt;script&gt; var bdhtml = window.document.body.innerHTML;//获取当前页的html代码 //获取需要打印的html代码 window.document.body.innerHTML = $("#print-content")[0].innerHTML; window.print(); window.document.body.innerHTML = bdhtml;//还原页面内容&lt;/script&gt;&lt;/body&gt; 效果Chrome Firfox和IE这两个浏览器是没有打印预览的，是直接弹出打印页面的 扩展Chrome打印的时候会出现页眉和页脚中有地址的问题，可以直接点击上图中左侧的页眉页脚中取消勾选]]></content>
+      <categories>
+        <category>前端</category>
+        <category>Javascript</category>
+      </categories>
+      <tags>
+        <tag>Javascript</tag>
+        <tag>打印</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[js 遍历JSON]]></title>
+    <url>%2F2019%2F01%2F23%2Fjs-%E9%81%8D%E5%8E%86JSON%2F</url>
+    <content type="text"><![CDATA[背景说明：常规下一般是用不到Json对象的遍历的，但是如果要做一些公共方法的时候，有可能会用到，比如说后端扔给你一个json串，需要你把数据反显到页面上，这种就需要进行处理了，遍历扔给你json串，然后获取和页面上匹配的内容，进行赋值操作，当然这个过程中还得需要判断控件的类型，毕竟存在一些特殊类型的控件，比如说文件上传和回显、复选框、单选框等等特殊控件 遍历有规律的JSON对象12345678910111213packJson = [&#123;"name":"nikita", "password":"1111"&#125;,&#123;"name":"tony", "password":"2222"&#125;];for(var p in packJson)&#123;//遍历json数组时，这么写p为索引，0,1 alert(packJson[p].name + " " + packJson[p].password);&#125; 遍历无规律的JSON对象123456789101112&lt;script&gt;var json = [ &#123;dd:'SB',AA:'东东',re1:123&#125;, &#123;cccc:'dd',lk:'1qw'&#125;];for(var i=0,l=json.length;i&lt;l;i++)&#123; for(var key in json[i])&#123; alert(key+':'+json[i][key]); &#125;&#125;&lt;/script&gt;]]></content>
+      <categories>
+        <category>前端</category>
+        <category>Javascript</category>
+      </categories>
+      <tags>
+        <tag>Javascript</tag>
+        <tag>Json</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[js 基础知识]]></title>
+    <url>%2F2019%2F01%2F23%2Fjs-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%2F</url>
+    <content type="text"><![CDATA[js字符串转int(parseInt)1alert(parseInt(childNode)+1); js删除Object对象中的属性1delete obj.attr]]></content>
+      <categories>
+        <category>前端</category>
+        <category>Javascript</category>
+      </categories>
+      <tags>
+        <tag>Javascript</tag>
+      </tags>
+  </entry>
+</search>
