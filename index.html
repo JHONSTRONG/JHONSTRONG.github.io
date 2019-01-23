@@ -230,7 +230,7 @@
         
         
           
-          <li class="menu-item menu-item-frontend">
+          <li class="menu-item menu-item-java">
 
     
     
@@ -240,7 +240,41 @@
 
     
 
-    <a href="/tags/前端/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>前端</a>
+    <a href="/categories/Java/" rel="section"><i class="menu-item-icon fa fa-fw fa-bug"></i> <br>Java</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-javascript">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/Javascript/" rel="section"><i class="menu-item-icon fa fa-fw fa-xing"></i> <br>Javascript</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-json">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/Json/" rel="section"><i class="menu-item-icon fa fa-fw fa-opera"></i> <br>Json</a>
 
   </li>
         
@@ -343,6 +377,207 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/23/用户登录对账号和密码加解密/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Daniel">
+      <meta itemprop="description" content="生死看淡，不服就干">
+      <meta itemprop="image" content="/images/head_pic.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daniel's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/01/23/用户登录对账号和密码加解密/" class="post-title-link" itemprop="url">用户登录对账号和密码加解密</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-01-23 13:39:12 / 修改时间：13:46:08" itemprop="dateCreated datePublished" datetime="2019-01-23T13:39:12+08:00">2019-01-23</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <a href="/2019/01/23/用户登录对账号和密码加解密/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/01/23/用户登录对账号和密码加解密/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote><p>背景说明<br>闲的无聊，F12看了下项目上的登录，一看账号和密码都是明文发送的，因此找了下网络上的一些文章，对项目进行了优化</p>
+</blockquote>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>目前的项目登录的时候都是明文的传递账号和密码，具体如下图所示<br><img src="/2019/01/23/用户登录对账号和密码加解密/screenshort_1.png"><br><img src="/2019/01/23/用户登录对账号和密码加解密/screenshort_2.png"></p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><h3 id="准备资源"><a href="#准备资源" class="headerlink" title="准备资源"></a>准备资源</h3><ul>
+<li><p>jar包(使用Maven引入jar包，如果不是Maven项目可以去Maven仓库将jar下载下来，然后导入项目中)</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.bouncycastle<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>bcprov-jdk16<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>1.46<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>加密js文件<br>在Github上找到这个项目<a href="https://github.com/travist/jsencrypt" target="_blank" rel="noopener">https://github.com/travist/jsencrypt</a>的bin目录下下载<code>jsencrypt.min.js</code>进行</p>
+</li>
+</ul>
+<h3 id="具体步骤"><a href="#具体步骤" class="headerlink" title="具体步骤"></a>具体步骤</h3><ol>
+<li><p>（后台）创建一个RSA工具类(<code>RSAUtil.java</code>)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.commons.codec.binary.Base64;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.crypto.Cipher;</span><br><span class="line"><span class="keyword">import</span> java.security.*;</span><br><span class="line"><span class="keyword">import</span> java.security.interfaces.RSAPublicKey;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@ClassName</span> RASUtil</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span> TODO</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Date</span> 2018/12/109:52</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Version</span> 1.0</span></span><br><span class="line"><span class="comment"> **/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RSAUtil</span></span>&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">//KeyPair is a simple holder for a key pair.</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> KeyPair keyPair = initKey();</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 初始化方法，产生key pair，提供provider和random</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> KeyPair instance</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> KeyPair <span class="title">initKey</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">//添加provider</span></span><br><span class="line">            Provider provider = <span class="keyword">new</span> org.bouncycastle.jce.provider.BouncyCastleProvider();</span><br><span class="line">            Security.addProvider(provider);</span><br><span class="line">            <span class="comment">//产生用于安全加密的随机数</span></span><br><span class="line">            SecureRandom random = <span class="keyword">new</span> SecureRandom();</span><br><span class="line"></span><br><span class="line">            KeyPairGenerator generator = KeyPairGenerator.getInstance(<span class="string">"RSA"</span>, provider);</span><br><span class="line">            generator.initialize(<span class="number">1024</span>, random);</span><br><span class="line">            <span class="keyword">return</span> generator.generateKeyPair();</span><br><span class="line">        &#125; <span class="keyword">catch</span>(Exception e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 产生public key</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> public key字符串</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">generateBase64PublicKey</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        PublicKey publicKey = (RSAPublicKey)keyPair.getPublic();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//encodeBase64(): Encodes binary data using the base64</span></span><br><span class="line">        <span class="comment">//algorithm but does not chunk the output.</span></span><br><span class="line">        <span class="comment">//getEncoded():返回key的原始编码形式</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> String(Base64.encodeBase64(publicKey.getEncoded()));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 解密数据</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> string 需要解密的字符串</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span>  破解之后的字符串</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">decryptBase64</span><span class="params">(String string)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//decodeBase64():将Base64数据解码为"八位字节”数据</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> String(decrypt(Base64.decodeBase64(string.getBytes())));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">byte</span>[] decrypt(<span class="keyword">byte</span>[] byteArray) &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Provider provider = <span class="keyword">new</span> org.bouncycastle.jce.provider.BouncyCastleProvider();</span><br><span class="line">            Security.addProvider(provider);</span><br><span class="line">            <span class="comment">//Cipher: 提供加密和解密功能的实例</span></span><br><span class="line">            <span class="comment">//transformation: "algorithm/mode/padding"</span></span><br><span class="line">            Cipher cipher = Cipher.getInstance(<span class="string">"RSA/ECB/PKCS1Padding"</span>, provider);</span><br><span class="line">            PrivateKey privateKey = keyPair.getPrivate();</span><br><span class="line">            <span class="comment">//初始化</span></span><br><span class="line">            cipher.init(Cipher.DECRYPT_MODE, privateKey);</span><br><span class="line">            <span class="comment">//doFinal(): 加密或者解密数据</span></span><br><span class="line">            <span class="keyword">byte</span>[] plainText = cipher.doFinal(byteArray);</span><br><span class="line">            <span class="keyword">return</span> plainText;</span><br><span class="line">        &#125; <span class="keyword">catch</span>(Exception e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>（后台）编写一个生成公钥的接口</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> *<span class="doctag">@Description</span> 生成公钥</span></span><br><span class="line"><span class="comment"> *<span class="doctag">@param</span></span></span><br><span class="line"><span class="comment"> *<span class="doctag">@return</span> java.lang.String</span></span><br><span class="line"><span class="comment"> *<span class="doctag">@date</span> 2018/12/10 9:48</span></span><br><span class="line"><span class="comment"> **/</span></span><br><span class="line"><span class="meta">@RequestMapping</span>(<span class="string">"/genPubKey"</span>)</span><br><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">genPubKey</span><span class="params">()</span></span>&#123;</span><br><span class="line">	Map&lt;String,Object&gt; map = <span class="keyword">new</span> HashMap&lt;String,Object&gt;();</span><br><span class="line">	map.put(<span class="string">"code"</span>,-<span class="number">1</span>);</span><br><span class="line">	String publicKey = <span class="string">""</span>;</span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">		publicKey = RSAUtil.generateBase64PublicKey();</span><br><span class="line">		map.put(<span class="string">"pubkey"</span>,publicKey);</span><br><span class="line">		map.put(<span class="string">"code"</span>,<span class="number">1</span>);</span><br><span class="line">	&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">		e.printStackTrace();</span><br><span class="line">		map.put(<span class="string">"msg"</span>,e.getMessage());</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> publicKey;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>（前台）登录界面引入<code>jsencrypt.min.js</code>，初始化登录页的同时初始化公钥</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">//页面初始化，调取公钥</span><br><span class="line">var publicKey = &apos;&apos;;</span><br><span class="line">$(function()&#123;</span><br><span class="line">    getPublicKey();</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">//调取后台生成公钥接口</span><br><span class="line">function getPublicKey()&#123;</span><br><span class="line">    $.ajax(&#123;</span><br><span class="line">        url: &quot;user/genPubKey&quot;,</span><br><span class="line">        type: &quot;post&quot;,</span><br><span class="line">        dataType: &quot;text&quot;,</span><br><span class="line">		data:&#123;&#125;,</span><br><span class="line">        success: function(data) &#123;</span><br><span class="line">            if(data) publicKey = data;</span><br><span class="line">            if(publicKey==null)&#123;</span><br><span class="line">                alert(获取publicKey失败，请联系管理员！);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>（前台）点击登录时，使用公钥生成私钥，加密账号和密码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">var uname = $.trim($(&quot;#userName&quot;).val());</span><br><span class="line">var upwd = $.trim($(&quot;#passWord&quot;).val());</span><br><span class="line"></span><br><span class="line">var encrypt = new JSEncrypt();</span><br><span class="line">if(publicKey)&#123;</span><br><span class="line">encrypt.setPublicKey(publicKey);//设置公钥到前端生成私钥</span><br><span class="line">uname = encrypt.encrypt(uname);//加密用户名</span><br><span class="line">upwd = encrypt.encrypt(upwd);//加密密码</span><br><span class="line">//通过ajax发送加密的账号和密码到后台</span><br><span class="line">.....</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>（后台）后台账号和密码解密</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String loginID = RSAUtil.decryptBase64(username);</span><br><span class="line">String pwd = RSAUtil.decryptBase64(passwd);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><blockquote><p>前台页面加载时调用生成公钥方法生成公钥，然后用户点击登录时，获取用户名和密码，根据之前生成的公钥，进行私钥加密，传入后台的数据就是已经加密过的数据，然后我们在后台进行解密，得到用户输入的原始密码和账户</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/23/js-操作页面打印操作（不使用插件）/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -388,7 +623,7 @@
                 
               
 
-              <time title="创建时间：2019-01-23 12:29:55 / 修改时间：12:49:41" itemprop="dateCreated datePublished" datetime="2019-01-23T12:29:55+08:00">2019-01-23</time>
+              <time title="创建时间：2019-01-23 12:29:55 / 修改时间：13:22:03" itemprop="dateCreated datePublished" datetime="2019-01-23T12:29:55+08:00">2019-01-23</time>
             
 
             
@@ -410,28 +645,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/前端/" itemprop="url" rel="index"><span itemprop="name">前端</span></a></span>
-
-                
-                
-                  ，
-                
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/前端/语言/" itemprop="url" rel="index"><span itemprop="name">语言</span></a></span>
-
-                
-                
-                  ，
-                
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/前端/语言/js/" itemprop="url" rel="index"><span itemprop="name">js</span></a></span>
-
-                
-                
-                  ，
-                
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/前端/语言/js/打印/" itemprop="url" rel="index"><span itemprop="name">打印</span></a></span>
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Javascript/" itemprop="url" rel="index"><span itemprop="name">Javascript</span></a></span>
 
                 
                 
@@ -441,6 +655,18 @@
 
           
             
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <a href="/2019/01/23/js-操作页面打印操作（不使用插件）/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/01/23/js-操作页面打印操作（不使用插件）/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -575,7 +801,7 @@
                 
               
 
-              <time title="创建时间：2019-01-23 01:54:14 / 修改时间：02:00:49" itemprop="dateCreated datePublished" datetime="2019-01-23T01:54:14+08:00">2019-01-23</time>
+              <time title="创建时间：2019-01-23 01:54:14 / 修改时间：13:23:14" itemprop="dateCreated datePublished" datetime="2019-01-23T01:54:14+08:00">2019-01-23</time>
             
 
             
@@ -597,21 +823,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/前端/" itemprop="url" rel="index"><span itemprop="name">前端</span></a></span>
-
-                
-                
-                  ，
-                
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/前端/语言/" itemprop="url" rel="index"><span itemprop="name">语言</span></a></span>
-
-                
-                
-                  ，
-                
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/前端/语言/js/" itemprop="url" rel="index"><span itemprop="name">js</span></a></span>
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Javascript/" itemprop="url" rel="index"><span itemprop="name">Javascript</span></a></span>
 
                 
                 
@@ -621,6 +833,18 @@
 
           
             
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <a href="/2019/01/23/js-遍历JSON/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/01/23/js-遍历JSON/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -754,7 +978,7 @@
                 
               
 
-              <time title="创建时间：2019-01-23 01:44:00 / 修改时间：13:17:16" itemprop="dateCreated datePublished" datetime="2019-01-23T01:44:00+08:00">2019-01-23</time>
+              <time title="创建时间：2019-01-23 01:44:00 / 修改时间：13:21:45" itemprop="dateCreated datePublished" datetime="2019-01-23T01:44:00+08:00">2019-01-23</time>
             
 
             
@@ -776,21 +1000,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/前端/" itemprop="url" rel="index"><span itemprop="name">前端</span></a></span>
-
-                
-                
-                  ，
-                
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/前端/语言/" itemprop="url" rel="index"><span itemprop="name">语言</span></a></span>
-
-                
-                
-                  ，
-                
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/前端/语言/js/" itemprop="url" rel="index"><span itemprop="name">js</span></a></span>
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Javascript/" itemprop="url" rel="index"><span itemprop="name">Javascript</span></a></span>
 
                 
                 
@@ -800,6 +1010,18 @@
 
           
             
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <a href="/2019/01/23/js-基础知识/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/01/23/js-基础知识/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -916,7 +1138,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-count">4</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -933,11 +1155,7 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-count">2</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -958,7 +1176,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">4</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1142,6 +1364,12 @@
 
 
   
+  
+  <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+
+
+
+
 
 
 
