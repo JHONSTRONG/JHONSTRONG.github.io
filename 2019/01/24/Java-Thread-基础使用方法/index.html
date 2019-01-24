@@ -104,12 +104,13 @@
 <meta property="og:site_name" content="Daniel&#39;s Blog">
 <meta property="og:description" content="线程运行状态的几个方法 start方法      用来启动一个线程，当调用start方法的时候，系统才会开启一个新的线程来执行用户定义的子任务，并为线程分配需要的资源     run方法  run()方法不需要用户调用，当通过start启动一个线程的时候，当线程或得了CPU执行时间，便会自动进入到run方法去执行具体的任务。*继承Thread类必须要重写run方法，在run中定义具体要执行的任务">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/images/banner/banner_1.png">
-<meta property="og:updated_time" content="2019-01-24T05:35:08.841Z">
+<meta property="og:image" content="http://yoursite.com/images/banner/banner_13.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/24/Java-Thread-基础使用方法/screenshot_1.jpg">
+<meta property="og:updated_time" content="2019-01-24T05:42:03.594Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java Thread 基础使用方法">
 <meta name="twitter:description" content="线程运行状态的几个方法 start方法      用来启动一个线程，当调用start方法的时候，系统才会开启一个新的线程来执行用户定义的子任务，并为线程分配需要的资源     run方法  run()方法不需要用户调用，当通过start启动一个线程的时候，当线程或得了CPU执行时间，便会自动进入到run方法去执行具体的任务。*继承Thread类必须要重写run方法，在run中定义具体要执行的任务">
-<meta name="twitter:image" content="http://yoursite.com/images/banner/banner_1.png">
+<meta name="twitter:image" content="http://yoursite.com/images/banner/banner_13.png">
 
 
 
@@ -462,7 +463,7 @@
                 
               
 
-              <time title="创建时间：2019-01-24 13:29:57 / 修改时间：13:35:08" itemprop="dateCreated datePublished" datetime="2019-01-24T13:29:57+08:00">2019-01-24</time>
+              <time title="创建时间：2019-01-24 13:29:57 / 修改时间：13:42:03" itemprop="dateCreated datePublished" datetime="2019-01-24T13:29:57+08:00">2019-01-24</time>
             
 
             
@@ -545,7 +546,7 @@
       
 
       
-        <p><img src="/images/banner/banner_1.png" alt=""></p>
+        <p><img src="/images/banner/banner_13.png" alt=""></p>
 <h1 id="线程运行状态的几个方法"><a href="#线程运行状态的几个方法" class="headerlink" title="线程运行状态的几个方法"></a>线程运行状态的几个方法</h1><blockquote>
 <p><code>start</code>方法    </p>
 </blockquote>
@@ -603,7 +604,7 @@
 <p><code>getId()</code> 得到线程的ID<br><code>getName()</code>和<code>setName()</code> 用来得到或者设置线程的名称<br><code>getPriority</code>和<code>setPriority</code> 用来获取和设置线程的优先级<br><code>setDaemon</code>和<code>isDaemon</code>用来设置线程为守护线程和判断线程是否为守护线程。</p>
 </blockquote>
 <p><font color="red">*</font>重点：守护线程和用户线程的却别是，守护线程依赖于创建它的线程，而用户线程不依赖于创建它的线程，当mian方法运行完毕后，守护线程会随之消亡。但是用户线程不会消失，直至其运行完毕。在JVM中，垃圾收集器线程就是守护线程。<br>Thread类中有一个比较常用的静态类方法<code>currentThread</code>用来获取当前线程。  </p>
-<h1 id="方法调用和Thread的生命周期关系"><a href="#方法调用和Thread的生命周期关系" class="headerlink" title="方法调用和Thread的生命周期关系"></a>方法调用和Thread的生命周期关系</h1>
+<h1 id="方法调用和Thread的生命周期关系"><a href="#方法调用和Thread的生命周期关系" class="headerlink" title="方法调用和Thread的生命周期关系"></a>方法调用和Thread的生命周期关系</h1><img src="/2019/01/24/Java-Thread-基础使用方法/screenshot_1.jpg">
 
       
     </div>
