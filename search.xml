@@ -1,9 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[IDEA 创建多模块Maven项目]]></title>
+    <url>%2F2019%2F01%2F30%2FIDEA-%E5%88%9B%E5%BB%BA%E5%A4%9A%E6%A8%A1%E5%9D%97Maven%E9%A1%B9%E7%9B%AE%2F</url>
+    <content type="text"><![CDATA[创建父模块 依次点击打开File-&gt;New-&gt;Project，具体操作见下图 打开创建项目对话框后，左侧选择Maven，右侧不勾选Create from archetype，然后点击Next，具体操作见下图 输入项目的信息，GroupId和ArtifactId，然后点击Next，具体操作见下图 直接点Next，直接到Finish，最后生成完成之后，删除src文件夹（因为这个是父级模块，因此不需要src文件夹），如下图所示： 创建核心子模块 右键父级模块，点击New-&gt;Module，打开新增Module界面，具体操作见下图： 左侧选择Maven，因为要创建一个普通项目，右侧同样不选择Create from archetype，然后点击Next，如下图所示： GroupId和version继承自父模块，不需要修改，只需要修改ArtifactId，点击Next 输入Module name，模块的名称可以和ArtifactId保持一致即可，具体操作见下图 创建完成后的结构图如下： 创建子模块 第一步和创建核心子模块一样，只是在打开New Module的时候，选上Create from archetype，并选中maven-archetype-webapp 一路点击下去，中间会有一个选择Maven的地方，选择你自己的Maven以及配置文件，然后点到最后，创建的项目路径如下图所示：]]></content>
+      <categories>
+        <category>后端开发框架</category>
+        <category>SSM</category>
+        <category>SSM框架搭建</category>
+      </categories>
+      <tags>
+        <tag>SSM</tag>
+        <tag>搭建</tag>
+        <tag>多模块</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[java遍历Map的方法]]></title>
+    <url>%2F2019%2F01%2F30%2Fjava%E9%81%8D%E5%8E%86Map%E7%9A%84%E6%96%B9%E6%B3%95%2F</url>
+    <content type="text"><![CDATA[前言遍历Map在Java中有好几种方式，但各自方式都有优缺点，不同的方式应用在不同的应用场景中 遍历方法keySet values在使用的过程中只是用到了Map的key或者value，这种是最简单的方式123456789101112// KeySet 获取keypublic void testKeySet() &#123; for (Integer key : map.keySet()) &#123; System.out.println(key); &#125;&#125;// values 获取valuepublic void testValues() &#123; for (Integer value : map.values()) &#123; System.out.println(value); &#125;&#125; keySet get(key)(不推荐使用)如果同时需要key和value，可以先获取key，然后通过key获取到value，但这种方法不推荐使用12345public void testKeySetAndGetKey() &#123; for (Integer key : map.keySet()) &#123; System.out.println(key + ":" + map.get(key)); &#125;&#125; entrySet通过map的entrySet进行遍历，是可以同时拿到key和value的，性能上更好一点，一般是用这种方式获取12345public void testEntry() &#123; for (Map.Entry&lt;Integer, Integer&gt; entry : map.entrySet()) &#123; System.out.println(entry.getKey() + ":" + entry.getValue()); &#125;&#125; IteratorIterator的优势是可以在遍历过程中删除元素123456789// Iterator entrySet 获取key and value public void testIterator() &#123; Iterator&lt;Map.Entry&lt;Integer, Integer&gt;&gt; it = map.entrySet().iterator(); while (it.hasNext()) &#123; Map.Entry&lt;Integer, Integer&gt; entry = it.next(); System.out.println(entry.getKey() + ":" + entry.getValue()); // it.remove(); 删除元素 &#125; &#125; Lambda Lambda是从java1.8开始支持的，语法更简洁，可以拿到key和value，但性能稍微低点 12345public void testLambda() &#123; map.forEach((key, value) -&gt; &#123; System.out.println(key + ":" + value); &#125;);&#125; 总结 单纯获取key或者value，使用keySet 需要同时获取key和value，使用entrySet 遍历过程中如果需要删除操作，使用Iterator 遍历过程中需要添加元素，可以新建一个临时map，遍历完成后，把临时map塞到最终map当中]]></content>
+      <categories>
+        <category>后端开发语言</category>
+        <category>Java</category>
+        <category>知识点</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>遍历</tag>
+        <tag>Map</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Java 读取和保存properties文件内容]]></title>
     <url>%2F2019%2F01%2F29%2FJava-%E8%AF%BB%E5%8F%96%E5%92%8C%E4%BF%9D%E5%AD%98properties%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9%2F</url>
-    <content type="text"><![CDATA[前言最近做微信公众号，需要读取配置文件中的appId等信息，鄙人将这些固定的信息放进了properties文件里面，因此才用到了这块读操作，顺道也把写操作在网上查了下 Properties类和properties配置文件Properties类继承自Hashtable，并实现了Map的接口，也就是properties文件在Properties类中是以键值对存在的，而且值都是字符串 Properties类的主要的方法 load(InputStream inStream)以文件流的形式加载文件中的信息到Properties类中，具体的代码如下： 1234567Properties pro = new Properties();//文件流读取文件信息FileInputStream inStrem = new FileInputStream("a.properties");//加载数据到Properties类中pro.load(in);//关闭文件流in.close(); store(OutputStream out, String comments)将Properties类中的内容输出保存到properties文件当中，具体的代码如下： 123FileOutputStream outFile = new FileOutputStream("a.properties",true);pro.store(outFile,"Comments");outFile.close(); 如果comments不为空，保存后文件的第一行回事#comments，表示注释信息；如果为空则没有注释信息 getProperty/setProperty这两个方法分别是用来获取和设置properties文件的属性的 代码实例 a.properties文件的内容如下123name=rootpass=liukey=value 读取a.properties文件和生成b.properties文件1234567891011121314151617181920212223242526272829303132import java.io.BufferedInputStream;import java.io.FileInputStream;import java.io.FileOutputStream;import java.io.InputStream;import java.util.Iterator;import java.util.Properties;public class PropertyTest &#123; public static void main(String[] args) &#123; Properties prop = new Properties(); try&#123; //读取属性文件a.properties InputStream in = new BufferedInputStream (new FileInputStream("a.properties")); prop.load(in); ///加载属性列表 Iterator&lt;String&gt; it=prop.stringPropertyNames().iterator(); while(it.hasNext())&#123; String key=it.next(); System.out.println(key+":"+prop.getProperty(key)); &#125; in.close(); ///保存属性到b.properties文件 FileOutputStream oFile = new FileOutputStream("b.properties", true);//true表示追加打开 prop.setProperty("phone", "10086"); prop.store(oFile, "The New properties file"); oFile.close(); &#125; catch(Exception e)&#123; System.out.println(e); &#125; &#125;&#125;]]></content>
+    <content type="text"><![CDATA[前言最近做微信公众号，需要读取配置文件中的appId等信息，鄙人将这些固定的信息放进了properties文件里面，因此才用到了这块读操作，顺道也把写操作在网上查了下 Properties类Properties类和properties配置文件Properties类继承自Hashtable，并实现了Map的接口，也就是properties文件在Properties类中是以键值对存在的，而且值都是字符串 Properties类的主要的方法 load(InputStream inStream)以文件流的形式加载文件中的信息到Properties类中，具体的代码如下： 1234567Properties pro = new Properties();//文件流读取文件信息FileInputStream inStrem = new FileInputStream("a.properties");//加载数据到Properties类中pro.load(in);//关闭文件流in.close(); store(OutputStream out, String comments)将Properties类中的内容输出保存到properties文件当中，具体的代码如下： 123FileOutputStream outFile = new FileOutputStream("a.properties",true);pro.store(outFile,"Comments");outFile.close(); 如果comments不为空，保存后文件的第一行回事#comments，表示注释信息；如果为空则没有注释信息 getProperty/setProperty这两个方法分别是用来获取和设置properties文件的属性的 代码实例 a.properties文件的内容如下123name=rootpass=liukey=value 读取a.properties文件和生成b.properties文件1234567891011121314151617181920212223242526272829303132import java.io.BufferedInputStream;import java.io.FileInputStream;import java.io.FileOutputStream;import java.io.InputStream;import java.util.Iterator;import java.util.Properties;public class PropertyTest &#123; public static void main(String[] args) &#123; Properties prop = new Properties(); try&#123; //读取属性文件a.properties InputStream in = new BufferedInputStream (new FileInputStream("a.properties")); prop.load(in); ///加载属性列表 Iterator&lt;String&gt; it=prop.stringPropertyNames().iterator(); while(it.hasNext())&#123; String key=it.next(); System.out.println(key+":"+prop.getProperty(key)); &#125; in.close(); ///保存属性到b.properties文件 FileOutputStream oFile = new FileOutputStream("b.properties", true);//true表示追加打开 prop.setProperty("phone", "10086"); prop.store(oFile, "The New properties file"); oFile.close(); &#125; catch(Exception e)&#123; System.out.println(e); &#125; &#125;&#125; ResourceBundle该类是基于类读取属性：将属性文件当做类，意味着属性文件必须放在包中，使用属性文件的权限定性类名而非路径1234567891011121314151617181920/** * 基于类读取属性文件：该方法将属性文件当作类来处理，属性文件放在包中，使用属性文件的全限定性而非路径来指代文件 */ @Test public void test02() &#123; ResourceBundle bundle = ResourceBundle.getBundle("com.javase.properties.test01"); System.out.println("获取指定key的值"); System.out.println("driver=" + bundle.getString("jdbc.driver")); System.out.println("url=" + bundle.getString("jdbc.url")); System.out.println("username=" + bundle.getString("jdbc.username")); System.out.println("password=" + bundle.getString("jdbc.password")); System.out.println("-----------------------------"); System.out.println("遍历属性文件"); Enumeration&lt;String&gt; keys = bundle.getKeys(); while (keys.hasMoreElements()) &#123; String key = keys.nextElement(); System.out.println(key + "=" + bundle.getString(key)); &#125; &#125;]]></content>
       <categories>
         <category>后端开发语言</category>
         <category>Java</category>
@@ -24,8 +54,8 @@
         <category>SSM框架搭建</category>
       </categories>
       <tags>
-        <tag>搭建</tag>
         <tag>SSM</tag>
+        <tag>搭建</tag>
       </tags>
   </entry>
   <entry>
@@ -80,8 +110,8 @@
         <category>Maven</category>
       </categories>
       <tags>
-        <tag>Maven</tag>
         <tag>搭建</tag>
+        <tag>Maven</tag>
         <tag>Idea15</tag>
       </tags>
   </entry>
