@@ -99,9 +99,9 @@
 
 
   <meta name="description" content="前言微信公众号开发，其实很简单，这里是在微信公众号测试账号（公众号沙箱）上的开发流程，具体到生产环境的公众号开发，另行配置，比如说公众号主体信息认证、消息模板配置（审核很严，需要提前进行申请，防止影响业务）  名词介绍 appID：第三方用户唯一凭证 appsecret：第三方用户唯一凭证密钥，即appsecret access_token：公众号的全局唯一接口调用凭据，公众号调用各接口时都需">
-<meta name="keywords" content="Java,微信公众号,模板消息推送">
+<meta name="keywords" content="Java,微信公众号,模板消息发送">
 <meta property="og:type" content="article">
-<meta property="og:title" content="微信公众号 模板消息推送">
+<meta property="og:title" content="微信公众号 模板消息发送">
 <meta property="og:url" content="https://polieme.github.io/2019/01/31/微信公众号-模板消息推送/index.html">
 <meta property="og:site_name" content="Daniel&#39;s Blog">
 <meta property="og:description" content="前言微信公众号开发，其实很简单，这里是在微信公众号测试账号（公众号沙箱）上的开发流程，具体到生产环境的公众号开发，另行配置，比如说公众号主体信息认证、消息模板配置（审核很严，需要提前进行申请，防止影响业务）  名词介绍 appID：第三方用户唯一凭证 appsecret：第三方用户唯一凭证密钥，即appsecret access_token：公众号的全局唯一接口调用凭据，公众号调用各接口时都需">
@@ -109,9 +109,9 @@
 <meta property="og:image" content="https://polieme.github.io/images/banner/banner_22.png">
 <meta property="og:image" content="https://polieme.github.io/2019/01/31/微信公众号-模板消息推送/screenshot_1.png">
 <meta property="og:image" content="https://polieme.github.io/2019/01/31/微信公众号-模板消息推送/screenshot_2.png">
-<meta property="og:updated_time" content="2019-01-31T10:04:57.839Z">
+<meta property="og:updated_time" content="2019-01-31T10:09:04.205Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="微信公众号 模板消息推送">
+<meta name="twitter:title" content="微信公众号 模板消息发送">
 <meta name="twitter:description" content="前言微信公众号开发，其实很简单，这里是在微信公众号测试账号（公众号沙箱）上的开发流程，具体到生产环境的公众号开发，另行配置，比如说公众号主体信息认证、消息模板配置（审核很严，需要提前进行申请，防止影响业务）  名词介绍 appID：第三方用户唯一凭证 appsecret：第三方用户唯一凭证密钥，即appsecret access_token：公众号的全局唯一接口调用凭据，公众号调用各接口时都需">
 <meta name="twitter:image" content="https://polieme.github.io/images/banner/banner_22.png">
 
@@ -130,7 +130,7 @@
   };
 </script>
 
-  <title>微信公众号 模板消息推送 | Daniel's Blog</title>
+  <title>微信公众号 模板消息发送 | Daniel's Blog</title>
   
 
 
@@ -261,7 +261,7 @@
       
     
 
-    <a href="/categories/后端开发语言/Java/" rel="section"><i class="menu-item-icon fa fa-fw fa-bug"></i> <br>Java</a>
+    <a href="/categories/后端语言/Java/" rel="section"><i class="menu-item-icon fa fa-fw fa-bug"></i> <br>Java</a>
 
   </li>
         
@@ -280,7 +280,7 @@
       
     
 
-    <a href="/categories/前端开发语言/Javascript/" rel="section"><i class="menu-item-icon fa fa-fw fa-xing"></i> <br>Javascript</a>
+    <a href="/categories/前端语言/Javascript/" rel="section"><i class="menu-item-icon fa fa-fw fa-xing"></i> <br>Javascript</a>
 
   </li>
         
@@ -299,7 +299,26 @@
       
     
 
-    <a href="/categories/后端开发框架/" rel="section"><i class="menu-item-icon fa fa-fw fa-modx"></i> <br>后端开发框架</a>
+    <a href="/categories/后端框架/" rel="section"><i class="menu-item-icon fa fa-fw fa-modx"></i> <br>后端开发框架</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-后端插件">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/categories/后端插件/" rel="section"><i class="menu-item-icon fa fa-fw fa-opera"></i> <br>后端插件</a>
 
   </li>
         
@@ -356,7 +375,7 @@
       
     
 
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">53</span></a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">54</span></a>
 
   </li>
         
@@ -375,7 +394,7 @@
       
     
 
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">30</span></a>
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">32</span></a>
 
   </li>
         
@@ -511,7 +530,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">微信公众号 模板消息推送
+          <h1 class="post-title" itemprop="name headline">微信公众号 模板消息发送
 
               
             
@@ -537,7 +556,7 @@
                 
               
 
-              <time title="创建时间：2019-01-31 15:26:16 / 修改时间：18:04:57" itemprop="dateCreated datePublished" datetime="2019-01-31T15:26:16+08:00">2019-01-31</time>
+              <time title="创建时间：2019-01-31 15:26:16 / 修改时间：18:09:04" itemprop="dateCreated datePublished" datetime="2019-01-31T15:26:16+08:00">2019-01-31</time>
             
 
             
@@ -559,14 +578,14 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/后端开发插件/" itemprop="url" rel="index"><span itemprop="name">后端开发插件</span></a></span>
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/后端插件/" itemprop="url" rel="index"><span itemprop="name">后端插件</span></a></span>
 
                 
                 
                   ，
                 
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/后端开发插件/微信公众号/" itemprop="url" rel="index"><span itemprop="name">微信公众号</span></a></span>
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/后端插件/微信公众号/" itemprop="url" rel="index"><span itemprop="name">微信公众号</span></a></span>
 
                 
                 
@@ -669,7 +688,7 @@
           
             <a href="/tags/微信公众号/" rel="tag"># 微信公众号</a>
           
-            <a href="/tags/模板消息推送/" rel="tag"># 模板消息推送</a>
+            <a href="/tags/模板消息发送/" rel="tag"># 模板消息发送</a>
           
         </div>
       
@@ -839,6 +858,10 @@
                     
                       
                     
+                      
+                    
+                      
+                    
                     <span class="site-state-item-count">30</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
@@ -851,6 +874,8 @@
                 <div class="site-state-item site-state-tags">
                   <a href="/tags/index.html">
                     
+                    
+                      
                     
                       
                     
