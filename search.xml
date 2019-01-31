@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Java ExecutorService限制线程数量]]></title>
+    <url>%2F2019%2F01%2F30%2FJava-ExecutorService%E9%99%90%E5%88%B6%E7%BA%BF%E7%A8%8B%E6%95%B0%E9%87%8F%2F</url>
+    <content type="text"><![CDATA[本文引自使用JAVA的ExecutorService来限制线程数量 前言目前对于线程的了解还是比较少，今天碰到一个使用微信公众号发送微信消息的功能，会出现批量发送的问题，如果排队执行，肯定会需要很长的时间，因此需要起线程执行，但是线程又不可能无限制的一直起，肯定会造成内存溢出类似的问题，因此想到了限制线程数量的方法。查阅了一些文章，提到了ExecutorService能够实现，因此进行了如下记录 概念ExecutorService是什么ExecutorService是Java并行运行的计算库java.util.concurrent包里面的接口，封装原来的难以使用的Java线程，使其简单优化 测试代码线程代码根据给定的生命周期，记录生命周期前后的时间点并输出信息123456789101112131415161718192021222324252627import java.text.SimpleDateFormat;import java.util.Calendar;public class SampleThread implements Runnable &#123; private int no; private int time; SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss"); SampleThread(int no, int time) &#123; this.no = no; this.time = time; &#125; @Override public void run() &#123; //开始执行，显示当前的时间，用于计算进程执行的生命周期 System.out.println("No." + no + " start ID:" + Thread.currentThread().getId() + " 生命周期:" + time + " 现在时间:" + sdf.format(Calendar.getInstance().getTime())); try &#123; Thread.sleep(time * 1000); &#125; catch (InterruptedException e) &#123; e.printStackTrace(); &#125; //执行完毕之后，打印执行结束时的时间 System.out.println("No." + no + " end ID:" + Thread.currentThread().getId() + " 生命周期:" + time + " 现在时间:" + sdf.format(Calendar.getInstance().getTime())); &#125;&#125; 使用ExecutorService调用线程的代码12345678910111213141516171819202122import java.util.concurrent.ExecutorService;import java.util.concurrent.Executors;public class Main &#123; public static void main(String[] args) &#123; final int MAX_THREADS = 3; //定义线程数最大值 ExecutorService executorService = Executors.newFixedThreadPool(MAX_THREADS); for (int i = 0; i &lt; 10; i++) &#123; int no = i; //随机一个线程能活多少秒 int lifeTime = (int)(Math.random() * 9 + 1); //将线程提交到executorService中，等待执行 executorService.submit(new SampleThread(no, lifeTime)); &#125; System.out.println("executor.shutdown();"); executorService.shutdown(); &#125;&#125; 执行的结果12345678910111213141516171819202122executor.shutdown();No.0 start ID:13 生命周期:4 现在时间:21:52:46No.2 start ID:15 生命周期:4 现在时间:21:52:46No.1 start ID:14 生命周期:1 现在时间:21:52:46No.1 end ID:14 生命周期:1 现在时间:21:52:47No.3 start ID:14 生命周期:2 现在时间:21:52:47No.3 end ID:14 生命周期:2 现在时间:21:52:49No.4 start ID:14 生命周期:6 现在时间:21:52:49No.0 end ID:13 生命周期:4 现在时间:21:52:50No.5 start ID:13 生命周期:2 现在时间:21:52:50No.2 end ID:15 生命周期:4 现在时间:21:52:50No.6 start ID:15 生命周期:6 现在时间:21:52:50No.5 end ID:13 生命周期:2 现在时间:21:52:52No.7 start ID:13 生命周期:2 现在时间:21:52:52No.7 end ID:13 生命周期:2 现在时间:21:52:54No.8 start ID:13 生命周期:7 现在时间:21:52:54No.4 end ID:14 生命周期:6 现在时间:21:52:55No.9 start ID:14 生命周期:5 现在时间:21:52:55No.6 end ID:15 生命周期:6 现在时间:21:52:56No.9 end ID:14 生命周期:5 现在时间:21:53:00No.8 end ID:13 生命周期:7 现在时间:21:53:01Disconnected from the target VM, address: '127.0.0.1:14207', transport: 'socket' 总结 同一个时间点执行的线程数量不会超过MAX_THREAD所定义的数量 从线程的ID可以看出，只有三个线程在跑 有点没搞明白的是：ExecutorService已经在主线程里面调用了shutdown了，但是在子线程还能在正常调度的问题？？？]]></content>
+      <categories>
+        <category>后端开发语言</category>
+        <category>Java</category>
+        <category>Thread</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>线程数量控制</tag>
+        <tag>Thread</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[IDEA 创建多模块Maven项目]]></title>
     <url>%2F2019%2F01%2F30%2FIDEA-%E5%88%9B%E5%BB%BA%E5%A4%9A%E6%A8%A1%E5%9D%97Maven%E9%A1%B9%E7%9B%AE%2F</url>
     <content type="text"><![CDATA[创建父模块 依次点击打开File-&gt;New-&gt;Project，具体操作见下图 打开创建项目对话框后，左侧选择Maven，右侧不勾选Create from archetype，然后点击Next，具体操作见下图 输入项目的信息，GroupId和ArtifactId，然后点击Next，具体操作见下图 直接点Next，直接到Finish，最后生成完成之后，删除src文件夹（因为这个是父级模块，因此不需要src文件夹），如下图所示： 创建核心子模块 右键父级模块，点击New-&gt;Module，打开新增Module界面，具体操作见下图： 左侧选择Maven，因为要创建一个普通项目，右侧同样不选择Create from archetype，然后点击Next，如下图所示： GroupId和version继承自父模块，不需要修改，只需要修改ArtifactId，点击Next 输入Module name，模块的名称可以和ArtifactId保持一致即可，具体操作见下图 创建完成后的结构图如下： 创建子模块 第一步和创建核心子模块一样，只是在打开New Module的时候，选上Create from archetype，并选中maven-archetype-webapp 一路点击下去，中间会有一个选择Maven的地方，选择你自己的Maven以及配置文件，然后点到最后，创建的项目路径如下图所示：]]></content>
