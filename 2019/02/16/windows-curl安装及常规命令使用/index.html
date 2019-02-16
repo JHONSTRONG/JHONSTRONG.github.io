@@ -111,7 +111,7 @@
 <meta property="og:image" content="https://xydcom.cn/2019/02/16/windows-curl安装及常规命令使用/screenshot_2.png">
 <meta property="og:image" content="https://xydcom.cn/2019/02/16/windows-curl安装及常规命令使用/screenshot_3.png">
 <meta property="og:image" content="https://xydcom.cn/2019/02/16/windows-curl安装及常规命令使用/screenshot_4.png">
-<meta property="og:updated_time" content="2019-02-16T02:36:03.965Z">
+<meta property="og:updated_time" content="2019-02-16T04:55:11.278Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="windows curl安装及常规命令使用">
 <meta name="twitter:description" content="curl是什么curl是一个利用URL语法在命令行下工作的文件传输工具，它支持的通信协议有FTP、FTPS、HTTP、HTTPS、TFTP、SFTP、Gopher、SCP、Telnet、DICT、FILE、LDAP、LDAPS、IMAP、POP3、SMTP和RTSP。curl还支持SSL认证、HTTP POST、HTTP PUT、FTP上传, HTTP form based upload、pro">
@@ -529,7 +529,7 @@
       
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">50</span></a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">51</span></a>
 
   </li>
         
@@ -672,7 +672,7 @@
                 
               
 
-              <time title="创建时间：2019-02-16 09:22:57 / 修改时间：10:36:03" itemprop="dateCreated datePublished" datetime="2019-02-16T09:22:57+08:00">2019-02-16</time>
+              <time title="创建时间：2019-02-16 09:22:57 / 修改时间：12:55:11" itemprop="dateCreated datePublished" datetime="2019-02-16T09:22:57+08:00">2019-02-16</time>
             
 
             
@@ -796,7 +796,55 @@
 </li>
 </ol>
 <ul>
-<li>保存网站上的cookie，内置option: -c(小写)</li>
+<li><p>保存网站上的cookie，内置option: -c(小写)，文件会存储在你命令执行的位置<br><code>curl -c cookie.txt www.baidu.com</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\zp&gt;curl -c cookie.txt www.baidu.com</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;!--STATUS OK--&gt;&lt;html&gt; &lt;head&gt;&lt;meta http-equiv=content-type content=text/html;charset=utf-8&gt;&lt;meta http-equiv=X-UA-Compatible content=IE=Edge&gt;&lt;meta content=always name=referrer&gt;&lt;link rel=stylesheet <span class="built_in">type</span>=text/css href=http://s1.bdstatic.com/r/www/cache/bdorz/baidu.min.css&gt;&lt;title&gt;百度一下，你就知道&lt;/title&gt;&lt;/head&gt; &lt;body link=<span class="comment">#0000cc&gt; &lt;div id=wrapper&gt; &lt;div id=head&gt; &lt;div class=head_wrapper&gt; &lt;div class=s_form&gt; &lt;div class=s_form_wrapper&gt; &lt;div id=lg&gt; &lt;img hidefocus=true src=//www.baidu.com/img/bd_logo1.png width=270 height=129&gt; &lt;/div&gt; &lt;form id=form name=f action=//www.baidu.com/s class=fm&gt; &lt;input type=hidden name=bdorz_come value=1&gt; &lt;input type=hidden name=ie value=utf-8&gt; &lt;input type=hidden name=f value=8&gt; &lt;input type=hidden name=rsv_bp value=1&gt; &lt;input type=hidden name=rsv_idx value=1&gt; &lt;input type=hidden name=tn value=baidu&gt;&lt;span class="bg s_ipt_wr"&gt;&lt;input id=kw name=wd class=s_ipt value maxlength=255 autocomplete=off autofocus&gt;&lt;/span&gt;&lt;span class="bg s_btn_wr"&gt;&lt;input type=submit id=su value=百度一下 class="bg s_btn"&gt;&lt;/span&gt; &lt;/form&gt; &lt;/div&gt; &lt;/div&gt; &lt;div id=u1&gt; &lt;a href=http://news.baidu.com name=tj_trnews class=mnav&gt;新闻&lt;/a&gt; &lt;a href=http://www.hao123.com name=tj_trhao123 class=mnav&gt;hao123&lt;/a&gt; &lt;a href=http://map.baidu.com name=tj_trmap class=mnav&gt;地图&lt;/a&gt; &lt;a href=http://v.baidu.com name=tj_trvideo class=mnav&gt;视频&lt;/a&gt; &lt;a href=http://tieba.baidu.com name=tj_trtieba class=mnav&gt;贴吧&lt;/a&gt; &lt;noscript&gt; &lt;a href=http://www.baidu.com/bdorz/login.gif?login&amp;amp;tpl=mn&amp;amp;u=http%3A%2F%2Fwww.bai</span></span><br><span class="line">......</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>保存http的response里面的header信息，内置option:-D<br><code>curl -D cookie.txt www.baidu.com</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\zp&gt;curl -D cookie.txt www.baidu.com</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;!--STATUS OK--&gt;&lt;html&gt; &lt;head&gt;&lt;meta http-equiv=content-type content=text/html;charset=utf-8&gt;&lt;meta http-equiv=X-UA-Compatible content=IE=Edge&gt;&lt;meta content=always name=referrer&gt;&lt;link rel=stylesheet <span class="built_in">type</span>=text/css href=http://s1.bdstatic.com/r/www/cache/bdorz/baidu.min.css&gt;&lt;title&gt;百度一下，你就知道&lt;/title&gt;&lt;/head&gt; &lt;body link=<span class="comment">#0000cc&gt; &lt;div id=wrapper&gt; &lt;div id=head&gt; &lt;div class=head_wrapper&gt; &lt;div class=s_form&gt; &lt;div class=s_form_wrapper&gt; &lt;div id=lg&gt; &lt;img hidefocus=true src=//www.baidu.com/img/bd_logo1.png width=270 height=129&gt; &lt;/div&gt; &lt;form id=form name=f action=//www.baidu.com/s class=fm&gt; &lt;input type=hidden name=bdorz_come value=1&gt; &lt;input type=hidden name=ie value=utf-8&gt; &lt;input type=hidden name=f value=8&gt; &lt;input type=hidden name=rsv_bp value=1&gt; &lt;input type=hidden name=rsv_idx value=1&gt; &lt;input type=hidden name=tn value=baidu&gt;&lt;span class="bg s_ipt_wr"&gt;&lt;input id=kw name=wd class=s_ipt value maxleng</span></span><br><span class="line">......</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用cookie<br>网站访问有时候会检测你的cookie信息是否合法，因此需要使用上面保存的cookie信息，内置option:-b<br><code>curl -b cookie.txt www.baidu.com</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\zp&gt;curl -b cookie.txt www.baidu.com</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;!--STATUS OK--&gt;&lt;html&gt; &lt;head&gt;&lt;meta http-equiv=content-type content=text/html;charset=utf-8&gt;&lt;meta http-equiv=X-UA-Compatible content=IE=Edge&gt;&lt;meta content=always name=referrer&gt;&lt;link rel=stylesheet <span class="built_in">type</span>=text/css href=http://s1.bdstatic.com/r/www/cache/bdorz/baidu.min.css&gt;&lt;title&gt;百度一下，你就知道&lt;/title&gt;&lt;/head&gt; &lt;body link=<span class="comment">#0000cc&gt; &lt;div id=wrapper&gt; &lt;div id=head&gt; &lt;div class=head_wrapper&gt; &lt;div class=s_form&gt; &lt;div class=s_form_wrapper&gt; &lt;div id=lg&gt; &lt;img hidefocus=true src=//www.baidu.com/img/bd_logo1.png width=270 height=129&gt; &lt;/div&gt; &lt;form id=form name=f action=//www.baidu.com/s class=fm&gt; &lt;input type=hidden name=bdorz_come value=1&gt; &lt;input type=hidden name=ie value=utf-8&gt; &lt;input type=hidden name=f value=8&gt; &lt;input type=hidden name=rsv_bp value=1&gt; &lt;input type=hidden name=rsv_idx value=1&gt; &lt;input type=hidden name=tn value=baidu&gt;&lt;span class="bg s_ipt_wr"&gt;&lt;input id=kw name=wd class=s_ipt value maxlength=255 autocomplete=off autofocus&gt;&lt;/span&gt;&lt;span class="bg s_btn_wr"&gt;&lt;input type=submit id=su value=百度一下 class="bg s_btn"&gt;&lt;/span&gt; &lt;/form&gt; &lt;/div&gt; &lt;/div&gt; &lt;div id=u1&gt; &lt;a href=http://news.baidu.com name=tj_trnews class=mnav&gt;新闻&lt;/a&gt; &lt;a href=http://www.hao123.com name=tj_trhao123 class=mnav&gt;hao123&lt;/a&gt; &lt;a href=http://map.baidu.com name=tj_trmap class=mnav&gt;地</span></span><br><span class="line">.......</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ol start="9">
+<li><p>模拟浏览器<br>有些网站需要特定的浏览器进行访问，而且还有些需要特定的版本。curl内置option:-A可以让我们指定浏览器去访问网址</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -A <span class="string">"Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.0)"</span> http://www.linux.com</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>伪造referer（盗链）<br>很多服务器会出现检测http访问的rederer从而控制访问。比如：先访问主页，然后再访问主页上的邮箱页面，这里访问邮箱的referer地址就是访问首页成功后的页面地址，如果服务器发现对邮箱页面访问的referer地址不是首页地址，断定是盗链<br>curl内置option:-e 可以让我们设定referer</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># curl -e "www.linux.com" http://mail.linux.com</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>下载文件</p>
+</li>
+</ol>
+<ul>
+<li><p>利用curl下载文件<br>使用内置option: -o (小写)<br><code>curl -o baidulogo.png https://www.baidu.com/img/superlogo_c4d7df0a003d3db9b65e9ef0fe6da1ec.png</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\zp&gt;curl -o baidulogo.png https://www.baidu.com/img/superlogo_c4d7df0a003d3db9b65e9ef0fe6da1ec.png?<span class="built_in">where</span>=super</span><br><span class="line">  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current</span><br><span class="line">                                 Dload  Upload   Total   Spent    Left  Speed</span><br><span class="line">100  6958  100  6958    0     0  18654      0 --:--:-- --:--:-- --:--:-- 18654</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用内置option: -O (大写)，这个会保存服务器上文件的名字作为本地文件名</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -O https://www.baidu.com/img/superlogo_c4d7df0a003d3db9b65e9ef0fe6da1ec.png?<span class="built_in">where</span>=super</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>循环下载<br>有时候下载图片可能是前面的部分一样，但是后一部分不一样的情况</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># curl -O http://www.linux.com/dodo[1-5].JPG</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>下载重名文件<br>如果两次下载的文件重名，就出现文件覆盖的情况，为了不覆盖文件，可执行下面的命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># curl -o #1_#2.JPG http://www.linux.com/&#123;hello,bb&#125;/dodo[1-5].JPG</span></span><br></pre></td></tr></table></figure>
+<p>这样在hello/dodo1.JPG的文件下载下来就会变成hello_dodo1.JPG,其他文件依此类推，从而有效的避免了文件被覆盖</p>
+</li>
+<li><p>分块下载<br>有时候文件比较大，需要分段去下载，使用内置的option:-r</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">curl -r 0-100 -o dodo1_part1.JPG http://www.linux.com/dodo1.JPG</span><br><span class="line">curl -r 100-200 -o dodo1_part2.JPG http://www.linux.com/dodo1.JPG</span><br><span class="line">curl -r 200- -o dodo1_part3.JPG http://www.linux.com/dodo1.JPG</span><br><span class="line">cat dodo1_part* &gt; dodo1.JPG/*这个是linux指令，因此需要在Linux环境下*/</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>通过FTP下载文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># curl -O -u 用户名:密码 ftp://www.linux.com/dodo1.JPG</span></span><br><span class="line"><span class="comment"># curl -O ftp://用户名:密码@www.linux.com/dodo1.JPG</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>显示下载进度条</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -O -<span class="comment"># http://www.linux.com/dodo1.JPG</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>断点续传<br>在Window中，我们可以使用迅雷进行断点续传，curl内置option:-C 同样可以达到相同的效果</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -C -O http://www.linux.com/dodo1.JPG</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>上传文件<br>内置option:-T 实现文件上传，下面是上传一个demo.txt文件到ftp服务器</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -T  demo.txt -u 用户名:用户密码 ftp://www.linux.com/img/</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
 
       
@@ -847,6 +895,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/02/16/不安全的HTTP方法/" rel="prev" title="不安全的HTTP方法">
+                不安全的HTTP方法 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -922,7 +974,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">50</span>
+                    <span class="site-state-item-count">51</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
