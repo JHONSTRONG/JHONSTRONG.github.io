@@ -107,7 +107,7 @@
 <meta property="og:description" content="本文转自命令查看Linux服务器内存、CPU、显卡使用情况 转不意味着Copy，而是对别人知识的汲取和吸收的同时加上自己的理解  内存使用情况 free -m命令  12345[root@itlb ~]# free -m             total       used       free     shared    buffers     cachedMem:         32">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://xydcom.cn/images/banner/banner_10.png">
-<meta property="og:updated_time" content="2019-02-18T09:07:42.219Z">
+<meta property="og:updated_time" content="2019-02-18T12:16:37.684Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux服务器内存、处理器、磁盘使用情况">
 <meta name="twitter:description" content="本文转自命令查看Linux服务器内存、CPU、显卡使用情况 转不意味着Copy，而是对别人知识的汲取和吸收的同时加上自己的理解  内存使用情况 free -m命令  12345[root@itlb ~]# free -m             total       used       free     shared    buffers     cachedMem:         32">
@@ -706,7 +706,7 @@
                 
               
 
-              <time title="创建时间：2019-02-18 17:04:40 / 修改时间：17:07:42" itemprop="dateCreated datePublished" datetime="2019-02-18T17:04:40+08:00">2019-02-18</time>
+              <time title="创建时间：2019-02-18 17:04:40 / 修改时间：20:16:37" itemprop="dateCreated datePublished" datetime="2019-02-18T17:04:40+08:00">2019-02-18</time>
             
 
             
@@ -784,10 +784,9 @@
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@itlb ~]# free -m</span><br><span class="line">             total       used       free     shared    buffers     cached</span><br><span class="line">Mem:         32078      31202        876          0          5      21952</span><br><span class="line">-/+ buffers/cache:       9244      22834</span><br><span class="line">Swap:        16111         86      16025</span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>参数解析</p>
-<ul>
-<li>命令中的<code>-m</code>指的是按照<code>MB</code>进行数据统计  </li>
-</ul>
+<p>参数解析  </p>
+</blockquote>
+<p>命令中的<code>-m</code>指的是按照<code>MB</code>进行数据统计  </p>
 <ul>
 <li>Mem行<ul>
 <li><code>total</code>:内存总数</li>
@@ -805,7 +804,6 @@
 </li>
 <li>Swap:交换区的内存使用情况</li>
 </ul>
-</blockquote>
 <p>注：虽然看着<code>free</code>的剩余比较小，但是这里有一定的混淆，真正的<code>free</code>是<code>free+buffers+cached</code></p>
 <h2 id="处理器使用情况"><a href="#处理器使用情况" class="headerlink" title="处理器使用情况"></a>处理器使用情况</h2><blockquote>
 <p><code>top</code>命令</p>
@@ -843,8 +841,9 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@itlb ~]<span class="comment"># cd /home/</span></span><br><span class="line">[root@itlb home]<span class="comment"># du -sh</span></span><br><span class="line">121G	.</span><br></pre></td></tr></table></figure>
 <p>该命令是指当前文件夹下已经使用了多少空间</p>
 <blockquote>
-<p><code>df -h</code> 命令<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@itlb home]<span class="comment"># df -h</span></span><br><span class="line">Filesystem                   Size  Used Avail Use% Mounted on</span><br><span class="line">/dev/mapper/vg_itlb-lv_root   50G   24G   24G  51% /</span><br><span class="line">tmpfs                         16G  1.1M   16G   1% /dev/shm</span><br><span class="line">/dev/sda2                    485M   39M  421M   9% /boot</span><br><span class="line">/dev/sda1                    200M  260K  200M   1% /boot/efi</span><br><span class="line">/dev/mapper/vg_itlb-lv_home  209G  121G   78G  61% /home</span><br></pre></td></tr></table></figure></p>
+<p><code>df -h</code> 命令</p>
 </blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@itlb home]<span class="comment"># df -h</span></span><br><span class="line">Filesystem                   Size  Used Avail Use% Mounted on</span><br><span class="line">/dev/mapper/vg_itlb-lv_root   50G   24G   24G  51% /</span><br><span class="line">tmpfs                         16G  1.1M   16G   1% /dev/shm</span><br><span class="line">/dev/sda2                    485M   39M  421M   9% /boot</span><br><span class="line">/dev/sda1                    200M  260K  200M   1% /boot/efi</span><br><span class="line">/dev/mapper/vg_itlb-lv_home  209G  121G   78G  61% /home</span><br></pre></td></tr></table></figure>
 <p>是指各个挂载点的硬盘空间及使用情况</p>
 <blockquote>
 <p><code>du -cks * | sort -rn | head -n 10</code>命令</p>
@@ -854,7 +853,7 @@
 <blockquote>
 <p><code>du -h --max-depth=2 /</code>   </p>
 </blockquote>
-<p>查看所有的文件占用大小</p>
+<font color="red">这个经常用查看所有的文件占用大小</font>
 
       
     </div>
