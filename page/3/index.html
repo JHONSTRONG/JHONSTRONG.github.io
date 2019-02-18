@@ -453,6 +453,25 @@
         
         
           
+          <li class="menu-item menu-item-中间件">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/categories/中间件/" rel="section"><i class="menu-item-icon fa fa-fw fa-arrows"></i> <br>中间件</a>
+
+  </li>
+        
+        
+        
+          
           <li class="menu-item menu-item-软件安装">
 
     
@@ -503,7 +522,7 @@
       
     
 
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">44</span></a>
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">45</span></a>
 
   </li>
         
@@ -522,7 +541,7 @@
       
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">51</span></a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">52</span></a>
 
   </li>
         
@@ -606,6 +625,221 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xydcom.cn/2019/01/28/mybatis-返回Map类型key改为小写/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Daniel">
+      <meta itemprop="description" content="生死看淡，不服就干">
+      <meta itemprop="image" content="/images/head/head_pic.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daniel's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/01/28/mybatis-返回Map类型key改为小写/" class="post-title-link" itemprop="url">mybatis 返回Map类型key改为小写</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-01-28 15:04:10 / 修改时间：15:06:16" itemprop="dateCreated datePublished" datetime="2019-01-28T15:04:10+08:00">2019-01-28</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/后端开发框架/" itemprop="url" rel="index"><span itemprop="name">后端开发框架</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/后端开发框架/SSM/" itemprop="url" rel="index"><span itemprop="name">SSM</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/后端开发框架/SSM/MyBatis/" itemprop="url" rel="index"><span itemprop="name">MyBatis</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/后端开发框架/SSM/MyBatis/知识点/" itemprop="url" rel="index"><span itemprop="name">知识点</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <a href="/2019/01/28/mybatis-返回Map类型key改为小写/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/01/28/mybatis-返回Map类型key改为小写/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>
+              
+
+当使用mybatis查询数据库的时候，会出现查询出来的Map中字段都是大写的，需要进行处理，处理的方法如下
+
+
+添加别名
+别名上添加双引号，查询出来的就是小写了
+
+
+demo
+
+&lt;select id="getStudentList" resultType="java.util.Map"&g
+              ...
+            </p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/01/28/mybatis-返回Map类型key改为小写/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
     
       
 
@@ -2406,205 +2640,6 @@ Url中传递JSONObject
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xydcom.cn/2019/01/25/JS-setInterval-方法/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Daniel">
-      <meta itemprop="description" content="生死看淡，不服就干">
-      <meta itemprop="image" content="/images/head/head_pic.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daniel's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/01/25/JS-setInterval-方法/" class="post-title-link" itemprop="url">JS setInterval()方法</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-01-25 21:24:40 / 修改时间：21:25:29" itemprop="dateCreated datePublished" datetime="2019-01-25T21:24:40+08:00">2019-01-25</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/前端开发语言/" itemprop="url" rel="index"><span itemprop="name">前端开发语言</span></a></span>
-
-                
-                
-                  ，
-                
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/前端开发语言/Javascript/" itemprop="url" rel="index"><span itemprop="name">Javascript</span></a></span>
-
-                
-                
-                  ，
-                
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/前端开发语言/Javascript/知识点/" itemprop="url" rel="index"><span itemprop="name">知识点</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-              
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-            
-                <a href="/2019/01/25/JS-setInterval-方法/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/01/25/JS-setInterval-方法/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>
-              
-定义和用法setInterval是按照指定周期（毫秒）调用函数或计算表达式，会不停的调用函数，直到调用clearInterval或者窗口关闭。其中setinterval返回的ID可以用作clearInterval方法的参数
-语法setInterval(code,millisec[,"lang"])
-              ...
-            </p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/01/25/JS-setInterval-方法/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2654,7 +2689,7 @@ Url中传递JSONObject
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">51</span>
+                    <span class="site-state-item-count">52</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -2755,7 +2790,9 @@ Url中传递JSONObject
                     
                       
                     
-                    <span class="site-state-item-count">44</span>
+                      
+                    
+                    <span class="site-state-item-count">45</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
