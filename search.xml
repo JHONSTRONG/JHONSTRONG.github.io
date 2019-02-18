@@ -1,6 +1,151 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Nginx开启Gzip压缩大幅提高页面加载速度]]></title>
+    <url>%2F2019%2F02%2F18%2FNginx%E5%BC%80%E5%90%AFGzip%E5%8E%8B%E7%BC%A9%E5%A4%A7%E5%B9%85%E6%8F%90%E9%AB%98%E9%A1%B5%E9%9D%A2%E5%8A%A0%E8%BD%BD%E9%80%9F%E5%BA%A6%2F</url>
+    <content type="text"><![CDATA[刚刚给博客加了一个500px相册插件，lightbox引入了很多js文件和css文件，页面一下子看起来非常臃肿，所以还是把Gzip打开了。环境：Debian 61、Vim打开Nginx配置文件vim /usr/local/nginx/conf/nginx.conf2、找到如下一段，进行修改12345678gzip on;gzip_min_length 1k;gzip_buffers 4 16k;#gzip_http_version 1.0;gzip_comp_level 2;gzip_types text/plain application/x-javascript text/css application/xml text/javascript application/x-httpd-php image/jpeg image/gif image/png;gzip_vary off;gzip_disable "MSIE [1-6]\."; 3、解释一下第1行：开启Gzip第2行：不压缩临界值，大于1K的才压缩，一般不用改第3行：buffer，就是，嗯，算了不解释了，不用改第4行：用了反向代理的话，末端通信是HTTP/1.0，有需求的应该也不用看我这科普文了；有这句的话注释了就行了，默认是HTTP/1.1第5行：压缩级别，1-10，数字越大压缩的越好，时间也越长，看心情随便改吧第6行：进行压缩的文件类型，缺啥补啥就行了，JavaScript有两种写法，最好都写上吧，总有人抱怨js文件没有压缩，其实多写一种格式就行了第7行：跟Squid等缓存服务有关，on的话会在Header里增加”Vary: Accept-Encoding”，我不需要这玩意，自己对照情况看着办吧第8行：IE6对Gzip不怎么友好，不给它Gzip了 4、:wq保存退出，重新加载Nginx/usr/local/nginx/sbin/nginx -s reload 5、用curl测试Gzip是否成功开启123456789curl -I -H "Accept-Encoding: gzip, deflate" "http://www.slyar.com/blog/"HTTP/1.1 200 OKServer: nginx/1.0.15Date: Sun, 26 Aug 2012 18:13:09 GMTContent-Type: text/html; charset=UTF-8Connection: keep-aliveX-Powered-By: PHP/5.2.17p1X-Pingback: http://www.slyar.com/blog/xmlrpc.phpContent-Encoding: gzip 页面成功压缩12345678910curl -I -H "Accept-Encoding: gzip, deflate" "http://www.slyar.com/blog/wp-content/plugins/photonic/include/css/photonic.css"HTTP/1.1 200 OKServer: nginx/1.0.15Date: Sun, 26 Aug 2012 18:21:25 GMTContent-Type: text/cssLast-Modified: Sun, 26 Aug 2012 15:17:07 GMTConnection: keep-aliveExpires: Mon, 27 Aug 2012 06:21:25 GMTCache-Control: max-age=43200Content-Encoding: gzip css文件成功压缩12345678910curl -I -H &quot;Accept-Encoding: gzip, deflate&quot; &quot;http://www.slyar.com/blog/wp-includes/js/jquery/jquery.js&quot;HTTP/1.1 200 OKServer: nginx/1.0.15Date: Sun, 26 Aug 2012 18:21:38 GMTContent-Type: application/x-javascriptLast-Modified: Thu, 12 Jul 2012 17:42:45 GMTConnection: keep-aliveExpires: Mon, 27 Aug 2012 06:21:38 GMTCache-Control: max-age=43200Content-Encoding: gzip js文件成功压缩12345678910curl -I -H &quot;Accept-Encoding: gzip, deflate&quot; &quot;http://www.slyar.com/blog/wp-content/uploads/2012/08/2012-08-23_203542.png&quot;HTTP/1.1 200 OKServer: nginx/1.0.15Date: Sun, 26 Aug 2012 18:22:45 GMTContent-Type: image/pngLast-Modified: Thu, 23 Aug 2012 13:50:53 GMTConnection: keep-aliveExpires: Tue, 25 Sep 2012 18:22:45 GMTCache-Control: max-age=2592000Content-Encoding: gzip 图片成功压缩1234567891011curl -I -H &quot;Accept-Encoding: gzip, deflate&quot; &quot;http://www.slyar.com/blog/wp-content/plugins/wp-multicollinks/wp-multicollinks.css&quot;HTTP/1.1 200 OKServer: nginx/1.0.15Date: Sun, 26 Aug 2012 18:23:27 GMTContent-Type: text/cssContent-Length: 180Last-Modified: Sat, 02 May 2009 08:46:15 GMTConnection: keep-aliveExpires: Mon, 27 Aug 2012 06:23:27 GMTCache-Control: max-age=43200Accept-Ranges: bytes 最后来个不到1K的文件，由于我的阈值是1K，所以没压缩 本文引自http://www.veryhuo.com/a/view/51706.html]]></content>
+      <categories>
+        <category>中间件</category>
+      </categories>
+      <tags>
+        <tag>图片压缩</tag>
+        <tag>Nginx</tag>
+        <tag>Gzip</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[服务器端图片压缩之Nginx+lua_nginx module+GraphicsMagick]]></title>
+    <url>%2F2019%2F02%2F18%2F%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9%E4%B9%8BNginx-lua-nginx-module-GraphicsMagick%2F</url>
+    <content type="text"><![CDATA[在开发电子商务网站时，同一个图片需要不同尺寸的缩略图片，一般有两种策略生成缩略图，一种在上传图片时，生成需要的缩略图，另一种是请求指定尺寸的图片时生存缩略图片，第一种方式有一定限制，就是需要提前知道所有尺寸的图片，如果前端ui设计改变了图片大小，需要重新生成。而第二种方式更加灵活，这里采用第二种方 ，只是淘宝使用ImageMagick）。 这里主要借助lua_nginx module调用GraphicsMagick命令生存生存缩略图片，缩略图片的尺寸包含在请求图片名称中，例如：xxxxx.jpg.80x80.jpg返回的就是xxx.jpg的80x80尺寸的图片大小。nginx配置如下： 上传图片名称使用32位随机字符替换掉，图片存放目录为图片名称前六个字母，每两个一组，构造三层目录结构存放，这样可以均匀存放图片在不同目录。避免目录存放文件数量限制。为了避免随意生成不同尺寸的缩略图，这里做了限制，在image_sizes中定义了需要的缩略图尺寸。 初次版本 12345678910111213141516171819202122232425262728293031323334353637383940414243location /testImg/ &#123; rewrite_by_lua ' local image_root = "/home/tomcat/eisp-files"; function file_notexists(name) local f=io.open(name,"r") if f~=nil then io.close(f) return false else return true end end local uri = ngx.re.sub(ngx.var.uri, "/testImg/([0-9a-zA-Z]+)/([0-9a-zA-Z]&#123;2&#125;)([0-9a-zA-Z]&#123;2&#125;)([0-9a-zA-Z]&#123;2&#125;)([0-9a-zA-Z]+).([0-9a-zA-Z]+)", "/images/$1/$2/$3/$4/$2$3$4$5.$6", "o"); local index = string.find(uri, "([0-9]+)x([0-9]+)"); local originalUri = string.sub(uri, 0, index-2); local area = string.sub(uri, index); index = string.find(area, "([.])"); area = string.sub(area, 0, index-1); if file_notexists(image_root .. uri) then local image_sizes = &#123;"80x80", "800x600", "40x40"&#125;; function table.contains(table, element) for _, value in pairs(table) do if value == element then return true end end return false end if table.contains(image_sizes, area) then local command = "gm convert " .. image_root .. originalUri .. " -thumbnail " .. area .. " -background gray -gravity center -extent " .. area .. " " .. image_root .. uri; os.execute(command); ngx.req.set_uri(uri, true); else ngx.exit(404); end; else ngx.req.set_uri(uri, true); end; '; &#125; location /images/ &#123; alias /home/tomcat/eisp-files/images/; expires 7d; &#125; 最后一次修改版本 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849location /images/ &#123; set $image_root /home/nds/nds-files; if ($uri ~* "/images/([0-9a-zA-Z]+)/([0-9a-zA-Z]&#123;2&#125;)([0-9a-zA-Z]&#123;2&#125;)([0-9a-zA-Z]&#123;2&#125;)([0-9a-zA-Z]+).(.*)") &#123; set $filePath "$image_root/$1/$2/$3/$4/$2$3$4$5.$6"; set $reqPath "/$1/$2/$3/$4/$2$3$4$5.$6"; &#125; set $file "$image_root$reqPath"; if (-f $file) &#123; rewrite "/images/(.+)" /innerImages$reqPath last; &#125; if (!-f $file) &#123; rewrite_by_lua ' local index = string.find(ngx.var.filePath, "([0-9]+)x([0-9]+)"); local originalUri = string.sub(ngx.var.filePath, 0, index-2); local area = string.sub(ngx.var.filePath, index); index = string.find(area, "([.])"); area = string.sub(area, 0, index-1); local image_sizes = &#123;"155x155", "400x400","104x104", "50x50", "40x40", "56x56", "172x172","800x600"&#125;; function table.contains(table, element) for _, value in pairs(table) do if value == element then return true end end return false end if table.contains(image_sizes, area) then local command = "gm convert " .. originalUri .. " -thumbnail " .. area .. " -background white -gravity center -extent " .. area .. " " .. ngx.var.file; os.execute(command); ngx.req.set_uri("/innerImages" .. ngx.var.reqPath, true); else ngx.exit(404); end; '; &#125; &#125; location /innerImages/ &#123; alias /home/nds/nds-files/; expires max; tcp_nodelay off; tcp_nopush on; &#125; 本文引自http://www.iteye.com/topic/1125126]]></content>
+      <categories>
+        <category>中间件</category>
+      </categories>
+      <tags>
+        <tag>服务器</tag>
+        <tag>图片压缩</tag>
+        <tag>Nginx</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Android开机启动服务或者Activity]]></title>
+    <url>%2F2019%2F02%2F18%2FAndroid%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8%E6%9C%8D%E5%8A%A1%E6%88%96%E8%80%85Activity%2F</url>
+    <content type="text"><![CDATA[有些时候，应用需要在开机时就自动运行，例如某个自动从网上更新内容的后台 service。怎样实现开机自动运行的应用？在撰写本文时，联想到高焕堂先生以“Don’’t call me, I’’ll call you back!”总结Android框架，真是说到点子上了。理解这句话的含义，许多有关Android平台上实现某种功能的问题，都能迎刃而解。 使用场景：手机开机后，自动运行程序，在屏幕上显示”Hello. I started!”字样。 背景知识：当Android启动时，会发出一个系统广播，内容为 ACTION_BOOT_COMPLETED，它的字符串常量表示为android.intent.action.BOOT_COMPLETED。只要在程序中“捕捉”到这个消息，再启动之即可。记住，Android框架说：Don’’t call me, I’’ll call you back。我们要做的是做好接收这个消息的准备，而实现的手段就是实现一个BroadcastReceiver。 代码解析： 1、界面Activity：SayHello.java123456789101112131415package com.ghstudio.BootStartDemo;import android.app.Activity;import android.os.Bundle;import android.widget.TextView;public class SayHello extends Activity &#123; @Override public void onCreate(Bundle savedInstanceState) &#123; super.onCreate(savedInstanceState); TextView tv = new TextView(this); tv.setText("Hello. I started!"); setContentView(tv); &#125;&#125; 这段代码很简单，当Activity启动时，创建一个TextView，用它显示”Hello. I started!”字样。 2、接收广播消息：BootBroadcastReceiver.java1234567891011121314151617package com.ghstudio.BootStartDemo;import android.content.BroadcastReceiver;import android.content.Context;import android.content.Intent;public class BootBroadcastReceiver extends BroadcastReceiver &#123;static final String ACTION = "android.intent.action.BOOT_COMPLETED"; @Override public void onReceive(Context context, Intent intent) &#123; if (intent.getAction().equals(ACTION))&#123; Intent sayHelloIntent=new Intent(context,SayHello.class); sayHelloIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); context.startActivity(sayHelloIntent); &#125; &#125;&#125; 该类派生自BroadcastReceiver，覆载方法onReceive中，检测接收到的Intent是否符合BOOT_COMPLETED，如果符合，则启动SayHello那个Activity。 3、配置文件：AndroidManifest.xml123456789101112131415161718192021&lt;?xml version="1.0" encoding="utf-8"?&gt;&lt;manifest xmlns:android="http://schemas.android.com/apk/res/android"package="com.ghstudio.BootStartDemo"android:versionCode="1"android:versionName="1.0"&gt;&lt;application android:icon="@drawable/icon" android:label="@string/app_name"&gt; &lt;activity android:name=".SayHello" android:label="@string/app_name"&gt; &lt;intent-filter&gt; &lt;action android:name="android.intent.action.MAIN" /&gt; &lt;category android:name="android.intent.category.LAUNCHER" /&gt; &lt;/intent-filter&gt; &lt;/activity&gt; &lt;receiver android:name=".BootBroadcastReceiver"&gt; &lt;intent-filter&gt; &lt;action android:name="android.intent.action.BOOT_COMPLETED" /&gt; &lt;/intent-filter&gt; &lt;/receiver&gt;&lt;/application&gt;&lt;uses-sdk android:minSdkVersion="3" /&gt;&lt;uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"&gt;&lt;/uses-permission&gt;&lt;/manifest&gt; 注意其中粗体字那一部分，该节点向系统注册了一个receiver，子节点intent-filter表示接收 android.intent.action.BOOT_COMPLETED消息。不要忘记配置 android.permission.RECEIVE_BOOT_COMPLETED权限。 完成后，编译出apk包，安装到模拟器或手机中。关机，重新开机。]]></content>
+      <categories>
+        <category>移动端</category>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
+        <tag>服务</tag>
+        <tag>Activity</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Android 长摁连续触发事件，类似于Js里面的Interval]]></title>
+    <url>%2F2019%2F02%2F18%2FAndroid-%E9%95%BF%E6%91%81%E8%BF%9E%E7%BB%AD%E8%A7%A6%E5%8F%91%E4%BA%8B%E4%BB%B6%EF%BC%8C%E7%B1%BB%E4%BC%BC%E4%BA%8EJs%E9%87%8C%E9%9D%A2%E7%9A%84Interval%2F</url>
+    <content type="text"><![CDATA[大致原理是,如果手指按在view上，则使用ScheduledExecutorService对象执行scheduleWithFixedDelay()方法，每隔一个间隔不停地向Handler发送Message，此处Message里的信息是View id，然后由Handler在handlemessage的时候处理需要触发的事件。 实现 首先,让对应的View设置一个OnTouchListener，在手指按下时触发不停的发送消息,手指抬起时停止发送 1234567891011subtractButton.setOnTouchListener(new OnTouchListener() &#123; @Override public boolean onTouch(View v, MotionEvent event) &#123; if(event.getAction() == MotionEvent.ACTION_DOWN)&#123; updateAddOrSubtract(v.getId()); //手指按下时触发不停的发送消息 &#125;else if(event.getAction() == MotionEvent.ACTION_UP)&#123; stopAddOrSubtract(); //手指抬起时停止发送 &#125; return true; &#125; &#125;); 发送消息与终止方法：先定义一个ScheduledExecutorService对象，然后调用scheduleWithFixedDelay()方法 12345678910111213141516171819202122private ScheduledExecutorService scheduledExecutor;private void updateAddOrSubtract(int viewId) &#123; stop();//如果同时摁两个按钮或两个以上，会出现定时器不能停止的问题，因此在这里加上这个，把之前的定时器先关掉 final int vid = viewId; scheduledExecutor = Executors.newSingleThreadScheduledExecutor(); scheduledExecutor.scheduleWithFixedDelay(new Runnable() &#123; @Override public void run() &#123; Message msg = new Message(); msg.what = vid; handler.sendMessage(msg); &#125; &#125;, 0, 100, TimeUnit.MILLISECONDS); //每间隔100ms发送Message &#125; private void stopAddOrSubtract() &#123; if (scheduledExecutor != null) &#123; scheduledExecutor.shutdownNow(); scheduledExecutor = null; &#125; &#125; 用来处理Touch事件的Handler定义如下： 1234567891011121314private Handler handler = new Handler()&#123; @Override public void handleMessage(Message msg) &#123; int viewId = msg.what; switch (viewId)&#123; case R.id.custom_number_picker_subtract_button: setValue(value - rangeability); //减小操作 break; case R.id.custom_number_picker_add_button: setValue(value + rangeability); //增大操作 break; &#125; &#125; &#125;;]]></content>
+      <categories>
+        <category>移动端</category>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>连续触发</tag>
+        <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux服务器内存、处理器、磁盘使用情况]]></title>
+    <url>%2F2019%2F02%2F18%2FLinux%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%86%85%E5%AD%98%E3%80%81%E5%A4%84%E7%90%86%E5%99%A8%E3%80%81%E7%A3%81%E7%9B%98%E4%BD%BF%E7%94%A8%E6%83%85%E5%86%B5%2F</url>
+    <content type="text"><![CDATA[本文转自命令查看Linux服务器内存、CPU、显卡使用情况 转不意味着Copy，而是对别人知识的汲取和吸收的同时加上自己的理解 内存使用情况 free -m命令 12345[root@itlb ~]# free -m total used free shared buffers cachedMem: 32078 31202 876 0 5 21952-/+ buffers/cache: 9244 22834Swap: 16111 86 16025 参数解析 命令中的-m指的是按照MB进行数据统计 Mem行 total:内存总数 used:内存已使用数 free:内存空闲数 shared:目前该参数已经废弃不适用，为0 buffers:缓存内存数（Buffer） cached:缓存内舒数（Page） -/+ buffers/cache: （-buffers/cache）: 真正使用的内存数，指的是第一部分的 used - buffers - cached （+buffers/cache）: 可用的内存数，指的是第一部分的 free + buffers + cached Swap:交换区的内存使用情况 注：虽然看着free的剩余比较小，但是这里有一定的混淆，真正的free是free+buffers+cached 处理器使用情况 top命令 12345678910111213141516171819[root@itlb ~]# toptop - 10:21:44 up 833 days, 18:27, 1 user, load average: 1.45, 1.36, 1.19Tasks: 509 total, 2 running, 507 sleeping, 0 stopped, 0 zombieCpu(s): 0.0%us, 1.2%sy, 3.1%ni, 95.7%id, 0.0%wa, 0.0%hi, 0.0%si, 0.0%stMem: 32848860k total, 31990756k used, 858104k free, 26208k buffersSwap: 16498680k total, 88276k used, 16410404k free, 22492248k cached PID USER PR NI VIRT RES SHR S %CPU %MEM TIME+ COMMAND24827 root 30 10 391m 97m 6940 S 106.1 0.3 0:02.40 sosreport25310 root 20 0 15300 1588 944 R 0.7 0.0 0:00.06 top 100 root 20 0 0 0 0 S 0.3 0.0 142:18.26 events/1 118 root 20 0 0 0 0 S 0.3 0.0 25:50.62 events/19 2193 root 20 0 0 0 0 S 0.3 0.0 125:46.21 kondemand/0 2199 root 20 0 0 0 0 S 0.3 0.0 213:10.72 kondemand/6 9996 root 20 0 13.6g 786m 10m S 0.3 2.5 570:23.13 java15398 oracle 20 0 6355m 23m 20m S 0.3 0.1 173:01.00 oracle25444 root 20 0 7630m 930m 31m S 0.3 2.9 128:53.80 java25775 root 30 10 77124 6324 4512 R 0.3 0.0 0:00.01 rpm28567 root 20 0 17.2g 1.8g 14m S 0.3 5.8 24:48.19 java 参数解析 Tasks total:总共目前运行的任务数量 running:目前正在运行的任务数量 zombie:僵尸进程数量-Cpu(s) us:CPU已经使用的良 id:CPU空闲使用率 注：下半部分数据中出现%CPU列中出现超过100%的情况，说明是多核服务器，而且该进程使用多核 磁盘使用情况 fdisk -l命令 1234567891011121314151617181920212223242526272829303132333435363738[root@itlb ~]# fdisk -lWARNING: GPT (GUID Partition Table) detected on '/dev/sda'! The util fdisk doesn't support GPT. Use GNU Parted.Disk /dev/sda: 299.0 GB, 298999349248 bytes255 heads, 63 sectors/track, 36351 cylindersUnits = cylinders of 16065 * 512 = 8225280 bytesSector size (logical/physical): 512 bytes / 4096 bytesI/O size (minimum/optimal): 4096 bytes / 4096 bytesDisk identifier: 0x00000000 Device Boot Start End Blocks Id System/dev/sda1 1 36352 291991551+ ee GPTPartition 1 does not start on physical sector boundary.Disk /dev/mapper/vg_itlb-lv_root: 53.7 GB, 53687091200 bytes255 heads, 63 sectors/track, 6527 cylindersUnits = cylinders of 16065 * 512 = 8225280 bytesSector size (logical/physical): 512 bytes / 4096 bytesI/O size (minimum/optimal): 4096 bytes / 4096 bytesDisk identifier: 0x00000000Disk /dev/mapper/vg_itlb-lv_swap: 16.9 GB, 16894656512 bytes255 heads, 63 sectors/track, 2053 cylindersUnits = cylinders of 16065 * 512 = 8225280 bytesSector size (logical/physical): 512 bytes / 4096 bytesI/O size (minimum/optimal): 4096 bytes / 4096 bytesDisk identifier: 0x00000000Disk /dev/mapper/vg_itlb-lv_home: 227.7 GB, 227679404032 bytes255 heads, 63 sectors/track, 27680 cylindersUnits = cylinders of 16065 * 512 = 8225280 bytesSector size (logical/physical): 512 bytes / 4096 bytesI/O size (minimum/optimal): 4096 bytes / 4096 bytesDisk identifier: 0x00000000 参数解析 第一部分：Disk /dev/sda: 299.0 GB, 298999349248 bytes说明硬盘的总空间为299Gb 第二部分：Disk /dev/mapper/vg_itlb-lv_root: 53.7 GB, 53687091200 bytes对应分区的大小 ··· du -sh 命令 123[root@itlb ~]# cd /home/[root@itlb home]# du -sh121G . 该命令是指当前文件夹下已经使用了多少空间 df -h 命令1234567[root@itlb home]# df -hFilesystem Size Used Avail Use% Mounted on/dev/mapper/vg_itlb-lv_root 50G 24G 24G 51% /tmpfs 16G 1.1M 16G 1% /dev/shm/dev/sda2 485M 39M 421M 9% /boot/dev/sda1 200M 260K 200M 1% /boot/efi/dev/mapper/vg_itlb-lv_home 209G 121G 78G 61% /home 是指各个挂载点的硬盘空间及使用情况 du -cks * | sort -rn | head -n 10命令 该命令是查看 当前目录 下占用空间最多的文件或者文件夹，取前10个 1234567891011[root@itlb home]# du -cks * | sort -rn | head -n 10126247676 总用量88805524 oracle15347828 yzh4867880 itl4199764 xyd3921468 tomcatservers3389964 admin2229484 xyddev1419676 tomcat-mc-platform881904 mysqlvbs du -h --max-depth=2 / 查看所有的文件占用大小]]></content>
+      <categories>
+        <category>服务器</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>应用情况</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux公钥进行远程登录]]></title>
+    <url>%2F2019%2F02%2F18%2FLinux%E5%85%AC%E9%92%A5%E8%BF%9B%E8%A1%8C%E8%BF%9C%E7%A8%8B%2F</url>
+    <content type="text"><![CDATA[之前听领导说使用公钥远程服务器的方式进行远程，感觉挺神秘，今天实践了一下，确实挺方便，先讲几点从中的感悟 拿到一个服务器的时候，如果想看下是否有被别人使用了公钥登录方式进行登录的方法看下文件/etc/ssh/sshd_config中的PubkeyAuthentication是否为yes状态，如果是，有可能是被别人能够通过公钥登录，然后再看下AuthorizedKeysFile看后面是否有公钥文件，如果有，那就是公钥的文件目录了 12345# 查看/etc/ssh/sshd_config[root@itlb ssh]# cat /etc/ssh/sshd_config# 文件比较长，需要详细的看下里面的内容，主要关注的是以下几个点PubkeyAuthentication yesAuthorizedKeysFile /root/.ssh/id_rsa.pub 设置服务器只能通过公钥进行登录，不能通过账号和密码登录的方法设置/etc/ssh/sshd_config中的PasswordAuthentication为no 1PasswordAuthentication no # 不允许密码验证登录 设置通过公钥登录服务器步骤1. 首先检查下服务器的SSH远程登录的服务状态1234567891011[root@node1 ~]$service sshd status # 查看sshd服务运行状态,如果没有输出`正在运行`，说明存在问题，需要安装# 安装、启动、永久生效[root@node1 ~]$ yum install -y openssh-server # 安装openssh服务端[root@node1 ~]$ yum install -y openssh-clients #安装openssh客户端，可以不安装[root@node1 ~]$ service sshd start # 临时开启sshd服务[root@node1 ~]$ chkconfig sshd on # 永久开启sshd服务，服务器重启也生效# 再次检查sshd的状态[root@node1 ~]$service sshd status # 查看sshd服务运行状态，如果输出下面内容，说明运行正常openssh-daemon (pid 1384) 正在运行... # 显示正在运行 2. 生成密钥对123456789101112131415161718192021222324252627[root@node1 ~]$ ssh-keygen # 生成ssh密钥对Generating public/private rsa key pair.Enter file in which to save the key (/root/.ssh/id_rsa): # 回车(如果默认要保存到当前路径下，就直接回车，如果需要修改，输入对应的路径)Enter passphrase (empty for no passphrase): #密码（如果远程的使用公钥的时候设置还需要密码的时候，在这里输入密码）Enter same passphrase again: # 重复上面的密码Your identification has been saved in /root/.ssh/id_rsa. # 提示你的密钥保存在这个路径下了Your public key has been saved in /root/.ssh/id_rsa.pub.The key fingerprint is:fd:72:10:50:a6:7d:83:c7:93:d2:26:3d:12:0e:38:2f root@node1The keys randomart image is:+--[ RSA 2048]----+| .o.+ || o B * . || o. O % || E .. O + || .S o || o || . o || o || |+-----------------+[root@node1 ~]$ cd root/.ssh/[root@node1 .ssh]$ ll # 查看密钥/公钥对信息，权限都为600总用量 8-rw-------. 1 root root 1675 5月 21 14:26 id_rsa # 私钥-rw-------. 1 root root 392 5月 21 14:26 id_rsa.pub # 公钥[root@node1 .ssh]$ 3. 修改sshd配置文件这个地方文件内容比较长，一定要耐心找12345[root@node1 ~]$ vim /etc/ssh/sshd_configPasswordAuthentication no # 不允许密码验证登录PubkeyAuthentication yes # 允许公钥验证登录AuthorizedKeysFile .ssh/id_rsa.pub # 指定公钥文件路径 4. 将公私钥导出到本地这个步骤就不多说了，用各种ftp软件导出到本地即可 5. 重启sshd服务（重要）12[root@node1 .ssh]$ service sshd reload重新载入 sshd： [确定] 6. 使用Xshell远程]]></content>
+      <categories>
+        <category>服务器</category>
+      </categories>
+      <tags>
+        <tag>公私钥</tag>
+        <tag>远程登录</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[CentOS7防火墙端口号相关]]></title>
+    <url>%2F2019%2F02%2F18%2FCentOS7%E9%98%B2%E7%81%AB%E5%A2%99%E7%AB%AF%E5%8F%A3%E5%8F%B7%E7%9B%B8%E5%85%B3%2F</url>
+    <content type="text"><![CDATA[12345678# firewall-cmd --list-all-zones #查看所有的zone信息# firewall-cmd --get-default-zone #查看默认zone是哪一个# firewall-cmd --zone=internal --change-zone=p3p1 #临时修改接口p3p1所属的zone为internal# firewall-cmd --add-service=http #暂时开放http# firewall-cmd --permanent --add-service=http #永久开放http# firewall-cmd --zone=public --add-port=80/tcp --permanent #在public中永久开放80端口# firewall-cmd --permanent --zone=public --remove-service=ssh #从public zone中移除服务# firewall-cmd --reload #重新加载配置]]></content>
+      <categories>
+        <category>服务器</category>
+      </categories>
+      <tags>
+        <tag>服务器</tag>
+        <tag>CentOS7</tag>
+        <tag>防火墙</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[nginx开机启动（添加系统服务）]]></title>
+    <url>%2F2019%2F02%2F18%2Fnginx%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8%EF%BC%88%E6%B7%BB%E5%8A%A0%E7%B3%BB%E7%BB%9F%E6%9C%8D%E5%8A%A1%EF%BC%89%2F</url>
+    <content type="text"><![CDATA[Windows添加开机启动，很简单，但是Linux呢，这两天学习了一下，通过添加/etc/rc.local文件启动，但是据说这个方法很快就要被废掉了，因此又研究了一下添加系统服务，做成开机启动，这种启动方式是可以在开机之后不登录，就能启动服务的，好用！！ 编辑service文件（文件存储在/lib/systemd/system/xxxx.service） 1vim /lib/systemd/system/nginx.service 将一下内容拷贝进nginx.service文件中 12345678910111213[Unit]Description=nginxAfter=network.target[Service]Type=forkingExecStart=/usr/local/nginx/sbin/nginxExecReload=/usr/local/nginx/sbin/nginx -s reloadExecStop=/usr/local/nginx/sbin/nginx -s quitPrivateTmp=true[Install]WantedBy=multi-user.target 说明： Description:描述服务 After:描述服务类别 [Service]服务运行参数的设置 Type=forking是后台运行的形式 ExecStart为服务的具体运行命令 ExecReload为重启命令 ExecStop为停止命令 PrivateTmp=True表示给服务分配独立的临时空间 注意：[Service]的启动、重启、停止命令全部要求使用绝对路径 [Install]运行级别下服务安装的相关设置，可设置为多用户，即系统运行级别为3保存退出。 设置开机启动systemctl enable nginx.service 其他启动指令启动nginx服务：systemctl start nginx.service设置开机自启动：systemctl enable nginx.service停止开机自启动：systemctl disable nginx.service查看服务当前状态：systemctl status nginx.service重新启动服务：systemctl restart nginx.service查看所有已启动的服务：systemctl list-units --type=service]]></content>
+      <categories>
+        <category>中间件</category>
+      </categories>
+      <tags>
+        <tag>Nginx</tag>
+        <tag>开机启动</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[CentOS7卸载默认openjdk并安装新的JDK]]></title>
+    <url>%2F2019%2F02%2F18%2FCentOS7%E5%8D%B8%E8%BD%BD%E9%BB%98%E8%AE%A4openjdk%E5%B9%B6%E5%AE%89%E8%A3%85%E6%96%B0%E7%9A%84JDK%2F</url>
+    <content type="text"><![CDATA[通常CentOS会安装OpenJDK，因为这是JDK开源的分支，也就是后期不会收费的（目前Oracle受够Java之后，应该是准备进行收费的），但是项目中要使用的是官方的JDK，因此需要进行替换，所以需要进行如下的操作 首先第一步是查询是否安装了openjdk12java -versionrpm -qa | grep java或者rpm -qa | grep jdk 执行卸载命令 123yum -y remove java 红色框中的内容或者rpm -e --nodeps 红色框中的内容 安装jdkwget 下载地址从jdk官网下载jdk，对应的版本是http://download.oracle.com/otn-pub/java/jdk/8u111-b14/jdk-8u111-linux-x64.tar.gz?AuthParam=1484402679_fcd52afad2d006c2f4d31c50b4e7b6b8 下载完成后进行解压操作，并移动到/usr/local12tar -zxvf 下载下来的tar.gz 的安装包mv jdk1.8.0_111/ /usr/local/ 配置环境变量编辑/etc/profile文件，在最后添加如下内容,然后保存123456vim /etc/profileexport JAVA_HOME=/usr/local/jdk1.8.0_111export JRE_HOME=/usr/local/jdk1.8.0_111/jreexport PATH=$JAVA_HOME/bin:$PATHexport CLASSPATH=$CLASSPATH:.:$JAVA_HOME/lib:$JRE_HOME/lib 执行编译，使配置文件生效1234. /etc/profile或者切换到etc文件夹下面执行./profile]]></content>
+  </entry>
+  <entry>
+    <title><![CDATA[Tomcat开机启动（添加系统服务）]]></title>
+    <url>%2F2019%2F02%2F18%2FTomcat%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8%EF%BC%88%E6%B7%BB%E5%8A%A0%E7%B3%BB%E7%BB%9F%E6%9C%8D%E5%8A%A1%EF%BC%89%2F</url>
+    <content type="text"><![CDATA[tomcat 需要增加一个pid文件在tomca/bin 目录下面，增加 setenv.sh 配置，catalina.sh启动的时候会调用，同时配置java内存参数 1234#add tomcat pidCATALINA_PID="$CATALINA_BASE/tomcat.pid"#add java optsJAVA_OPTS="-server -XX:PermSize=256M -XX:MaxPermSize=1024m -Xms512M -Xmx1024M -XX:MaxNewSize=256m" 增加tomcat.service 123456789101112[Unit]Description=tomcatAfter=syslog.target network.target remote-fs.target nss-lookup.target[Service]Type=forkingPIDFile=/usr/local/tomcat/apache-tomcat-8.5.8/tomcat.pidExecStart=/usr/local/tomcat/apache-tomcat-8.5.8/bin/startup.shExecStop=/bin/kill -s QUIT $MAINPIDExecReload=/bin/kill -s HUP $MAINPIDPrivateTmp=true[Install]WantedBy=multi-user.targe 使用tomcat.service 配置开机启动systemctl enable tomcat 启动tomcatsystemctl start tomcat 停止tomcatsystemctl stop tomcat 重启tomcatsystemctl restart tomcat注:因为配置pid，在启动的时候会再tomcat根目录生成tomcat.pid文件，停止之后删除，同时tomcat在启动时候，执行start不会启动两个tomcat，保证始终只有一个tomcat服务在运行。多个tomcat可以配置在多个目录下，互不影响]]></content>
+      <categories>
+        <category>中间件</category>
+      </categories>
+      <tags>
+        <tag>Tomcat</tag>
+        <tag>开机启动</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Xshell远程内网的服务器慢，指令输入和操作时快时慢的问题]]></title>
+    <url>%2F2019%2F02%2F18%2FXshell%E8%BF%9C%E7%A8%8B%E5%86%85%E7%BD%91%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%85%A2%EF%BC%8C%E6%8C%87%E4%BB%A4%E8%BE%93%E5%85%A5%E5%92%8C%E6%93%8D%E4%BD%9C%E6%97%B6%E5%BF%AB%E6%97%B6%E6%85%A2%E7%9A%84%E9%97%AE%E9%A2%98%2F</url>
+    <content type="text"><![CDATA[登录Linux系统，打开终端，输入以下命令vi /etc/ssh/sshd_config 打开的文件中，拖动鼠标到最后一行，可能会出现下面两种情况 UsePAM yes UseDNS yes UsePAM yes在这里将UseDNS yes修改为UseDNS no，没有的则加上这一行，便可]]></content>
+      <categories>
+        <category>服务器</category>
+      </categories>
+      <tags>
+        <tag>服务器</tag>
+        <tag>Xshell</tag>
+        <tag>远程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[CentOS7修改静态IP地址]]></title>
+    <url>%2F2019%2F02%2F18%2FCentOS7%E4%BF%AE%E6%94%B9%E9%9D%99%E6%80%81IP%E5%9C%B0%E5%9D%80%2F</url>
+    <content type="text"><![CDATA[服务器一般是需要修改成静态的IP地址的，否则在非DHCP下，有可能会出现IP地址变动，远程不到服务器的情况，具体修改的方法如下 第一步是先看下自己服务器对应的正在使用的网卡地址，左面对应的是网络配置文件中配置的名字，后面会讲到[daniel@localhost ~]$ ifconfig 找到对应的网络配置文件# vim /etc/sysconfig/network-scripts/ifcfg-+上面那个第一红方框中的文件名 主要修改的内容如下 123456BOOTPROTO="static" #dhcp改为static ONBOOT="yes" #开机启用本配置 IPADDR=192.168.7.106 #静态IP GATEWAY=192.168.7.1 #默认网关 NETMASK=255.255.255.0 #子网掩码 DNS1=192.168.7.1 #DNS 配置 修改后的效果如下 重启网络服务#service network restart 查看改动后的效果，Centois 7 不再使用 ifconfig 而是用 ip 命令查看网络信息]]></content>
+      <categories>
+        <category>服务器</category>
+      </categories>
+      <tags>
+        <tag>服务器</tag>
+        <tag>CentOS7</tag>
+        <tag>静态IP</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[tomcat中docBase的配置及在Tomcat和Idea中的配置方法]]></title>
     <url>%2F2019%2F02%2F18%2Ftomcat%E4%B8%ADdocBase%E7%9A%84%E4%BD%BF%E7%94%A8%E5%92%8C%E9%9D%9E%E9%A1%B9%E7%9B%AE%E8%B7%AF%E5%BE%84%E4%B8%8B%E5%9B%BE%E7%89%87%E7%9A%84%E8%AF%BB%E5%8F%96%E6%93%8D%E4%BD%9C%E4%BB%A5%E5%8F%8A%E5%9C%A8Tomcat%E5%92%8CIdea%E4%B8%AD%E7%9A%84%E9%85%8D%E7%BD%AE%E6%96%B9%E6%B3%95%2F</url>
     <content type="text"><![CDATA[tomcat中docBase配置的三种项目部署方式docBase是web应用的本地路径，path是访问tomcat服务的路径 直接将项目放在webapps下面，这是最简单而且很初级的部署方式 在tomcat安装目录下conf文件夹下的server.xml文件中，在&lt;host&gt;....&lt;/host&gt;之间，插入如下语句 1&lt;Context path="/hello" docBase="F:\eclipse3.2\workspace\hello\WebRoot" debug="0" privileged="true"&gt;&lt;/Context&gt; 在tomcat安装目录中的conf\Catalina\localhost目录下新建一个xml文件，名字随意，只要不重复，代码如下 1&lt;Context path="/hello" docBase="F:\eclipse3.2\workspace\hello\WebRoot" debug="0" privileged="true"&gt;&lt;/Context&gt; IDEA中配置的方法 点击下图中的Edit Configurations，弹出Run/Debug Configurations对话框 选择你的Tomcat中间件，点击中间件上的Deployment，并点击绿色的加号 选择External Source，打开选择路径界面，选择一个路径进行部署 点击Apply按钮，然后点击Ok就可以了 本文引自Tomcat中的docbase和path]]></content>
@@ -44,8 +189,8 @@
         <category>Linux常用命令</category>
       </categories>
       <tags>
-        <tag>常用命令</tag>
         <tag>Linux</tag>
+        <tag>常用命令</tag>
       </tags>
   </entry>
   <entry>
@@ -223,8 +368,8 @@
         <category>SSM框架搭建</category>
       </categories>
       <tags>
-        <tag>SSM</tag>
         <tag>搭建</tag>
+        <tag>SSM</tag>
         <tag>多模块</tag>
       </tags>
   </entry>
@@ -267,8 +412,8 @@
         <category>SSM框架搭建</category>
       </categories>
       <tags>
-        <tag>SSM</tag>
         <tag>搭建</tag>
+        <tag>SSM</tag>
       </tags>
   </entry>
   <entry>
@@ -323,8 +468,8 @@
         <category>Maven</category>
       </categories>
       <tags>
-        <tag>搭建</tag>
         <tag>Maven</tag>
+        <tag>搭建</tag>
         <tag>Idea15</tag>
       </tags>
   </entry>
@@ -620,9 +765,9 @@
         <category>Nginx</category>
       </categories>
       <tags>
+        <tag>Nginx</tag>
         <tag>安全测评</tag>
         <tag>修复方案</tag>
-        <tag>Nginx</tag>
       </tags>
   </entry>
   <entry>
