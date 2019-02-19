@@ -1,0 +1,1997 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" href="/css/main.css?v=6.7.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.7.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.7.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.7.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Oracle分组拼接函数123SELECT LISTAGG(ID, ’, ’) WITHIN GROUP(ORDER BY DEPON)  FROM TEST_1 GROUP BY DEPON 注意：分组拼接函数在Oracle11g之前是没有的  Sql函数 Oracle中的日期时间函数：在Oracle中以字符串表示的数据是不能自动转换为日期时间类型的，必须使用TO_DATE()函数来手动将字符">
+<meta name="keywords" content="数据库,Oracle">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Oracle知识点">
+<meta property="og:url" content="https://xydcom.cn/2019/02/19/Oracle知识点/index.html">
+<meta property="og:site_name" content="Daniel&#39;s Blog">
+<meta property="og:description" content="Oracle分组拼接函数123SELECT LISTAGG(ID, ’, ’) WITHIN GROUP(ORDER BY DEPON)  FROM TEST_1 GROUP BY DEPON 注意：分组拼接函数在Oracle11g之前是没有的  Sql函数 Oracle中的日期时间函数：在Oracle中以字符串表示的数据是不能自动转换为日期时间类型的，必须使用TO_DATE()函数来手动将字符">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://xydcom.cn/images/banner/banner_27.png">
+<meta property="og:updated_time" content="2019-02-19T06:30:23.627Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Oracle知识点">
+<meta name="twitter:description" content="Oracle分组拼接函数123SELECT LISTAGG(ID, ’, ’) WITHIN GROUP(ORDER BY DEPON)  FROM TEST_1 GROUP BY DEPON 注意：分组拼接函数在Oracle11g之前是没有的  Sql函数 Oracle中的日期时间函数：在Oracle中以字符串表示的数据是不能自动转换为日期时间类型的，必须使用TO_DATE()函数来手动将字符">
+<meta name="twitter:image" content="https://xydcom.cn/images/banner/banner_27.png">
+
+
+
+
+
+
+  <link rel="canonical" href="https://xydcom.cn/2019/02/19/Oracle知识点/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Oracle知识点 | Daniel's Blog</title>
+  
+
+
+
+
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?54f260792b0ce4401620db3ee3bb5b52";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Daniel's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">生死看淡，不服就干</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-java">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/categories/后端开发语言/Java/" rel="section"><i class="menu-item-icon fa fa-fw fa-bug"></i> <br>Java</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-javascript">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/categories/前端开发语言/Javascript/" rel="section"><i class="menu-item-icon fa fa-fw fa-xing"></i> <br>Javascript</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-jquery">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/categories/前端开发语言/JQuery/" rel="section"><i class="menu-item-icon fa fa-fw fa-flash"></i> <br>JQuery</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-css">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/categories/前端开发语言/CSS/" rel="section"><i class="menu-item-icon fa fa-fw fa-css3"></i> <br>CSS</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-android">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/categories/移动端/Android/" rel="section"><i class="menu-item-icon fa fa-fw fa-android"></i> <br>Android</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-后端框架">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/categories/后端开发框架/" rel="section"><i class="menu-item-icon fa fa-fw fa-modx"></i> <br>后端框架</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-后端插件">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/categories/后端插件/" rel="section"><i class="menu-item-icon fa fa-fw fa-opera"></i> <br>后端插件</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-前端框架">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/categories/前端开发框架/" rel="section"><i class="menu-item-icon fa fa-fw fa-diamond"></i> <br>前端框架</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-前端插件">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/categories/前端插件/" rel="section"><i class="menu-item-icon fa fa-fw fa-crop"></i> <br>前端插件</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-安全测评">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/categories/安全测评/" rel="section"><i class="menu-item-icon fa fa-fw fa-lock"></i> <br>安全测评</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-办公知识">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/categories/办公知识/" rel="section"><i class="menu-item-icon fa fa-fw fa-dot-circle-o"></i> <br>办公知识</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-服务器">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/categories/服务器/" rel="section"><i class="menu-item-icon fa fa-fw fa-server"></i> <br>服务器</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-中间件">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/categories/中间件/" rel="section"><i class="menu-item-icon fa fa-fw fa-arrows"></i> <br>中间件</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-数据库">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/categories/数据库/" rel="section"><i class="menu-item-icon fa fa-fw fa-database"></i> <br>数据库</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-软件安装">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/categories/软件安装/" rel="section"><i class="menu-item-icon fa fa-fw fa-th-large"></i> <br>软件安装</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">124</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">62</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">91</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-待完善">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/todo/" rel="section"><i class="menu-item-icon fa fa-fw fa-paper-plane"></i> <br>待完善</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xydcom.cn/2019/02/19/Oracle知识点/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Daniel">
+      <meta itemprop="description" content="生死看淡，不服就干">
+      <meta itemprop="image" content="/images/head/head_pic.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daniel's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Oracle知识点
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-02-19 12:53:10 / 修改时间：14:30:23" itemprop="dateCreated datePublished" datetime="2019-02-19T12:53:10+08:00">2019-02-19</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/数据库/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/数据库/Oracle/" itemprop="url" rel="index"><span itemprop="name">Oracle</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/数据库/Oracle/知识点/" itemprop="url" rel="index"><span itemprop="name">知识点</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <a href="/2019/02/19/Oracle知识点/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/02/19/Oracle知识点/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="/images/banner/banner_27.png" alt=""></p>
+<h2 id="Oracle分组拼接函数"><a href="#Oracle分组拼接函数" class="headerlink" title="Oracle分组拼接函数"></a>Oracle分组拼接函数</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">LISTAGG</span>(<span class="keyword">ID</span>, ’, ’) <span class="keyword">WITHIN</span> <span class="keyword">GROUP</span>(<span class="keyword">ORDER</span> <span class="keyword">BY</span> DEPON)</span><br><span class="line">  <span class="keyword">FROM</span> TEST_1</span><br><span class="line"> <span class="keyword">GROUP</span> <span class="keyword">BY</span> DEPON</span><br></pre></td></tr></table></figure>
+<font color="red">注意：分组拼接函数在Oracle11g之前是没有的</font>
+
+<h2 id="Sql函数"><a href="#Sql函数" class="headerlink" title="Sql函数"></a>Sql函数</h2><ol>
+<li><code>Oracle</code>中的日期时间函数：<br>在<code>Oracle</code>中以字符串表示的数据是不能自动转换为日期时间类型的，必须使用<code>TO_DATE()</code>函数来手动将字符串转换为日期时间类型，比如 <code>TO_DATE(‘2010-10-10’,’YYYY-MM-DD HH24:MI:SS’)</code>。</li>
+<li><p><code>Oracle</code>取得系统当前时间：<br><code>Oracle</code>中没有提供取得当前日期时间的函数，不过我们可以到系统表<code>DUAL</code>中查询<code>SYSTIMESTAMP</code>的值来得到当前的时间戳。如下：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Select</span> SYSTIMESTAMP</span><br><span class="line"><span class="keyword">From</span> DUAL</span><br><span class="line">同样我们可以到系统表DUAL中查询<span class="keyword">SYSDATE</span>的值来得到当前日期时间。如下：</span><br><span class="line"><span class="keyword">Select</span> <span class="keyword">SYSDATE</span></span><br><span class="line"><span class="keyword">From</span> DUAL</span><br></pre></td></tr></table></figure>
+<p>使用<code>TO_CHAR(时间日期值，’YYYY-MM-DD’)</code>可以得到日期时间值的日期部分，因此下面的<code>SQL</code>语句可以得到当前的日期值：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Select</span> TO_CHAR(<span class="keyword">SYSDATE</span>,’YYYY-MM-DD’)</span><br><span class="line"><span class="keyword">From</span> DUAL</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>日期增减：有时我们需要在一个日期的基础上增加某个时间长度或者减去某个时间长度，比如我们知道每个员工的出生日期，而想计算出他出生后10000 天的日期，再如我们想计算所有合同的到期日的三月后的日期。<code>Oracle</code>中可以直接使用加号“+”来进行日期的加法计算，其计算单位为“天”，比如<code>date+3</code>就表示在日期<code>date</code>的基础上增加三天；同理使用减号“-”则可以用来计算日期前的特定时间段的时间，比如<code>date-3</code>就表示在日期<code>date</code>的三天前的日期。比如下面的<code>sql</code>语句用于计算每个人出生日期3天后以及10天前的日期；</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Select</span> FBirthDay，</span><br><span class="line">FBirthDay+<span class="number">3</span>，</span><br><span class="line">FBirthDay<span class="number">-10</span></span><br><span class="line"><span class="keyword">From</span> T_Person</span><br></pre></td></tr></table></figure>
+<p><code>Oracle</code>中提供了<code>ADD_MONTHS()</code>函数用于以月为单位的日期增减运算，<code>ADD_MONTHS()</code>函数的参数格式如下：<code>ADD_MONTHS(date，number)</code> 其中参数date为待计算的日期，参数<code>number</code>为要增加的月份数，如果<code>number</code>为负数则表示进行日期的减运算。下面的<code>SQL</code>语句用于计算每个人的出生日期两个月后以及10个月前的日期：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Select</span> FBirthDay,</span><br><span class="line">ADD_MONTHS(FBirthDay,<span class="number">2</span>),</span><br><span class="line">ADD_MONTHS(FBirthDay,<span class="number">-10</span>)</span><br><span class="line"><span class="keyword">From</span> T_Person</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>计算日期差额：<br>在<code>Oracle</code>中，可以在两个日期类型的数据之间使用减号运算符“-”，其计算结果为两个日期之间的天数差。比如执行下面的<code>SQL</code>语句用于计算注册日期<code>FRegDay</code>和出生日期<code>FBirthDay</code>之间的时间间隔：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Select</span> FRegDay,FBirthDay,FRegDay – FbirthDay</span><br><span class="line"><span class="keyword">From</span> T_Person</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>计算一个日期是星期几：<br><code>Oracle</code>中提供了<code>TO_CHAR（）</code>函数用于将数据转换为字符串类型，当针对时间日期类型数据进行转换的时候，它接受两个参数，其参数格式如下：<code>TO_CHAR(date,format)</code>其中参数<code>date</code>为待转换的日期，参数<code>format</code>为格式化字符串，数据库系统将按照这个字符串对<code>date</code>进行转换。如下是以<code>2008-08-08</code>这样的形式显示出生日期：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Select</span> FBirthDay，</span><br><span class="line">TO_CHAR(FbirthDay，’YYYY-MM-DD’) <span class="keyword">as</span> 出生日期</span><br><span class="line"><span class="keyword">From</span> TPerson</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>取得日期的指定部分：<br>提取日期的特定不是非常有必要的，比如检索本年的每个月的16日的销售量、检索访问用户集中的时间段，这些都需要对日期的特定部分进行提取。使用<code>TO_CHAR()</code>函数就可以提取日期的任意部分，比如下面的<code>SQL</code>用于提取每个人员的出生年份、出生时是当年的第几天、出生时是当年的第几周：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Select</span></span><br><span class="line">FBirthDay,</span><br><span class="line">TO_CHAR(FBirthDay,’YYYY’) <span class="keyword">AS</span> y,</span><br><span class="line">TO_CHAR(FBirthDay,’DDD’) <span class="keyword">AS</span> d,</span><br><span class="line">TO_CHAR(FBirthDay,’WW’) <span class="keyword">AS</span> u</span><br><span class="line"><span class="keyword">From</span> T_Person</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>类型转换：<br>在使用<code>SQL</code>语句的时候，我们使用的数据的类型不一定符合函数或者运算符的需要，比如函数需要整数类型的数据而我们使用的则是一个字符串，在一些情况下数据库系统会替我们自动将字符串类型转换为整数类型，这种转换称为隐式转换。但是在有的情况下数据库系统不会进行隐式转换，这时就要使用类型转换函数了，这种转换称为显式转换。使用类型转换函数不仅可以保证类型转换的正确性，而且可以提高数据处理的速度，因此应该使用显式转换，尽量避免使用隐式转换。<br><code>Oracle</code>提供了针对<code>TO_CHAR()</code>、<code>TO_DATE()</code>、<code>TO_NUMBER()</code>等函数，这些函数可以将数据显示的转换为字符串类型、日期时间类型或者数值类型。<code>Oracle</code>中还提供了<code>HEXTORAW()</code>、<code>RAWTOHEX()</code>、<code>TO_MULTI_BYTE()</code>、<code>TO_SINGLE_BYTE()</code>等函数用于存储格式的转换。<br>1） <code>TO_CHAR()</code><br><code>TO_CHAR()</code>函数用来将时间日期类型或者数值类型的数据转换为字符串，其参数格式如下：<code>TO_CHAR(expression，format)</code>，参数<code>expression</code>为待转换的表达式，参数<code>format</code>为转换后的字符串格式，参数<code>format</code>可以省略，如果省略参数<code>format</code>将会按照数据库系统内置的转换规则进行转换。<br>2） <code>TO_DATE()</code>函数用来将字符串转换为时间类型，其参数格式如下：<br><code>TO_DATE(expression，format)</code>，参数<code>expression</code>为待转换的表达式，参数<code>format</code>为转换格式，参数<code>format</code>可以省略，如果省略参数<code>format</code>将会按照数据库系统内置的转换规则进行转换。<br>下面的SQL语句用于将字符串形式的数据按照特定的格式解析为日期类型：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Select</span></span><br><span class="line"><span class="keyword">TO_DATE</span>(<span class="string">'2008-08-08 08:09:10'</span>, <span class="string">'YYYY-MM-DD HH24:MI:SS'</span>) <span class="keyword">as</span> dt1,</span><br><span class="line"><span class="keyword">TO_DATE</span>(<span class="string">'20080808 080910'</span>, <span class="string">'YYYYMMDD HH24MISS'</span>) <span class="keyword">as</span> dt2</span><br><span class="line"><span class="keyword">From</span> DUAL</span><br></pre></td></tr></table></figure>
+<p><code>TO_NUMBER()</code>函数用法类似<br>3） <code>HEXTORAW()</code>、<code>RAWTOHEX()</code>：<br><code>HEXTORAW()</code>用于将十六进制格式的数据转换为原始值，而<code>RAWTOHEX()</code>函数用来将原始值转换为十六进制格式的数据<br>4） <code>TO_MULTI_BYTE()</code>、<code></code>TO_SINGLE_BYTE()<code>：</code>TO_MULTI_BYTE()<code>函数用于将字符串中的半角字符转换为全角字符，而</code>TO_SINGLE_BYTE()`函数则用来将字符串中的全角字符转换为半角字符。</p>
+</li>
+<li>空值处理：<br>主流数据库系统都支持<code>COLAESCE()</code>函数，这个函数主要用来进行空值处理，其参数格式如下：<code>COLAESCE(expression，valuel,value2……,valuen)</code><br><code>COLAESEC()</code>函数的第一个参数<code>expression</code>为待检测的表达式，而其后的参数个数不定。<code>COLAESEC()</code>函数将会返回包括<code>expression</code>在内的所有参数中的第一个非空表达式。如果expression不为空值则返回<code>expression</code>；否则不、判断<code>value1</code>是否是空值，如果<code>value1</code>不为空值则返回<code>value1</code>；否则判断<code>value2</code>是否是空值，如果<code>value2</code>不为空值则返回value3；……以此类推，如果所有的表达式都为空值，则返回<code>NULL</code>。<br><code>Oracle</code>中<code>NVL(expression1,expression2)</code>函数将<code>NULL</code>转变为实际值，如果<code>expression1</code>不为<code>NULL</code>则返回<code>expression1</code>，若为<code>NULL</code>则返回<code>expression2</code>，两个表达式可以是任意数据类型，但两个表达式的数据类型必须一致。而<br>函数<code>NVL2(expr1,expr2,expr3)</code>，如果<code>expr1</code>不是<code>NULL</code>，则返回<code>expr2</code>；如果<code>expr1</code>是<code>NULL</code>，则返回<code>expr3</code>。参数<code>expr1</code>可以是任意数据类型，而<code>expr2</code>和<code>expr3</code>可以是除<code>LONG</code>类型之外的任何数据类型，但三者的数据类型必须保持一致。</li>
+<li><p>自动增长字段：<br>在<code>Oracle</code>中可以通过<code>SEQUENCE</code>序列来实现自动增长字段，在<code>Oracle</code>中<code>SEQUENCE</code>被称为序列，每次取的时候它会自动增加，一般用在需要按序列号排序的地方。在使用<code>SEQUENCE</code>前需要首先定义一个<code>SEQUENCE</code>，定义<code>SEQUENCE</code>的语法如下：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">SEQUENCE</span> sequence_name</span><br><span class="line"><span class="keyword">INCREMENT</span> <span class="keyword">BY</span> step</span><br><span class="line"><span class="keyword">START</span> <span class="keyword">WITH</span> startvalue;</span><br></pre></td></tr></table></figure>
+<p>其中<code>sequence_name</code> 为序列的名字，每个序列都必须有唯一的名字；<code>startvalue</code> 参数值为起始数字，<code>step</code> 参数值为步长，即每次自动增长时增加的值。<br>一旦定义了<code>SEQUENCE</code>，你就可以用<code>CURRVAL</code>来取得<code>SEQUENCE</code>的当前值，也可以通过<code>NEXTVAL</code>来增加<code>SEQUENCE</code>，然后返回 新的<code>SEQUENCE</code>值。比如：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sequence_name.CURRVAL</span><br><span class="line">sequence_name.NEXTVAL</span><br></pre></td></tr></table></figure>
+<p>如果<code>SEQUENCE</code>不需要的话就可以将其删除：<code>DROP SEQUENCE sequence_name</code>;</p>
+</li>
+<li><p><code>ORACLE</code>中的分析函数（即开窗函数）</p>
+</li>
+</ol>
+<ul>
+<li><p>按照<code>FSALARY</code>进行排序，<code>ROWS</code> 按照行数进行范围定位;</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> FNAME,</span><br><span class="line">       FAGE,</span><br><span class="line">       <span class="keyword">SUM</span>(FSALARY) <span class="keyword">OVER</span>(<span class="keyword">ORDER</span> <span class="keyword">BY</span> FSALARY <span class="keyword">ROWS</span> <span class="keyword">BETWEEN</span> <span class="keyword">UNBOUNDED</span> <span class="keyword">PRECEDING</span> <span class="keyword">AND</span> <span class="keyword">CURRENT</span> <span class="keyword">ROW</span>)</span><br><span class="line">  <span class="keyword">FROM</span> T_PERSON;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>按照<code>FSALARY</code>进行排序，<code>RANGE</code> 按照<code>FSALARY</code>值范围进行定位;</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> FNAME,</span><br><span class="line">       FAGE,</span><br><span class="line">       <span class="keyword">SUM</span>(FSALARY) <span class="keyword">OVER</span>(<span class="keyword">ORDER</span> <span class="keyword">BY</span> FSALARY <span class="keyword">RANGE</span> <span class="keyword">BETWEEN</span> <span class="keyword">UNBOUNDED</span> <span class="keyword">PRECEDING</span> <span class="keyword">AND</span> <span class="keyword">CURRENT</span> <span class="keyword">ROW</span>)</span><br><span class="line">  <span class="keyword">FROM</span> T_PERSON;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>按照<code>FSALARY</code>进行排序，计算从当前行的前两行与当前行的后两行的和;</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> FNAME,</span><br><span class="line">       FAGE,</span><br><span class="line">       <span class="keyword">SUM</span>(FSALARY) <span class="keyword">OVER</span>(<span class="keyword">ORDER</span> <span class="keyword">BY</span> FSALARY <span class="keyword">ROWS</span> <span class="keyword">BETWEEN</span> <span class="number">2</span> <span class="keyword">PRECEDING</span> <span class="keyword">AND</span> <span class="number">2</span> <span class="keyword">FOLLOWING</span>)</span><br><span class="line">  <span class="keyword">FROM</span> T_PERSON;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>按照<code>FSALARY</code>进行排序，计算从当前行的后一行到当前行的后三行的和，注意：最后一行没有后续行，其计算结果为空值<code>NULL</code>而非0;</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> FNAME,</span><br><span class="line">       FAGE,</span><br><span class="line">       <span class="keyword">SUM</span>(FSALARY) <span class="keyword">OVER</span>(<span class="keyword">ORDER</span> <span class="keyword">BY</span> FSALARY <span class="keyword">ROWS</span> <span class="keyword">BETWEEN</span> <span class="number">1</span> <span class="keyword">FOLLOWING</span> <span class="keyword">AND</span> <span class="number">3</span> <span class="keyword">FOLLOWING</span>)</span><br><span class="line">       <span class="keyword">FROM</span> T_PERSON;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ol start="11">
+<li><code>Oracle</code>中的聚合函数<br><code>MAX()</code> 该函数用于取得列或表达式的最大值，它适用于任何数据类型；<br><code>MIN()</code> 该函数用于取得列或表达式的最小值，它适用于任何数据类型；<br><code>AVG()</code> 该函数用于取得列或表达式的平均值，它适用于任何数据类型；<br><code>SUM()</code> 该函数用于取得列或表达式的总和，它适用于任何数据类型；<br><code>COUNT()</code> 该函数用于取得总计行数；<br><code>VARIANCE()</code> 该函数用于取得列或表达式的方差，并且该函数只适用于数字类型。当只有一行数据时，其值返回为0；当存在多行数据时，方差是按照如下公式计算取得：<code>(SUM(EXPR)2-SUM(EXPR)2/COUNT(EXPR))/(COUNT(EXPR)-1)</code>;<br><code>STDDEV()</code> 该函数用于取得列或表达式的标准偏差，并且该函数只适用于数字类型。当只有一行数据时，其值返回为0；当存在多行数据时，<code>Oracle</code>按照方差的平方根来计算标准偏差。</li>
+</ol>
+<h2 id="创建表空间"><a href="#创建表空间" class="headerlink" title="创建表空间"></a>创建表空间</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLESPACE</span> USER_IRS_SPACE <span class="keyword">DATAFILE</span><span class="string">'D:\oracle\product\10.1.0\oradata\orcl\USER_IRS_TBS_temp01.dbf'</span><span class="keyword">SIZE</span> <span class="number">500</span>M <span class="keyword">AUTOEXTEND</span> <span class="keyword">ON</span> <span class="keyword">NEXT</span> <span class="number">50</span>M</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLESPACE</span> USER_IRS_TBS <span class="keyword">DATAFILE</span> <span class="string">'D:\oracle\product\10.1.0\oradata\orcl\USER_IRS_TBS_temp01.dbf'</span><span class="keyword">size</span> <span class="number">500</span>M <span class="keyword">autoextend</span> <span class="keyword">on</span> <span class="keyword">next</span> <span class="number">50</span>M</span><br></pre></td></tr></table></figure>
+<h2 id="备份数据库"><a href="#备份数据库" class="headerlink" title="备份数据库"></a>备份数据库</h2><p> 如果所有数据都对，但是就是倒不出来的话，可以看下<code>Oracle</code>的基本服务是不是开了，例如<code>Services</code>服务是不是开了<br><code>exp sgirs/sgirsdb@orcl file=&#39;D :\db.dmp&#39;</code>  </p>
+<h2 id="数据库导入"><a href="#数据库导入" class="headerlink" title="数据库导入"></a>数据库导入</h2><p><code>imp sgirs/sgirsdb file=&#39;D:\dba.dmp&#39;</code></p>
+<h2 id="ORACLE查询表死锁"><a href="#ORACLE查询表死锁" class="headerlink" title="ORACLE查询表死锁"></a>ORACLE查询表死锁</h2><ul>
+<li><p>查看锁表进程SQL语句1：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> sess.sid,</span><br><span class="line">    sess.serial<span class="comment">#,</span></span><br><span class="line">    lo.oracle_username,</span><br><span class="line">    lo.os_user_name,</span><br><span class="line">    ao.object_name,</span><br><span class="line">    lo.locked_mode</span><br><span class="line">    <span class="keyword">from</span> v$locked_object lo,</span><br><span class="line">    dba_objects ao,</span><br><span class="line">    v$<span class="keyword">session</span> sess</span><br><span class="line"><span class="keyword">where</span> ao.object_id = lo.object_id <span class="keyword">and</span> lo.session_id = sess.sid;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看锁表进程SQL语句2：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> v$<span class="keyword">session</span> t1, v$locked_object t2 <span class="keyword">where</span> t1.sid = t2.SESSION_ID;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>杀掉锁表进程<br>如有記錄則表示有lock，記錄下SID和serial# ，將記錄的ID替換下面的738,1429，即可解除LOCK</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">system</span> <span class="keyword">kill</span> <span class="keyword">session</span> <span class="string">'738,1429'</span>;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数据库/" rel="tag"># 数据库</a>
+          
+            <a href="/tags/Oracle/" rel="tag"># Oracle</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/19/MySQL对于大小写敏感问题的处理方式/" rel="next" title="MySQL对于大小写敏感问题的处理方式">
+                <i class="fa fa-chevron-left"></i> MySQL对于大小写敏感问题的处理方式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/02/19/Oracle-SQL性能优化/" rel="prev" title="Oracle SQL性能优化">
+                Oracle SQL性能优化 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/head/head_pic.jpg" alt="Daniel">
+            
+              <p class="site-author-name" itemprop="name">Daniel</p>
+              <p class="site-description motion-element" itemprop="description">生死看淡，不服就干</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">91</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">62</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">124</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/polieme" title="GitHub &rarr; https://github.com/polieme" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="/polieme@126.com" title="E-Mail &rarr; polieme@126.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Oracle分组拼接函数"><span class="nav-number">1.</span> <span class="nav-text">Oracle分组拼接函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Sql函数"><span class="nav-number">2.</span> <span class="nav-text">Sql函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建表空间"><span class="nav-number">3.</span> <span class="nav-text">创建表空间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#备份数据库"><span class="nav-number">4.</span> <span class="nav-text">备份数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库导入"><span class="nav-number">5.</span> <span class="nav-text">数据库导入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ORACLE查询表死锁"><span class="nav-number">6.</span> <span class="nav-text">ORACLE查询表死锁</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Daniel</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.7.0"></script>
+
+  <script src="/js/src/motion.js?v=6.7.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=6.7.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=6.7.0"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.7.0"></script>
+<script src="/js/src/post-details.js?v=6.7.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.7.0"></script>
+
+
+
+  
+  
+
+<script src="//cdn1.lncld.net/static/js/3.11.1/av-min.js"></script>
+
+
+
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+<script>
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'E3l6p69eISu5ctqPmC1IQ0a7-gzGzoHsz',
+    appKey: 'BxKIbBYU8Vpn6Nyi9ttTI7XR',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+</script>
+
+
+
+
+  
+
+
+  
+
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
