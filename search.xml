@@ -1,15 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[Nginx开启Gzip压缩大幅提高页面加载速度]]></title>
-    <url>%2F2019%2F02%2F18%2FNginx%E5%BC%80%E5%90%AFGzip%E5%8E%8B%E7%BC%A9%E5%A4%A7%E5%B9%85%E6%8F%90%E9%AB%98%E9%A1%B5%E9%9D%A2%E5%8A%A0%E8%BD%BD%E9%80%9F%E5%BA%A6%2F</url>
-    <content type="text"><![CDATA[刚刚给博客加了一个500px相册插件，lightbox引入了很多js文件和css文件，页面一下子看起来非常臃肿，所以还是把Gzip打开了。环境：Debian 61、Vim打开Nginx配置文件vim /usr/local/nginx/conf/nginx.conf2、找到如下一段，进行修改12345678gzip on;gzip_min_length 1k;gzip_buffers 4 16k;#gzip_http_version 1.0;gzip_comp_level 2;gzip_types text/plain application/x-javascript text/css application/xml text/javascript application/x-httpd-php image/jpeg image/gif image/png;gzip_vary off;gzip_disable "MSIE [1-6]\."; 3、解释一下第1行：开启Gzip第2行：不压缩临界值，大于1K的才压缩，一般不用改第3行：buffer，就是，嗯，算了不解释了，不用改第4行：用了反向代理的话，末端通信是HTTP/1.0，有需求的应该也不用看我这科普文了；有这句的话注释了就行了，默认是HTTP/1.1第5行：压缩级别，1-10，数字越大压缩的越好，时间也越长，看心情随便改吧第6行：进行压缩的文件类型，缺啥补啥就行了，JavaScript有两种写法，最好都写上吧，总有人抱怨js文件没有压缩，其实多写一种格式就行了第7行：跟Squid等缓存服务有关，on的话会在Header里增加”Vary: Accept-Encoding”，我不需要这玩意，自己对照情况看着办吧第8行：IE6对Gzip不怎么友好，不给它Gzip了 4、:wq保存退出，重新加载Nginx/usr/local/nginx/sbin/nginx -s reload 5、用curl测试Gzip是否成功开启123456789curl -I -H "Accept-Encoding: gzip, deflate" "http://www.slyar.com/blog/"HTTP/1.1 200 OKServer: nginx/1.0.15Date: Sun, 26 Aug 2012 18:13:09 GMTContent-Type: text/html; charset=UTF-8Connection: keep-aliveX-Powered-By: PHP/5.2.17p1X-Pingback: http://www.slyar.com/blog/xmlrpc.phpContent-Encoding: gzip 页面成功压缩12345678910curl -I -H "Accept-Encoding: gzip, deflate" "http://www.slyar.com/blog/wp-content/plugins/photonic/include/css/photonic.css"HTTP/1.1 200 OKServer: nginx/1.0.15Date: Sun, 26 Aug 2012 18:21:25 GMTContent-Type: text/cssLast-Modified: Sun, 26 Aug 2012 15:17:07 GMTConnection: keep-aliveExpires: Mon, 27 Aug 2012 06:21:25 GMTCache-Control: max-age=43200Content-Encoding: gzip css文件成功压缩12345678910curl -I -H &quot;Accept-Encoding: gzip, deflate&quot; &quot;http://www.slyar.com/blog/wp-includes/js/jquery/jquery.js&quot;HTTP/1.1 200 OKServer: nginx/1.0.15Date: Sun, 26 Aug 2012 18:21:38 GMTContent-Type: application/x-javascriptLast-Modified: Thu, 12 Jul 2012 17:42:45 GMTConnection: keep-aliveExpires: Mon, 27 Aug 2012 06:21:38 GMTCache-Control: max-age=43200Content-Encoding: gzip js文件成功压缩12345678910curl -I -H &quot;Accept-Encoding: gzip, deflate&quot; &quot;http://www.slyar.com/blog/wp-content/uploads/2012/08/2012-08-23_203542.png&quot;HTTP/1.1 200 OKServer: nginx/1.0.15Date: Sun, 26 Aug 2012 18:22:45 GMTContent-Type: image/pngLast-Modified: Thu, 23 Aug 2012 13:50:53 GMTConnection: keep-aliveExpires: Tue, 25 Sep 2012 18:22:45 GMTCache-Control: max-age=2592000Content-Encoding: gzip 图片成功压缩1234567891011curl -I -H &quot;Accept-Encoding: gzip, deflate&quot; &quot;http://www.slyar.com/blog/wp-content/plugins/wp-multicollinks/wp-multicollinks.css&quot;HTTP/1.1 200 OKServer: nginx/1.0.15Date: Sun, 26 Aug 2012 18:23:27 GMTContent-Type: text/cssContent-Length: 180Last-Modified: Sat, 02 May 2009 08:46:15 GMTConnection: keep-aliveExpires: Mon, 27 Aug 2012 06:23:27 GMTCache-Control: max-age=43200Accept-Ranges: bytes 最后来个不到1K的文件，由于我的阈值是1K，所以没压缩 本文引自http://www.veryhuo.com/a/view/51706.html]]></content>
+    <title><![CDATA[双数据源配置SpringMVC+Spring+Mybatis]]></title>
+    <url>%2F2019%2F02%2F19%2F%E5%8F%8C%E6%95%B0%E6%8D%AE%E6%BA%90%E9%85%8D%E7%BD%AESpingMVC-Sping-Mybatis%2F</url>
+    <content type="text"><![CDATA[最近下载了一个SSM的框架，然后项目上要用到双数据源的情况，因此在这方面查资料查了很久，最终完成了，具体过程如下，有误之处麻烦各位大神指出，及时更新 首当其冲第一步就是修改数据库配置文件，我这里叫dbconfig.properties，修改的时候，只需要把原来的数据库的配置文件复制一套，然后在前面加上对应数据库的标识就行了 修改Sping的配置文件ApplicationContext.xml，复制一套org.springframework.jdbc.datasource.DataSourceTransactionManager对应的bean，修改对应的name值为transactionManager2，然后复制一套数据库连接的配置，改为数据源2的数据信息 再就是DAO层面的修改了，只需要修改两个地方，一个地方是sqlSessionTemplate2对应到上面Spring配置文件中的sqlSessionTemplate2，在一个就是DaoSupport的声明了吧 下面就可以直接使用了 附件源码：双数据源配置代码下载]]></content>
+      <categories>
+        <category>后端开发框架</category>
+      </categories>
+      <tags>
+        <tag>SpringMVC</tag>
+        <tag>双数据源</tag>
+        <tag>Mybatis</tag>
+        <tag>Spring</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[MySQL学习笔记]]></title>
+    <url>%2F2019%2F02%2F19%2FMySQL%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2F</url>
+    <content type="text"><![CDATA[MySQL 插入数据MySQL使用INSERT INTO 语句插入数据 语法1INSERT INTO table_name (filed1, field2, field3) VALUES (value1, value2, value3); 例子：1INSERT INTO tt_area (id, name, pid) VALUES (&apos;1&apos;, &apos;北京&apos;, &apos;0&apos;); MySQL 查询数据123SELECT * FROM TABLE LIMIT 10; #查询前10条数据SELECT * FROM TABLE LIMIT 5,10;#查询6-15条数据，第一个参数是从那条数据开始，第二个参数是指查询多少条SELECT * FROM tt_users A ORDER BY reg_time DESC,reco_name ASC #按照多个字段进行排序，DESC是倒序，ASC是正序，其中 MySQL Update更新数据123456/*通过查询一个表里面的数据更新另一个表中的数据*/UPDATE tableA, tableBSET tableA.columnA = tableB.columnBWHERE tableA.clumnC = tableB.columnD 数据库层面的操作 常规的update 12345mysql -u root -p password #登录mysql数据库use database name #使用哪个数据库实例drop database #删除某个数据库实例mysqldump -u root -p database_name&gt; /usr/data/mysqldata_bak_20171110.db #数据泵导出mysqldump -u root -p database_name&lt; /usr/data/mysqldata_bak_20171011.db #数据泵导入 非常规update(通过子查询更新主表，子查询中牵扯GROUP BY 和 查询条件)首先在数据库创建表，并插入数据，具体的sql如下： 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647DROP TABLE IF EXISTS `demo_value`;CREATE TABLE `demo_value` ( `id` int(5) NOT NULL, `user_id` int(5) DEFAULT NULL, `value` int(11) DEFAULT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;-- ------------------------------ Records of demo_value-- ----------------------------INSERT INTO `demo_value` VALUES (&apos;1&apos;, &apos;1&apos;, &apos;20&apos;);INSERT INTO `demo_value` VALUES (&apos;2&apos;, &apos;1&apos;, &apos;30&apos;);INSERT INTO `demo_value` VALUES (&apos;3&apos;, &apos;1&apos;, &apos;20&apos;);INSERT INTO `demo_value` VALUES (&apos;4&apos;, &apos;1&apos;, &apos;20&apos;);INSERT INTO `demo_value` VALUES (&apos;5&apos;, &apos;2&apos;, &apos;30&apos;);INSERT INTO `demo_value` VALUES (&apos;6&apos;, &apos;2&apos;, &apos;20&apos;);INSERT INTO `demo_value` VALUES (&apos;7&apos;, &apos;2&apos;, &apos;20&apos;);INSERT INTO `demo_value` VALUES (&apos;8&apos;, &apos;3&apos;, &apos;20&apos;);INSERT INTO `demo_value` VALUES (&apos;9&apos;, &apos;4&apos;, &apos;20&apos;);INSERT INTO `demo_value` VALUES (&apos;10&apos;, &apos;4&apos;, &apos;30&apos;);INSERT INTO `demo_value` VALUES (&apos;11&apos;, &apos;5&apos;, &apos;40&apos;);INSERT INTO `demo_value` VALUES (&apos;12&apos;, &apos;6&apos;, &apos;20&apos;);DROP TABLE IF EXISTS `demo_value`;CREATE TABLE `demo_value` ( `id` int(5) NOT NULL, `user_id` int(5) DEFAULT NULL, `value` int(11) DEFAULT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;-- ------------------------------ Records of demo_value-- ----------------------------INSERT INTO `demo_value` VALUES (&apos;1&apos;, &apos;1&apos;, &apos;20&apos;);INSERT INTO `demo_value` VALUES (&apos;2&apos;, &apos;1&apos;, &apos;30&apos;);INSERT INTO `demo_value` VALUES (&apos;3&apos;, &apos;1&apos;, &apos;20&apos;);INSERT INTO `demo_value` VALUES (&apos;4&apos;, &apos;1&apos;, &apos;20&apos;);INSERT INTO `demo_value` VALUES (&apos;5&apos;, &apos;2&apos;, &apos;30&apos;);INSERT INTO `demo_value` VALUES (&apos;6&apos;, &apos;2&apos;, &apos;20&apos;);INSERT INTO `demo_value` VALUES (&apos;7&apos;, &apos;2&apos;, &apos;20&apos;);INSERT INTO `demo_value` VALUES (&apos;8&apos;, &apos;3&apos;, &apos;20&apos;);INSERT INTO `demo_value` VALUES (&apos;9&apos;, &apos;4&apos;, &apos;20&apos;);INSERT INTO `demo_value` VALUES (&apos;10&apos;, &apos;4&apos;, &apos;30&apos;);INSERT INTO `demo_value` VALUES (&apos;11&apos;, &apos;5&apos;, &apos;40&apos;);INSERT INTO `demo_value` VALUES (&apos;12&apos;, &apos;6&apos;, &apos;20&apos;); 1234567891011UPDATE demo_nameSET sum_value = ( SELECT SUM(`value`) FROM demo_value WHERE demo_value.user_id = demo_name.id GROUP BY user_id) 其他 在Navicat中，Ctrl+Q是创建一个查询界面 MySQL底层实现是从右往左进行解析执行，因此把]]></content>
+      <categories>
+        <category>数据库</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Windows10 MySQL5.7免安装版安装教程]]></title>
+    <url>%2F2019%2F02%2F19%2FWindows10-MySQL5-7%E5%85%8D%E5%AE%89%E8%A3%85%E7%89%88%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%2F</url>
+    <content type="text"><![CDATA[首先是下载 最近发现官网上下载版本直接跳到8.0了，下载的时候一定要注意找之前的版本 打开mysql的官网mysql下载地址 找到顶部的DOWNLOADS ，如果地址没换的话，应该是下面这个地址下载地址 选择社区版本（Community），然后选择左侧的菜单中的MySQL Community Server 滑动滚轮，向下，一直到选择系统和下载版本 选择完之后选择列表中展示的（ZIP Archive）版本的进行下载，我下载的版本是5.7.20，下载完成成解压 添加环境变量 首先是添加MYSQL_HOME，设置的VALUE值是MYSQL的解压目录，我是解压在了D:\Program Files\mysql，所以对应的MYSQL_HOME就是这个值 设置PATH在PATH的最后添加%MYSQL_HOME%\bin; 配置文件 在mysql文件夹下，新建一个my.ini的文件此处需要注意：保存文件的编码集一定是ANSI，这个地方不要用记事本编辑，记事本默认是UTF-8，因为他是个坑，用专业的Notepad++ 或者UE进行编辑，具体my.ini的内容如下,内容解释下面的文件中都已经有了，就不再废话了，另外这个地方先开启skip-grant-tables是为了给root修改密码123456789[mysqld]basedir=D:\Program Files\mysqldatadir=D:\Program Files\mysql\data\port=3306skip-grant-tables#basedir表示mysql安装路径#datadir表示mysql数据文件存储路径#port表示mysql端口#skip-grant-tables表示忽略密码 安装 然后以管理员的权限进入cmd窗口界面，管理员权限进入方式：搜索cmd，右键在对应程序上，以管理员的权限启动 切换到mysql/bin文件夹下，也就是你解压的出来的文件夹的bin目录下，怎么切换我就不讲了 各种cd，然后执行命令，命令如下，执行完成后会显示“Service successfully installed” 1mysqld --install 生成data数据。不要着急于启动，先生成mysql的data数据，上面的my.cnf中设置了datadir=D:\Program Files\mysql\data\，因此我们需要先手动在mysql文件夹下面新建一个data文件夹，否则接下来的步骤会报错 1mysqld --initialize-insecure --user=mysql; 然后看下data目录下会生成一堆文件夹和文件 启动 在刚刚的cmd窗口中直接输入 net start mysql，然后会提示启动成功1net start mysql 登录 输入命令mysql -u root -p，这个时候是没有密码的，所以输入完之后直接回车，就可以进入mysql中了1mysql -u root -p 更新密码 输入以下命令修改密码，当然密码需要修改成你自己想要修改的内容,再就是刷新下quanxian 1update mysql.user set authentication_string=password(&apos;123456789&apos;) where user=&apos;root&apos; and Host = &apos;localhost&apos;; 1flush privileges; 恢复my.ini配置文件 现在修改完密码了，需要删除或注释my.ini文件中的skip-grant-tables选项，一定注意不要用记事本，那是个坑 停止和启动mysql服务12net start mysqlnet stop mysql 常规错误提示及可能遇到的问题 出现这个问题的原因一般是my.ini文件的编码格式出现问题了，保存的时候一定要记得是ANSI mysqld: [ERROR] Found option without preceding group in config file D:\Program Files\mysql\my.ini at line 1!mysqld: [ERROR] Fatal error in defaults handling. Program aborted! 如果你电脑的性能没啥问题的话，一般4-5S就能启动，像这种一直冒点的情况，可以在“计算机管理”界面查看Windows应用程序日志，翻一翻，MySQL相关错误 D:\Program Files\mysql\bin&gt;net start mysqlMySQL 服务正在启动 ……………. sc delete mysql 服务的时候回提示服务正在启动，不能删除，或者已经标记为删除的情况，但是服务就是删不掉的情况，这种情况下，第一确认你的服务是否已经停止（有时候 net stop mysql 不好使，可以直接在任务管理器里面，把mysql的进程结束掉） 第二、关闭你的services.msc界面 然后再执行sc 命令进行服务删除操作]]></content>
+      <categories>
+        <category>软件安装</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
+        <tag>免安装版</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[MongoDB资料]]></title>
+    <url>%2F2019%2F02%2F19%2FMongoDB%E8%B5%84%E6%96%99%2F</url>
+    <content type="text"><![CDATA[MongoDB数据表基本操作http://www.cnblogs.com/libingql/archive/2011/06/09/2076440.html mongodb安全认证http://www.cnblogs.com/silentjesse/p/4676440.html mongodb Replica Sets +Sharding高可用集群搭建(含认证)http://www.cnblogs.com/ylh1223/archive/2013/04/23/3037301.html MongoDB的授权和权限http://blog.csdn.net/lixiaoweihubin/article/details/8620552 mongodb key文件报 permissions on xxx are too openhttps://blog.csdn.net/lixiaoweihubin/article/details/8620552 mongodb 添加用户及权限设置详解http://www.jb51.net/article/52485.htm mongodb-常见问题http://www.cnblogs.com/cyhe/p/5526662.html]]></content>
+      <categories>
+        <category>数据库</category>
+      </categories>
+      <tags>
+        <tag>数据库</tag>
+        <tag>MongoDB</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Tomcat性能优化]]></title>
+    <url>%2F2019%2F02%2F19%2FTomcat%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%2F</url>
+    <content type="text"><![CDATA[本文转自闲谈Tomcat性能优化,tomcat服务器优化 转不意味着Copy，而是对别人知识的汲取和吸收的同时加上自己的理解 Tomcat默认配置作为生产环境，尤其是内存和线程的配置，默认都是很低，容易成为性能的瓶颈，下面对Tomcat的内存、线程、IO三个方面的优化进行详解： Tomcat内存优化（内存调优的最直接方式）启动Tomcat的时候告诉JVM（java虚拟机）分配一块大内存 打开Linux服务器下bin文件夹下的catalina.sh文件，修改虚拟机配置 修改的主要内容包含如下：123# -Xms&lt;size&gt; JVM初始化堆的大小# -Xmx&lt;size&gt; JVM堆的最大值 实际参数大小根据服务器配置或者项目具体设置.JAVA_OPTS='-server -Xms512m -Xmx512m' 参数解析 -server:一定要作为第一个参数，在多个CPU时性能佳 -Xms:初始Heap大小，使用的最小内存,一般建议堆的最大值配置为可用内存的最大值的80% -Xmx:java heap最大值，使用的最大内存,一般建议堆的最大值配置为可用内存的最大值的80% -XX:PermSize:内存永久保留区域 -XX:MaxPermSize:内存最大永久保留区域 -Xmn:jvm最小内存* 服务器一般设置-Xms、-Xmx相等以避免在每次GC 后调整堆的大小 123# 32G 内存配置示例：JAVA_OPTS="-server -Xms10g -Xmx10g -XX:PermSize=1g -XX:MaxPermSize=2g -Xshare:off -Xmn1024m" Tomcat线程优化server.xml文件中修改以下内容，从而优化线程12&lt;Connector port="80" protocol="HTTP/1.1" maxThreads="600" minSpareThreads="100" maxSpareThreads="500" acceptCount="700"connectionTimeout="20000" /&gt; maxThread:最大并发数，默认设置 200，一般建议在 500 ~ 800，根据硬件设施和业务来判断 minSpareThread:Tomcat 初始化时创建的线程数，默认设置 25 maxSpareThread:最多可以有多少个线程，一个超过这个数，则会关闭不再需要的线程 acceptCount:当同时连接的人数达maxThread时，还可以排队，排队大小为这个数，超过这个数就不进行处理 maxQueueSize，最大的等待队列数，超过则拒绝请求 Tomcat IO优化 同步阻塞IO（java BIO），服务器实现模式为一个连接一个线程，线程是宝贵资源，所以可以通过线程池机制改善。 Java NIO:分为同步非阻塞IO，异步IO与BIO最大的区别是可以通过一个线程处理多个connection（多路复用） 异步非阻塞IO（Java NIO2又叫AIO） BIO:适用于连接数目比较小且固定架构，这种方式对服务器资源要求比较高，而且局限于应用中，JDK1.4以前的唯一选择，但程序只管简单易理解 NIO:适用于连接数目比较多且连接比较短（轻操作）架构，比如聊天服务器，并且局限于应用中，编程比较复杂 AIO:连接数目比较多且连接比较长（重操作），比如相册服务器，充分调用OS参与并发操作，编程比较复杂，从JDK1.7开始支持 配置方法： 在server.xml中： 1234567&lt;Connector executor="tomcatThreadPool" port="8080" protocol="org.apache.coyote.http11.Http11Nio2Protocol"connectionTimeout="20000" maxConnections="10000"redirectPort="8443" enableLookups="false" acceptCount="100" maxPostSize="10485760" compression="on" disableUploadTimeout="true"compressionMinSize="2048" acceptorThreadCount="2"compressableMimeType="text/html,text/xml,text/plain,text/css,text/javascript,application/javascript" URIEncoding="utf-8"/&gt; 参数解析 protocol：Tomcat 8 设置 nio2 更好：org.apache.coyote.http11.Http11Nio2Protocol（如果这个用不了，就用下面那个） protocol：Tomcat 6、7 设置 nio 更好：org.apache.coyote.http11.Http11NioProtocol acceptCount，指定当所有可以使用的处理请求的线程数都被使用时，可以放到处理队列中的请求数，超过这个数的请求将不予处理，默认设置 100 maxPostSize，以 FORM URL 参数方式的 POST 提交方式，限制提交最大的大小，默认是 2097152(2兆)，它使用的单位是字节。10485760 为 10M。如果要禁用限制，则可以设置为 -1。 acceptorThreadCount，用于接收连接的线程的数量，默认值是1。一般这个指需要改动的时候是因为该服务器是一个多核CPU，如果是多核 CPU 一般配置为 2. APRAPR是从操作系统级别来解决异步IO问题，大幅度提高性能，具体可见链接地址APR(Apache Portable Runtime)是一个高可移植库,它是Apache HTTP Server 2.x的核心.能更好地和其它本地web技术集成，总体上让Java更有效率作为一个高性能web服务器平台而不是简单作为后台容器.在局域网环境测，就算是400个并发，也是一瞬间就处理/传输完毕，但是在真实的Internet环境下，页面处理时间只占0.1%都不到，绝大部分时间都用来页面传输.如果不用APR，一个线程同一时间只能处理一个用户，势必会造成阻塞。所以生产环境下用apr是非常必要的. 安装Apache Tomcat Native Library，直接启动就支持apr(http://tomcat.apache.org/native-doc/)它本身是基于APR的. 具体安装方法可以参考其他博客和文章. 排除代码问题Tomcat优化到这个层次,可以应对大部分性能需求]]></content>
       <categories>
         <category>中间件</category>
       </categories>
       <tags>
-        <tag>图片压缩</tag>
+        <tag>Tomcat</tag>
+        <tag>中间件</tag>
+        <tag>性能优化</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[CentOS6.5中Tomcat部署及单机多Tomcat部署]]></title>
+    <url>%2F2019%2F02%2F19%2FCentOS6-5%E4%B8%ADTomcat%E9%83%A8%E7%BD%B2%E5%8F%8A%E5%8D%95%E6%9C%BA%E5%A4%9ATomcat%E9%83%A8%E7%BD%B2%2F</url>
+    <content type="text"><![CDATA[Tomcat下载Tomcat的下载地址，根据自己的需求进行版本的下载12cd /usr/localwget http://mirrors.hust.edu.cn/apache/tomcat/tomcat-7/v7.0.73/bin/apache-tomcat-7.0.73.tar.gz Tomcat安装（Linux）解压tomcat并进行目录重命名12345tar -zxvf apache-tomcat-7.0.73.tar.gz # 解压mv apache-tomcat-7.0.73 tomcat1 # 重命名为tomcat1tar -zxvf apache-tomcat-7.0.73.tar.gz # 解压mv apache-tomcat-7.0.73 tomcat2 # 重命名为tomcat2rm -rf apache-tomcat-7.0.73.tar.gz # 删除安装包 修改配置文件修改两个tomcat的配置文件server.xml，修改的内容如下图所示 tomcat1 tomcat2 验证修改完成，启动Tomcat，访问对应的端口号进行验证]]></content>
+      <categories>
+        <category>中间件</category>
+      </categories>
+      <tags>
+        <tag>Tomcat</tag>
+        <tag>多节点</tag>
+        <tag>部署</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Nginx+Tomcat 负载均衡配置]]></title>
+    <url>%2F2019%2F02%2F19%2FNginx-Tomcat-%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E9%85%8D%E7%BD%AE%2F</url>
+    <content type="text"><![CDATA[Nginx 安装依赖安装首先由于nginx的一些模块依赖一些lib库，所以在安装nginx之前，必须先安装这些lib库，这些依赖库主要有g++、gcc、openssl-devel、pcre-devel和zlib-devel 所以执行如下命令安装1234$ yum install gcc-c++ $ yum install pcre pcre-devel $ yum install zlib zlib-devel $ yum install openssl openssl--devel 安装步骤验证是否安装过ngnix如果已经安装过，需要进行卸载 yum remove nginx$ find -name nginx 下载Ngnix$ wget http://nginx.org/download/nginx-1.7.4.tar.gz 解压压缩包$ tar -zxvf nginx-1.7.4.tar.gz 安装进入解压的文件夹，接下来安装，使用–prefix参数指定nginx安装的目录,make、make install安装123$ ./configure $默认安装在/usr/local/nginx $ make $ make install 查看安装位置$ whereis nginx 负载均衡配置修改nginx的配置文件修改/usr/local/nginx/conf文件夹下面的nginx.conf文件12cd /usr/local/nginx/confvim nginx.conf 定义一个mysite，然后定义这个mysite对应需要负载均衡的服务器12345upstream mysite&#123;server 192.168.1.148:8080;server 192.168.1.148:8081;ip_hash;&#125; ip_hash 是为了保证访问的时候只对一个服务器，使session能够保持住 启动、停止nginx进入nginx的安装文件夹下123456cd /usr/local/nginx/sbin./nginx //启动./nginx -s stop //停止./nginx -s reload //重新加载./nginx -s quit:此方式停止步骤是待nginx进程处理任务完毕进行停止。./nginx -s stop:此方式相当于先查出nginx进程id再使用kill命令强制杀掉进程]]></content>
+      <categories>
+        <category>中间件</category>
+      </categories>
+      <tags>
+        <tag>Tomcat</tag>
+        <tag>负载均衡</tag>
         <tag>Nginx</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Tomcat指定JDK启动]]></title>
+    <url>%2F2019%2F02%2F19%2FTomcat%E6%8C%87%E5%AE%9AJDK%E5%90%AF%E5%8A%A8%2F</url>
+    <content type="text"><![CDATA[项目上出现一个服务器上多个版本JDK的问题，而且目前要用的JDK和默认JDK版本不一致的时候，就需要在Tomcat启动的时候，设置对应的JDK版本，特别是在Linux服务器上 配置Windows服务器找到Tomcat的目录下的bin文件夹，打开bin文件夹下面的setclasspath.bat文件，在文件顶部添加如下代码： 12set JAVA_HOME=D:\Program Files\Java\jdk7\jdk1.7.0_51set JRE_HOME=D:\Program Files\Java\jdk7\jre7 Linux服务器找到Tomcat目录下的bin文件夹，打开bin文件夹下面的setclasspath.sh文件，在文件顶部添加如下代码： 一定要注意Linux是Export而Windows是set12345678910# -----------------------------------------------------------------------------# Set JAVA_HOME or JRE_HOME if not already set, ensure any provided settings# are valid and consistent with the selected start-up options and set up the# endorsed directory.# -----------------------------------------------------------------------------# Make sure prerequisite environment variables are setexport JAVA_HOME=/usr/local/java/jdk1.8.0_191export JRE_HOME=/usr/local/java/jdk1.8.0_191/jre... 校验在tomcat启动的时候，会报Tomcat JRE信息，可以看下JRE信息是否和配置的位置一致，如果位置一致，说明没有问题 原理Tomcat启动的时候会执行start.sh(Linux)或者start.bat(Win)，启动的时候会分别调用catalina.sh(Linux)，然后调用setclasspath.sh(Linux)文件，因此在setclasspath文件中设置JAVA_HOME和JRE之后，就可以指向特定的JDK 扩展基于上面的原理，也可以用下面的方法设置Tomcat指定的JDK 修改tomcat/bin/catalina.sh，增加 export JAVA_HOME=…]]></content>
+      <categories>
+        <category>中间件</category>
+      </categories>
+      <tags>
+        <tag>Tomcat</tag>
+        <tag>中间件</tag>
+        <tag>JDK</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Tomcat启动失败问题解决]]></title>
+    <url>%2F2019%2F02%2F19%2FTomcat%E5%90%AF%E5%8A%A8%E5%A4%B1%E8%B4%A5%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%2F</url>
+    <content type="text"><![CDATA[未安装JDK或JDK配置错误 新建JAVA_HOME 他的值为JDK的安装绝对路径 例如：C:\Program Files\Java\jdk1.5.0_18\ 新建Classpath（如果已经有的话，直接点击编辑，用分号隔开），他的值为 .;%JAVA_HOME%\lib 新建Path，如果已经有了，可以直接加分号隔开他的值为：%JAVA_HOME%\bin 已安装，启动bat闪退 在startup.bat文件末尾添加pause，启动tomcat，查看输出日志 如果是JDK的问题，可在start.bat顶部添加如下代码Windows: 12set JAVA_HOME=D:\Program Files\Java\jdk7\jdk1.7.0_51set JRE_HOME=D:\Program Files\Java\jdk7\jre7 Linux 12export JAVA_HOME=/home/jdk/Java\jdk7\jdk1.7.0_51export JRE_HOME=/home/jdk/Java\jdk7\jre7]]></content>
+      <categories>
+        <category>中间件</category>
+      </categories>
+      <tags>
+        <tag>Tomcat</tag>
+        <tag>中间件</tag>
+        <tag>启动失败</tag>
+        <tag>闪退</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Nginx开启Gzip压缩大幅提高页面加载速度]]></title>
+    <url>%2F2019%2F02%2F18%2FNginx%E5%BC%80%E5%90%AFGzip%E5%8E%8B%E7%BC%A9%E5%A4%A7%E5%B9%85%E6%8F%90%E9%AB%98%E9%A1%B5%E9%9D%A2%E5%8A%A0%E8%BD%BD%E9%80%9F%E5%BA%A6%2F</url>
+    <content type="text"><![CDATA[刚刚给博客加了一个500px相册插件，lightbox引入了很多js文件和css文件，页面一下子看起来非常臃肿，所以还是把Gzip打开了。环境：Debian 6 Vim打开Nginx配置文件vim /usr/local/nginx/conf/nginx.conf 找到如下一段，进行修改 12345678gzip on;gzip_min_length 1k;gzip_buffers 4 16k;#gzip_http_version 1.0;gzip_comp_level 2;gzip_types text/plain application/x-javascript text/css application/xml text/javascript application/x-httpd-php image/jpeg image/gif image/png;gzip_vary off;gzip_disable "MSIE [1-6]\."; 解释一下第1行：开启Gzip第2行：不压缩临界值，大于1K的才压缩，一般不用改第3行：buffer，就是，嗯，算了不解释了，不用改第4行：用了反向代理的话，末端通信是HTTP/1.0，有需求的应该也不用看我这科普文了；有这句的话注释了就行了，默认是HTTP/1.1第5行：压缩级别，1-10，数字越大压缩的越好，时间也越长，看心情随便改吧第6行：进行压缩的文件类型，缺啥补啥就行了，JavaScript有两种写法，最好都写上吧，总有人抱怨js文件没有压缩，其实多写一种格式就行了第7行：跟Squid等缓存服务有关，on的话会在Header里增加”Vary: Accept-Encoding”，我不需要这玩意，自己对照情况看着办吧第8行：IE6对Gzip不怎么友好，不给它Gzip了 :wq保存退出，重新加载Nginx/usr/local/nginx/sbin/nginx -s reload 用curl测试Gzip是否成功开启 123456789curl -I -H "Accept-Encoding: gzip, deflate" "http://www.slyar.com/blog/"HTTP/1.1 200 OKServer: nginx/1.0.15Date: Sun, 26 Aug 2012 18:13:09 GMTContent-Type: text/html; charset=UTF-8Connection: keep-aliveX-Powered-By: PHP/5.2.17p1X-Pingback: http://www.slyar.com/blog/xmlrpc.phpContent-Encoding: gzip 页面成功压缩12345678910curl -I -H "Accept-Encoding: gzip, deflate" "http://www.slyar.com/blog/wp-content/plugins/photonic/include/css/photonic.css"HTTP/1.1 200 OKServer: nginx/1.0.15Date: Sun, 26 Aug 2012 18:21:25 GMTContent-Type: text/cssLast-Modified: Sun, 26 Aug 2012 15:17:07 GMTConnection: keep-aliveExpires: Mon, 27 Aug 2012 06:21:25 GMTCache-Control: max-age=43200Content-Encoding: gzip css文件成功压缩12345678910curl -I -H &quot;Accept-Encoding: gzip, deflate&quot; &quot;http://www.slyar.com/blog/wp-includes/js/jquery/jquery.js&quot;HTTP/1.1 200 OKServer: nginx/1.0.15Date: Sun, 26 Aug 2012 18:21:38 GMTContent-Type: application/x-javascriptLast-Modified: Thu, 12 Jul 2012 17:42:45 GMTConnection: keep-aliveExpires: Mon, 27 Aug 2012 06:21:38 GMTCache-Control: max-age=43200Content-Encoding: gzip js文件成功压缩12345678910curl -I -H &quot;Accept-Encoding: gzip, deflate&quot; &quot;http://www.slyar.com/blog/wp-content/uploads/2012/08/2012-08-23_203542.png&quot;HTTP/1.1 200 OKServer: nginx/1.0.15Date: Sun, 26 Aug 2012 18:22:45 GMTContent-Type: image/pngLast-Modified: Thu, 23 Aug 2012 13:50:53 GMTConnection: keep-aliveExpires: Tue, 25 Sep 2012 18:22:45 GMTCache-Control: max-age=2592000Content-Encoding: gzip 图片成功压缩1234567891011curl -I -H &quot;Accept-Encoding: gzip, deflate&quot; &quot;http://www.slyar.com/blog/wp-content/plugins/wp-multicollinks/wp-multicollinks.css&quot;HTTP/1.1 200 OKServer: nginx/1.0.15Date: Sun, 26 Aug 2012 18:23:27 GMTContent-Type: text/cssContent-Length: 180Last-Modified: Sat, 02 May 2009 08:46:15 GMTConnection: keep-aliveExpires: Mon, 27 Aug 2012 06:23:27 GMTCache-Control: max-age=43200Accept-Ranges: bytes 最后来个不到1K的文件，由于我的阈值是1K，所以没压缩 本文引自http://www.veryhuo.com/a/view/51706.html]]></content>
+      <categories>
+        <category>中间件</category>
+      </categories>
+      <tags>
+        <tag>Nginx</tag>
+        <tag>图片压缩</tag>
         <tag>Gzip</tag>
       </tags>
   </entry>
@@ -22,8 +137,8 @@
       </categories>
       <tags>
         <tag>服务器</tag>
-        <tag>图片压缩</tag>
         <tag>Nginx</tag>
+        <tag>图片压缩</tag>
       </tags>
   </entry>
   <entry>
@@ -368,8 +483,8 @@
         <category>SSM框架搭建</category>
       </categories>
       <tags>
-        <tag>搭建</tag>
         <tag>SSM</tag>
+        <tag>搭建</tag>
         <tag>多模块</tag>
       </tags>
   </entry>
@@ -412,8 +527,8 @@
         <category>SSM框架搭建</category>
       </categories>
       <tags>
-        <tag>搭建</tag>
         <tag>SSM</tag>
+        <tag>搭建</tag>
       </tags>
   </entry>
   <entry>
@@ -468,8 +583,8 @@
         <category>Maven</category>
       </categories>
       <tags>
-        <tag>Maven</tag>
         <tag>搭建</tag>
+        <tag>Maven</tag>
         <tag>Idea15</tag>
       </tags>
   </entry>
