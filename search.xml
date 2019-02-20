@@ -1,6 +1,164 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[树莓派操作摄像头]]></title>
+    <url>%2F2019%2F02%2F20%2F%E6%A0%91%E8%8E%93%E6%B4%BE%E6%93%8D%E4%BD%9C%E6%91%84%E5%83%8F%E5%A4%B4%2F</url>
+    <content type="text"><![CDATA[连接方式：连接器的位置：90度垂直连接器，HDMI口旁边那个。连接时触点一侧朝向HDMI接口 1. 首先进行系统和软件升级12sudo apt-get updatesudo apt-get upgrade 2. 设置摄像头enable1sudo raspi-config ①首先选择Interfacing Options②选择Camera③选择Yes，然后回车④显示设置成功提示⑤重启树莓派1sudo reboot 3. 使用摄像头拍一张照片1raspistill -o image.jpg #会在当前目录下生成一张叫image.jpg的图片 4. 使用摄像头录制一段(h264格式的)视频12raspivid -o video.h264raspivid -o video.h264 -t 10000 #录制一段10S中的视频 5. 以demo模式录制视频（没太懂）1raspivid -o video.h264 -t 10000 -d 以下是原英文的 How to use the Raspberry Pi camera software raspivid is a command line application that allows you to capture video with the camera module, while the applicationraspistill allows you to capture images. -o or –output specifies the output filename and -t or –timeout specifies the amount of time that the preview will be displayed in milliseconds. Note that this set to 5s by default and that raspistill will capture the final frame of the preview period. -d or –demo runs the demo mode that will cycle through the various image effects that are available. Example commandsCapture an image in jpeg format:1raspistill -o image.jpg Capture a 5s video in h264 format: 1raspivid -o video.h264 Capture a 10s video:1raspivid -o video.h264 -t 10000 Capture a 10s video in demo mode:1raspivid -o video.h264 -t 10000 -d To see a list of possible options for running raspivid or raspistill, you can run: raspivid | less raspistill | less Use the arrow keys to scroll and type q to exit. Extended documentation is available. Note that we recommend that you change SSH password if you are using a camera, in order to prevent unwanted access. How to stream video from the Raspberry Pi camera over a networkTo view the feed on LinuxInstall the dependencies by running the following in a terminal:1sudo apt-get install mplayer netcat Find your IP address by running ifconfig. (Your IP address will be listed in the console output and will probably be of the form 192.168.1.XXX). Run the following command in a terminal to view the feed using MPlayer:1nc -l -p 5001 | mplayer -fps 31 -cache 1024 - To view the feed on WindowsInstall and run Linux instead. Find your IP address by running ipconfig. (Your IP address will be listed in the console output and will probably be of the form 192.168.1.XXX). Download MPlayer. Download Netcat. Note that your browser may complain that these files are malicious, as they are unsigned executables. Press the Windows key and the ‘r’ key simultaneously to bring up the “Run” dialog. Enter cmd.exe into the dialog and press enter/return to open a DOS prompt. Enter the following command at the prompt to view the feed using MPlayer: [Path to nc.exe]\nc.exe -L -p 5001 | [Path to mplayer.exe]\mplayer.exe -fps 31 -cache 1024 - To view the feed on OS XDownload MPlayer. Alternatively, you can download mplayer using Brew, which we recommend. Find your IP address by running ifconfig. (Your IP address will be listed in the console output and will probably be of the form 192.168.1.XXX). Run the following command in Terminal to view the feed using MPlayer: nc -l -p 5001 | mplayer -fps 31 -cache 1024 - To view the feed on a Raspberry Pi: Find your IP address by running ifconfig. (Your IP address will be listed in the console output and will probably be of the form 192.168.1.XXX). Run the following commands in a terminal on the receiving Pi: mkfifo buffer nc -p 5001 -l &gt; buffer | /opt/vc/src/hello_pi/hello_video/hello_video.bin buffer To transmit the feed from the Pi with camera module attached After setting up the “receiving” machine as per the instructions above, run the following commands in a terminal on the “transmitting” Pi: raspivid -t 999999 -o – | nc [insert the IP address of the client] 5001 You can then use the commands listed in the “How to use the Raspberry Pi camera software” section above to change the capture time or to add a video effect]]></content>
+      <categories>
+        <category>物联网</category>
+        <category>树莓派</category>
+      </categories>
+      <tags>
+        <tag>树莓派</tag>
+        <tag>摄像头</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[树莓派3GPIO引脚图]]></title>
+    <url>%2F2019%2F02%2F20%2F%E6%A0%91%E8%8E%93%E6%B4%BE3GPIO%E5%BC%95%E8%84%9A%E5%9B%BE%2F</url>
+    <content type="text"><![CDATA[]]></content>
+      <categories>
+        <category>物联网</category>
+        <category>树莓派</category>
+      </categories>
+      <tags>
+        <tag>引脚图</tag>
+        <tag>树莓派</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[树莓派安装LiRC配合红外接收（HX1838B）记录遥控发射内容]]></title>
+    <url>%2F2019%2F02%2F20%2F%E6%A0%91%E8%8E%93%E6%B4%BE%E5%AE%89%E8%A3%85LiRC%E9%85%8D%E5%90%88%E7%BA%A2%E5%A4%96%E6%8E%A5%E6%94%B6%EF%BC%88HX1838B%EF%BC%89%E8%AE%B0%E5%BD%95%E9%81%A5%E6%8E%A7%E5%8F%91%E5%B0%84%E5%86%85%E5%AE%B9%2F</url>
+    <content type="text"><![CDATA[废话 最近想制作一个家庭智能遥控系统，控制空调等设备，因此就像用家里积灰的树莓派做个空调智能控制器，初步的思路很简单，就是先判定时间，如果是到了下午六点，温度还在30度以上，发起指令，控制空调启动设置温度为27℃，也可以通过APP远程进行启动和关闭 步骤1.HX 1838B(红外接收模块)连线示意图如下： HW-483(发送红外模块)连线示意图如下： 2.安装LiRC12$ sudo apt-get update$ sudo apt-get install lirc 添加下面这几行到/etc/modules中12lirc_devlirc_rpi gpio_in_pin=18 gpio_out_pin=17 添加下面这几行到文件/etc/lirc/hardware.conf中，如果这个文件不存在，可以直接创建12345LIRCD_ARGS=&quot;--uinput --listen&quot;LOAD_MODULES=trueDRIVER=&quot;default&quot;DEVICE=&quot;/dev/lirc0&quot;MODULES=&quot;lirc_rpi&quot; 添加下面的代码到/boot/config.txt文件中1dtoverlay=lirc-rpi,gpio_in_pin=18,gpio_out_pin=17 修改这个文件/etc/lirc/lirc_options.conf中的driver和device对应的值12driver = defaultdevice = /dev/lirc0 关闭服务然后进行启动，使上面的配置文件生效12$ sudo /etc/init.d/lircd stop$ sudo /etc/init.d/lircd start 检查lirc的启动状态1$ sudo /etc/init.d/lircd status 在测试之前重启系统1$ reboot 检测lirc状态是否正常123456$ sudo /etc/init.d/lircd stop$ mode2 -d /dev/lirc0&lt;摁遥控上的遥控键，看是否打印一些带有pulse和space的字符&gt;pulse 560space 1706pulse 535 3. 录制普通的遥控器12$ sudo /etc/init.d/lircd stop$ sudo irrecord -d /dev/lirc0 ~/lircd.conf 根据提示进行操作，其中需要输入到遥控器的名称，其中得注意，如果摁键的时间最好在1S多点，保证出现两个点以上，不超过10个，然后把所有的键都摁一边 备份系统自带的 lircd.conf，然后把生成的配置文件拷贝到/etc/lirc/l下123$ sudo mv /etc/lirc/lircd.conf /etc/lirc/lircd_original.conf$ sudo cp ~/lircd.conf /etc/lirc/lircd.conf$ sudo /etc/init.d/lircd start 使用下面的命令测试按键是否生效12$ irsend SEND_ONCE &lt;遥控器的名字&gt; KEY_POWER$ irsend SEND_ONCE &lt;device-name&gt; KEY_VOLUMEUP 4.录制空调遥控器空调遥控器这种带逻辑控制的比较麻烦.每次发射的都是含有温度、模式、制冷制热等一连串的指令，按照之前irrecord指令生成conf文件，行不通，只能使用raw的原始码，记录也是通过mode2 命令实现①首先制作模板，得到的模板见下面,如果不行可以直接拷贝下面的代码12sudo /etc/init.d/lircd restartirrecord -f -d /dev/lirc0 ~/lircd.conf #制作模板，具体的模板制作过程和上面一样 1234567891011121314151617begin remote name /home/pi/lircd.conf flags RAW_CODES eps 30 aeps 100 gap 19886 begin raw_codes name KEY_OPEN 90 102 331 end raw_codesend remote ②接下来就是录制,然后把第一行最大的数去掉，把剩下的填到对应的按钮下面，然后重复上面的操作，记录多个按钮，然后填在对应的按钮下面，配置完的配置文件如下12# -m --mode 使用行列显示模式，不显示pulse、spacemode2 -m -d /dev/lirc0 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121begin remote name air flags RAW_CODES eps 30 aeps 100 gap 19987 begin raw_codes name KEY_CLOSE 8990 4486 677 1630 680 527 651 555 679 527 680 527 676 530 679 527 682 523 682 1629 684 523 681 523 682 1629 679 525 688 519 655 551 680 533 673 526 682 526 682 522 654 554 653 561 672 1627 681 528 678 528 683 525 678 528 678 525 691 527 670 1628 681 525 682 1626 682 526 682 523 692 1615 683 522 682 19958 687 522 683 549 660 519 684 520 687 522 680 524 686 549 652 527 687 522 690 514 683 522 686 520 684 525 679 527 685 521 681 525 681 528 682 522 684 527 681 521 711 495 688 518 670 540 682 522 683 523 683 549 659 524 682 522 681 552 658 523 685 1621 683 525 682 39966 9028 4451 689 1620 686 547 658 553 657 544 657 549 665 542 662 545 658 548 658 1624 685 547 663 544 657 1625 683 548 657 550 662 543 657 550 661 545 670 537 659 547 660 546 658 549 634 1651 682 548 657 549 632 575 657 549 629 577 661 545 643 1638 657 1652 662 1647 654 577 630 579 628 1650 665 578 632 19975 651 581 631 576 626 581 627 578 659 547 631 577 631 575 627 1662 673 553 627 580 628 577 630 576 627 579 634 573 631 574 655 551 630 577 657 550 655 553 628 578 631 575 628 578 654 552 627 580 654 552 632 575 653 554 626 580 629 577 630 576 627 1654 657 1652 653 name KEY_OPEN 8984 4493 648 1659 648 559 648 557 649 1656 676 534 648 557 649 558 648 561 646 1662 649 557 647 561 644 1660 655 552 649 558 648 558 648 559 648 558 648 560 646 558 649 560 647 556 650 1658 651 557 648 560 646 558 648 559 648 557 650 558 646 1660 649 558 648 1658 650 559 648 558 648 1659 649 564 645 19988 648 556 651 558 647 562 646 558 648 557 650 559 649 556 649 557 649 557 651 558 646 557 650 558 649 556 650 557 656 553 647 557 649 557 651 556 650 559 647 560 646 556 650 569 638 557 649 560 646 558 649 558 648 562 646 556 650 557 648 561 646 1660 648 1659 650 40004 8989 4491 648 1659 650 559 646 560 647 1661 648 559 647 558 649 556 651 558 647 1659 651 557 648 558 650 1659 649 558 649 558 648 556 650 557 648 557 652 558 646 559 648 559 647 560 655 1652 646 559 651 553 651 557 649 559 648 555 650 559 649 1657 650 1658 650 1658 649 557 651 557 648 1658 650 558 648 19992 648 559 649 559 647 558 648 559 648 558 647 560 648 558 648 1658 650 557 649 557 648 559 648 558 647 557 651 558 647 558 648 559 647 567 640 558 648 560 647 558 648 559 648 558 649 558 648 559 648 558 648 557 648 558 650 560 646 558 648 557 649 1660 648 558 650 end raw_codesend remote ③最后，把配置文件复制到指定目录 /etc/lirc/lircd.conf/ 并重启lircd服务：12sudo cp aircon.lircd.conf /etc/lirc/lircd.conf.d/sudo service lircd restart 5. 发射信号12# 发射命令：irsend SEND_ONCE 遥控器名称 按钮名称irsend SEND_ONCE aircon KEY_OPEN 如果前面的步骤一切正常，但在发射信号时报错“transmission failed”。请检查生成的遥控器配置文件，查看flags项，若是flags RAW_CODES|CONST_LENGTH，请尝试将其修改成flags RAW_CODES并重启lircd服务。再测试能否发射信号。 github上的一个文章树莓派给家用电器加上智能（红外篇）树莓派学习手记——制作一个空调遥控器（红外接收、发射的实现）题]]></content>
+      <categories>
+        <category>物联网</category>
+        <category>树莓派</category>
+      </categories>
+      <tags>
+        <tag>树莓派</tag>
+        <tag>红外线</tag>
+        <tag>HX1838B</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[树莓派开发智能小车]]></title>
+    <url>%2F2019%2F02%2F20%2F%E6%A0%91%E8%8E%93%E6%B4%BE%E5%BC%80%E5%8F%91%E6%99%BA%E8%83%BD%E5%B0%8F%E8%BD%A6%2F</url>
+    <content type="text"><![CDATA[小车的配件 底盘 4个轮子和4个减速电机 双路L298N一个 电池盒（最好要5号8节电池） 树莓派 若干的跳线和杜邦线（最好是母对母的） 小车代码，使用的Python的Web异步框架（tornado）1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586878889909192939495969798import tornado.ioloopimport tornado.webimport RPi.GPIO as GPIOimport timeIN1=11IN2=12IN3=13IN4=15def init(): GPIO.setmode(GPIO.BOARD) GPIO.setup(IN1,GPIO.OUT) GPIO.setup(IN2,GPIO.OUT) GPIO.setup(IN3,GPIO.OUT) GPIO.setup(IN4,GPIO.OUT)def goLeft(): init() GPIO.output(IN1,GPIO.LOW) GPIO.output(IN2,GPIO.HIGH) GPIO.output(IN3,False) GPIO.output(IN4,False) time.sleep(0.3) GPIO.cleanup()def goRight(): init() GPIO.output(IN1,False) GPIO.output(IN2,False) GPIO.output(IN3,GPIO.LOW) GPIO.output(IN4,GPIO.HIGH) time.sleep(0.3) GPIO.cleanup()def goForward(): init() GPIO.output(IN1,GPIO.LOW) GPIO.output(IN2,GPIO.HIGH) GPIO.output(IN3,GPIO.LOW) GPIO.output(IN4,GPIO.HIGH) time.sleep(0.3) GPIO.cleanup()def goBack(): init() GPIO.output(IN1,GPIO.HIGH) GPIO.output(IN2,GPIO.LOW) GPIO.output(IN3,GPIO.HIGH) GPIO.output(IN4,GPIO.LOW) time.sleep(0.3) GPIO.cleanup()def parkRight(): init() GPIO.output(IN1,GPIO.HIGH) GPIO.output(IN2,GPIO.LOW) GPIO.output(IN3,GPIO.LOW) GPIO.output(IN4,GPIO.HIGH) time.sleep(0.3) GPIO.cleanup()def parkLeft(): init() GPIO.output(IN1,GPIO.LOW) GPIO.output(IN2,GPIO.HIGH) GPIO.output(IN3,GPIO.HIGH) GPIO.output(IN4,GPIO.LOW) time.sleep(0.3) GPIO.cleanup()class MainHandler(tornado.web.RequestHandler): def get(self): self.write("Hello, world") def post(self): print(self.get_argument('key')) arg = self.get_argument('key') if(arg == 'a'): goLeft() if(arg == 'd'): goRight() if(arg == 'w'): goForward() if(arg == 's'): goBack() if(arg == 'pr'): parkRight() if(arg == 'pl'): parkLeft()def make_app(): return tornado.web.Application([ (r"/", MainHandler), ])if __name__ == "__main__": app = make_app() app.listen(8888) tornado.ioloop.IOLoop.current().start() 安卓手机APP的程序代码（安卓初学，求放过） 界面布局 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475&lt;?xml version="1.0" encoding="utf-8"?&gt;&lt;android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent" android:layout_height="match_parent" tools:context="com.example.daniel.controlcar.MainActivity" android:background="#fff"&gt; &lt;LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" &gt; &lt;LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center" android:layout_marginTop="128px"&gt; &lt;Button android:id="@+id/go_a" android:layout_width="256px" android:layout_height="256px" android:background="@mipmap/left" /&gt; &lt;/LinearLayout&gt; &lt;LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center"&gt; &lt;Button android:id="@+id/go_s" android:layout_width="256px" android:layout_height="256px" android:background="@mipmap/down" /&gt; &lt;Button android:id="@+id/go_w" android:layout_width="256px" android:layout_height="256px" android:background="@mipmap/up" android:layout_marginLeft="256px" /&gt; &lt;/LinearLayout&gt; &lt;LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center"&gt; &lt;Button android:id="@+id/go_d" android:layout_width="256px" android:layout_height="256px" android:background="@mipmap/right" /&gt; &lt;/LinearLayout&gt; &lt;LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center"&gt; &lt;Button android:id="@+id/p_left" android:layout_width="256px" android:layout_height="256px" android:background="@mipmap/p_left" /&gt; &lt;Button android:id="@+id/p_right" android:layout_width="256px" android:layout_height="256px" android:background="@mipmap/p_right" /&gt; &lt;/LinearLayout&gt; &lt;/LinearLayout&gt;&lt;/android.support.constraint.ConstraintLayout&gt; 后台代码 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106package com.example.daniel.controlcar;import android.app.Activity;import android.os.Bundle;import android.util.Log;import android.view.MotionEvent;import android.view.View;import android.widget.Button;import com.example.daniel.common.HttpUtil;import java.util.concurrent.Executors;import java.util.concurrent.ScheduledExecutorService;import java.util.concurrent.TimeUnit;public class MainActivity extends Activity implements View.OnTouchListener &#123; @Override protected void onCreate(Bundle savedInstanceState) &#123; super.onCreate(savedInstanceState); setContentView(R.layout.activity_main); Button goWBtn = (Button) findViewById(R.id.go_w); goWBtn.setOnTouchListener(this); Button goABtn = (Button) findViewById(R.id.go_a); goABtn.setOnTouchListener(this); Button goSBtn = (Button) findViewById(R.id.go_s); goSBtn.setOnTouchListener(this); Button goDBtn = (Button) findViewById(R.id.go_d); goDBtn.setOnTouchListener(this); Button goPLeftBtn = (Button) findViewById(R.id.p_left); goPLeftBtn.setOnTouchListener(this); Button goPRightBtn = (Button) findViewById(R.id.p_right); goPRightBtn.setOnTouchListener(this); &#125; public void sendPost(final String key) &#123; new Thread(new Runnable() &#123; @Override public void run() &#123; HttpUtil httpUtil = new HttpUtil(); String response = httpUtil.doPost("http://192.168.31.242:8888?key=" + key, "&#123;&#125;"); Log.d("returnValue", response); &#125; &#125;).start(); &#125; @Override public boolean onTouch(View view, MotionEvent motionEvent) &#123; if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) &#123; action(view); &#125; else if (motionEvent.getAction() == MotionEvent.ACTION_UP) &#123; stop(); &#125; return false; &#125; private ScheduledExecutorService scheduledExecutor; /** * 开始计划任务，定时每100ms执行一次 * @param view */ private void action(final View view)&#123; stop();//首先把已有的定时任务关闭 scheduledExecutor = Executors.newSingleThreadScheduledExecutor(); scheduledExecutor.scheduleWithFixedDelay(new Runnable() &#123; @Override public void run() &#123; switch (view.getId()) &#123; case R.id.go_w: sendPost("w"); break; case R.id.go_a: sendPost("a"); break; case R.id.go_s: sendPost("s"); break; case R.id.go_d: sendPost("d"); break; case R.id.p_left: sendPost("pl"); break; case R.id.p_right: sendPost("pr"); break; &#125; &#125; &#125;, 0, 300, TimeUnit.MILLISECONDS); //每间隔100ms发送Message &#125; /** * 停止计划任务 */ private void stop() &#123; if (scheduledExecutor != null) &#123; scheduledExecutor.shutdownNow(); scheduledExecutor = null; &#125; &#125;&#125; 配置文件AndroidManifest.xml 12345678910111213141516171819202122&lt;?xml version="1.0" encoding="utf-8"?&gt;&lt;manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.example.daniel.controlcar"&gt; &lt;uses-permission android:name="android.permission.INTERNET" /&gt; &lt;application android:allowBackup="true" android:icon="@mipmap/ic_launcher" android:label="@string/app_name" android:roundIcon="@mipmap/ic_launcher_round" android:supportsRtl="true" android:theme="@style/AppTheme"&gt; &lt;activity android:name=".MainActivity" android:theme="@android:style/Theme.NoTitleBar.Fullscreen"&gt; &lt;intent-filter&gt; &lt;action android:name="android.intent.action.MAIN" /&gt; &lt;category android:name="android.intent.category.LAUNCHER" /&gt; &lt;/intent-filter&gt; &lt;/activity&gt; &lt;/application&gt;&lt;/manifest&gt; HttpUtil 123456789101112131415161718192021222324252627282930313233343536373839404142package com.example.daniel.common;import java.io.IOException;import okhttp3.MediaType;import okhttp3.OkHttpClient;import okhttp3.Request;import okhttp3.RequestBody;import okhttp3.Response;/** * Created by Daniel on 2018/6/20. */public class HttpUtil &#123; public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8"); OkHttpClient client = new OkHttpClient(); String post(String url, String json) throws IOException &#123; RequestBody body = RequestBody.create(JSON, json); Request request = new Request.Builder() .url(url) .post(body) .build(); try (Response response = client.newCall(request).execute()) &#123; return response.body().string(); &#125; &#125; public String doPost(String url,String paramJson)&#123; HttpUtil httpUtil = new HttpUtil(); String responseStr = ""; try &#123; responseStr = httpUtil.post(url,paramJson); &#125; catch (IOException e) &#123; e.printStackTrace(); &#125; return responseStr; &#125;&#125;]]></content>
+      <categories>
+        <category>物联网</category>
+        <category>树莓派</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
+        <tag>智能小车</tag>
+        <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[树莓派控制低电平触发蜂鸣器]]></title>
+    <url>%2F2019%2F02%2F20%2F%E6%A0%91%E8%8E%93%E6%B4%BE%E6%8E%A7%E5%88%B6%E4%BD%8E%E7%94%B5%E5%B9%B3%E8%A7%A6%E5%8F%91%E8%9C%82%E9%B8%A3%E5%99%A8%2F</url>
+    <content type="text"><![CDATA[连线如下图所示 Python代码(欢乐颂的第一段)12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273import RPi.GPIO as GPIOimport timeGPIO.setmode(GPIO.BOARD)GPIO.setup(12,GPIO.OUT)GPIO.output(12,GPIO.LOW)def INT1(time1): p = GPIO.PWM(12,523) p.start(1) time.sleep(time1)def INT2(time1): p = GPIO.PWM(12,587) p.start(1) time.sleep(time1)def INT3(time1): p = GPIO.PWM(12,659) p.start(1) time.sleep(time1)def INT4(time1): p = GPIO.PWM(12,698) p.start(1) time.sleep(time1)def INT5(time1): p = GPIO.PWM(12,784) p.start(1) time.sleep(time1)def INT6(time1): p = GPIO.PWM(12,880) p.start(1) time.sleep(time1)def INT7(time1): p = GPIO.PWM(12,988) p.start(1) time.sleep(time1)def INT11(time1): p = GPIO.PWM(12,1046) p.start(1) time.sleep(time1)INT3(0.5)INT3(0.5)INT4(0.5)INT5(0.5)INT5(0.5)INT4(0.5)INT3(0.5)INT2(0.5)INT1(0.5)INT1(0.5)INT2(0.5)INT3(0.5)INT3(1)INT2(0.5)INT2(0.5)p.stop()GPIO.cleanup() 运行1python3 laba.py]]></content>
+      <categories>
+        <category>物联网</category>
+        <category>树莓派</category>
+      </categories>
+      <tags>
+        <tag>树莓派</tag>
+        <tag>蜂鸣器</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[树莓派更换键盘布局]]></title>
+    <url>%2F2019%2F02%2F20%2F%E6%A0%91%E8%8E%93%E6%B4%BE%E6%9B%B4%E6%8D%A2%E9%94%AE%E7%9B%98%E5%B8%83%E5%B1%80%2F</url>
+    <content type="text"><![CDATA[遇到的问题：树莓派键盘输入的时候会出现不是自己想要的字符，比如说输入|，会出现顶部~线，输入#，显示的却是£字符的问题 首先输入命令1sudo dpkg-reconfigure keyboard-configuration 2.选择通用101键盘布局，直接回车 3.在键盘Layout中选择Other,回车 4.在选项中选择English(US)，回车 5.再选择English(US, alternative international),回车 6.然后一路回车就可以了 7.最重要的一步，重启系统，整个过程完成]]></content>
+      <categories>
+        <category>物联网</category>
+        <category>树莓派</category>
+      </categories>
+      <tags>
+        <tag>树莓派</tag>
+        <tag>更换键盘布局</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[树莓派常用命令]]></title>
+    <url>%2F2019%2F02%2F20%2F%E6%A0%91%E8%8E%93%E6%B4%BE%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%2F</url>
+    <content type="text"><![CDATA[常用命令:123456789101. sudo raspi-config 初始化配置2. startx 启动图形化界面3. sudo rpi-update 升级系统4. sudo reboot 重启5. sudo shutdown -h now 立即关机6. sudo apt-get update 更新软件源7. sudo apt-get upgrade 更新已经安装的软件8. sudo apt-get install XX 安装XX软件9. su root 切换到root用户10. passwd user 设置user用户的密码 资源管理命令：12341. top :查看系统的运行情况2. free -m(-k, -g):查看内存分配情况3. sudo df -h ：查看磁盘使用情况4. sudo du -sh :查看当前目录下的磁盘使用信息 进程管理123456781. ps ：查看系统正在运行的进程2. ps -ef | less :查看系统所有的进程，包括后台进程。3. kill -&lt;signal&gt; &lt;PID&gt; 对进程做出一定的操作 注：* signal 1 (SIGHUP): hang-up的缩写，该信号通知应用程序重新启动 * signal 3 （SIGQUIT）：该信号通知应用程序清理自身资源并退出 * signal 6 （SIGABRT）：该信号通知应用程序终止并立即退出 * signal 9 （SIGKILL）：该信号立即终止应用程序 * PID ：应用程序的进程号，可以通过ps 查看 文件管理12345678910111213141516171. pwd :显示当前的绝对路径2. cd ：切换路径3. cd .. :切换到上级目录4. find ：查找文件 注：参数解析 -L ：表示启动符号连接跟踪，默认情况下是不会启动的。 -maxdepth&lt;number&gt;: 该选项指定find命令最大的目录查看深度，如果为1的话表示当前目录文件和一级子目录文件。 -newer&lt;file&gt;:表示只查找指定文件的修改时间更新的文件 -empty：表示只查找空文件 -atime&lt;number&gt; ：表示只查找距离上次访问指定天数之后的文件 -name&lt;filename&gt;:表示搜索完全匹配指定文件名的文件 -exec&lt;command&gt;:指示find命令为每个匹配的文件路径执行指定的命令。例：find /mnt/volumer -empty -name foobar -exec rm作用：该命令会搜索/mnt/volumer 中的所有名称匹配foobar的空文件，并执行rm命令将其删去5、file &lt;filename&gt; :通过读取filename文件的内容判断文件的类型。6、grep &lt;pattern&gt; &lt;file&gt;: grep 所有的参数都支持通配符，所以你可以搜索整个目录中所有文件内容 编辑器vi的使用：（vi和vim的联系）编辑器：编辑器就是一款软件，他的主要作用是用来编辑。如编写文件，编写代码等。windows中的常用编辑器： notepad（笔记本） notepad++,UltraEditor, SlickEditorlinux中常用的编辑器： 自带的最古老的vi。比较好用的是vim，gedit。注意：vim是vi的升级版，推荐使用vim。但使用vim（vi）打开一个文件时，如果文件不存在他会帮你新建一个文件。 vi的两种工作模式：命令模式： 当vi打开时默认为命令模式，要转入输入模式，需要按a或i键。在命令模式下所有的输入都被vi当作命令来对待。（所以不要乱按）输入模式： 输入模式用来向文件输入内容。当输入完成要保存文件时需要按Esc键切换到命令模式。注意 : 看屏幕左下角，当命令模式时无提示信息或者提示文件名等信息，当输入模式时，提示：–INSERT– 使用方式： vi pathname 打开或创建一个文件 在命令模式下保存文件： ：wq 保存并且退出 ：w 只保存不退出 ：q 不保存退出 （只是进来看了一下没改时退出用） ：q! 不保存强制退出 ：wq! 保存并强制退出 vi 的高级使用(在命令模式下使用) /xxx 查找 xxx ：行数 快速切换到指定行数 ：set nu 设置显示行号 ：set nonu 设置不显示行号注意：设置永久显示行号，需要修改vi的配置文件。打开vi的配置文件~/.vimrc 在其中输入set nu 即可。 dd 删除一整行 numdd 删除num行 numyy 复制num行 p 粘贴注意: 复制时要把光标放在多行的第一行，粘贴时实际粘贴到当前光标所在行的下一行。 vim水平分屏的使用 :vim -on file1 file2 …其中: o(是小写字母o,不是数字零)n(表示你要分屏的文件个数) filen(文件名多个文件用空格分开) 我用两个文件做测试想到上面那个文件用:ctrl + w + k 想到下面的文件用:ctrl + w + j 当然你懒的话可以用:ctrl + w + w 在水平分屏好的文件中在打开别的文件:sp filename vim垂直分屏:vim -On file1 file2 ….. 其中:O(是大写字母O,不是数字零)n(表示你要分屏的文件个数) filen(文件名多个文件用空格分开) 想到左面那个文件用:ctrl + w + h 想到右面的文件用:ctrl + w + l 在垂直分屏好的文件中在打开别的文件:vsp filename 撤销命令（命令模式下有效） u ：小写的 u 键。]]></content>
+      <categories>
+        <category>物联网</category>
+        <category>树莓派</category>
+      </categories>
+      <tags>
+        <tag>树莓派</tag>
+        <tag>常用命令</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[树莓派更换apt-get update && apt-get upgrade源，解决更新慢的问题]]></title>
+    <url>%2F2019%2F02%2F20%2F%E6%A0%91%E8%8E%93%E6%B4%BE%E6%9B%B4%E6%8D%A2apt-get-update-apt-get-upgrade%E6%BA%90%EF%BC%8C%E8%A7%A3%E5%86%B3%E6%9B%B4%E6%96%B0%E6%85%A2%E7%9A%84%E9%97%AE%E9%A2%98%2F</url>
+    <content type="text"><![CDATA[起因：树莓派执行sudo apt-get update下载慢，中断 步骤 备份sources.list文件 1sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak 编辑sources.list 文件 1sudo nano /etc/apt/source.list 使用#注释原来的内容,并添加以下内容 12deb http://mirrors.aliyun.com/raspbian/raspbian/ wheezy main non-free contribdeb-src http://mirrors.aliyun.com/raspbian/raspbian/ wheezy main non-free contrib 更新系统软件并更新已安装的包 1sudo apt-get update &amp;&amp; apt-get upgrade -y]]></content>
+      <categories>
+        <category>物联网</category>
+        <category>树莓派</category>
+      </categories>
+      <tags>
+        <tag>树莓派</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[树莓派开机启动]]></title>
+    <url>%2F2019%2F02%2F20%2F%E6%A0%91%E8%8E%93%E6%B4%BE%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8%2F</url>
+    <content type="text"><![CDATA[制作脚本该步骤直接省略，按照个人需求编写 添加开机启动方法一: 向rc.local文件添加启动代码修改rc.local文件，在中断输入并回车1pi@raspberry:~$sudo nano /etc/rc.local 在打开的文本中找到exit 0,在此之前添加的代码再启动时会被执行(在执行代码的末尾加上&amp; 可以在后台执行)： 方法二: 将程序作为服务启动在/etc/init.d/目录下新建一个服务脚本文件，在终端输入并回车1pi@raspberry:~ $ sudo nano /etc/init.d/my_start 在打开的文本编辑器中输入一下内容1234567891011121314#!/bin/bashcase &quot;$1&quot; in start): echo &quot;Starting app&quot; nohup python3 /home/pi/share/ip_acquire.py &amp; ;; stop): echo &quot;to&quot; #kill $( ps aux | grep -m 1 &apos;python3 /home/pi/share/ip_acquire.py&apos; | awk &apos;&#123; print $2 &#125;&apos;) ;; *) echo &quot;Usage: service start_tool start|stop&quot; exit 1 ;;esacexit 0 设置python脚本开机启动1sudo chmod 777 /etc/init.d/my_start 这样启动该脚本用service命令就可以了12sudo service my_start start #启动sudo service my_start stop #停止 最后设置开机启动就好了1sudo update-rc.d my_start defaults]]></content>
+      <categories>
+        <category>物联网</category>
+        <category>树莓派</category>
+      </categories>
+      <tags>
+        <tag>开机启动</tag>
+        <tag>树莓派</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Kaa CentOS7安装 启动命令]]></title>
+    <url>%2F2019%2F02%2F20%2FKaa-CentOS7%E5%AE%89%E8%A3%85-%E5%90%AF%E5%8A%A8%E5%91%BD%E4%BB%A4%2F</url>
+    <content type="text"><![CDATA[1.启动Mariadbservice mysql startMariadb的授权信息CREATE USER &#39;sqladmin&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;admin&#39;; GRANT ALL PRIVILEGES ON *.* TO &#39;sqladmin&#39;@&#39;localhost&#39; WITH GRANT OPTION; FLUSH PRIVILEGES;`Mariadb的数据库名字123CREATE DATABASE kaa CHARACTER SET utf8 COLLATE utf8_general_ci; 2.启动zookeepersudo /usr/share/zookeeper/bin/zkServer.sh start（重启服务器需要重启）systemctl start supervisord（已经设置自动启动）检查启动的情况12#supervisorctlnetstat -ntlp | grep 2181 3.启动MongoDB12345sudo systemctl start mongodb（重启服务器需要重启）service mongod start（已经设置自动启动）检查mongoDB的启动情况sudo systemctl status mongodbcat /var/log/mongodb/mongod.log | grep "waiting for connections on port" 4.启动kaa12service kaa-node startcat /var/log/kaa/* | grep ERROR 5、Kaa关闭12sudo service kaa-node stopsudo service kaa-node start 5、Kaa的Administrator账号和密码 教程：http://docs.kaaproject.org/display/KAA/Administration+UI+guidehttp://192.168.1.115:8080/kaaAdmin/administrator]]></content>
+      <categories>
+        <category>物联网</category>
+        <category>kaa</category>
+      </categories>
+      <tags>
+        <tag>安装</tag>
+        <tag>kaa</tag>
+        <tag>启动命令</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[软件整理]]></title>
+    <url>%2F2019%2F02%2F20%2F%E8%BD%AF%E4%BB%B6%E6%95%B4%E7%90%86%2F</url>
+    <content type="text"><![CDATA[应用软件 Python开发工具JetBrains PyCharm 2017.1.2 x64 原型工具Axure RP Pro 7.0（PC端）、墨刀（手机端） C++开发CodeBlocks Mysql存储过程调试dbForge Studio for MySQL 截取手机APP请求信息软件Fiddler 4 文本编辑器NodePad++、UltraEdit32、EditPlus 数据库前端软件Navicat Premium、PLSQL、Studio 3T（Mongodb） 大数据分析Tableau、Qlik 邮箱客户端FoxMail、Gmail SDCard格式化（树莓派镜像会出现Windows无法格式化情况）SDFormatter 数模设计软件（能够快速导出已完成数据库的数模）PowerDesigner 远程Linux系统Xshell、Xftp 视频播放器、听歌、视频格式化、Win10扫雷完美解码、Potplayer、网易云音乐、格式工厂、MineSweeper 云笔记有道云、Evernote（印象笔记） 安卓开发、IOS开发AndroidStudio、apicloud-studio-2.exe CAD看图软件CAD迷你看图 Json格式化、XML格式化JsonView、XMLFormat 翻墙软件（需要国外搭建服务器，简单的VPS配置操作，可在搬瓦工上买服务器，相对稳定，不会封杀）Shadowsocks、蓝灯Lantern Windows内存分析RAMMap.1.50.chs 端口开放情况PortScan Java反编译工具jd-gui反编译 C#反编译dnSpy 截图软件，这个可以录视频幺FSCapture 接口测试HTTPPostman可自动生成接口调用代码 SQL文件分割工具SQLDumpSplitter 取色工具TakeColor、抓色小猫、Chrome和IE里面也有取色工具 流程在线制作软件Processon 脑图百度脑图、Xmind 关于我们或者推广在线H5展页兔展、人人秀、企业秀 图标下载、GIF图标下载https://preloaders.net/en/free GIF图标下载地址，包含等待之类的http://www.iconfont.cn/ 阿里图标下载，各种图标http://www.easyicon.net 国外的一个图标下载的网址 MarkDown编写工具Cmd Markdown：（写出来的文档好看，文件管理不是很好，导出PDF、带样式HTML收费）Typora：（目前免费，样式好看而且可以切换多种样式皮肤，喜欢Github和Vue风格的，适合于本地写文档，可以使用Github同步自己的文档到云端，而且Github是免费的幺，导出功能免费）Atom：（Github出品的一款程序员编辑器，用了不久，无感） GIF截屏工具GifCam 鼠标键盘多电脑共享Synergy、MouseWithOutBorder（Windows自带，免费，但是得在同一个WIFI下） 文件搜索Everything 内网映射工具frp可以自己搭建服务器进行域名的映射，很简单ngrok(免费,前提是自己有服务器和域名，也可以使用公共的，比较慢) 花生壳（部分功能收费，特别是80端口） 开发使用的常用插件 地图百度地图（SDK jsAPI）等等，使用很方便 图表(柱状、饼状、折线、雷达、地图、仪表盘、漏斗、热力图、混搭配合多种主题组合)Echarts（界面比较美观，可以使用上面JSONview进行分析） 富文本编辑UEditor(本地化保存) 接口管理工具（前后端协作）Swagger apizza 网页打印工具C-lodop 图片剪切上传Cropper 文件上传WebUploader Word文档文本搜索和数据存储ES Java后台图片处理thumbnailator Java工作流开发（流程相关）Activiti 跨服务器跨不同数据库不同业务表不同业务字段数据库同步ETL kettle 开发框架 手机APP开发框架afinal、ThinkAndroid、andBase、KJFrameForAndroid、SmartAndroid、dhroidQMUI（手机APP开发布局框架）、ButterKnife（个人理解是减少findViewById）、OkHttp框架（网络请求框架） JAVA 开发框架SSM(Spring+SpringMVC+MyBatis)，阿里数据库连接池durid 权限管理框架Apache shiro PC前端开发框架Bootstrap、Layer（PC端管理后台） 手机前端框架Framework7(阿里手机前端框架)MUI(HBuilder)SUI、MUI、WEUI（手机端）GMU(百度) Frozen UI（QQ） 相关软件 Kali Linux （还在研究各种渗透，里面有很多渗透用的工具） 人工智能、人脸识别 人脸识别OpenCV 博客、BBS论坛 博客HEXO、WordPress 论坛Xiuno]]></content>
+      <categories>
+        <category>办公知识</category>
+        <category>软件整理</category>
+      </categories>
+      <tags>
+        <tag>软件整理</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[SVN服务端安装设置（Windows版本）]]></title>
+    <url>%2F2019%2F02%2F20%2FSVN%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%AE%89%E8%A3%85%E8%AE%BE%E7%BD%AE%EF%BC%88Windows%E7%89%88%E6%9C%AC%EF%BC%89%2F</url>
+    <content type="text"><![CDATA[首先下载并安装SVN服务端 新建一个文件夹用于SVN同步文件到这个文件夹中 如：G:\svnData cmd命令中执行如下命令：（这一步的含义是创建一个资源库）svnadmin create G:\svnData\webDemo 进入 G:\svnData\webDemo目录下的conf中，打开svnserve.conf文件，将 12anon-access=readanauth-access= write 两行的注释去掉（第一行的意思是匿名用户也能读取资源库，如果想禁止的话只需要改成anon-access=none,第二行的意思是允许授权用户对资源进行读取和写入操作） 取消svnserve.conf文件中的password-db=passwd的注释，此句的意思是将svn资源库使用的passwd文件来保存用户名和密码 启动SVNsvnserve -d -r D:\SVNData exit]]></content>
+      <categories>
+        <category>软件安装</category>
+        <category>SVN</category>
+      </categories>
+      <tags>
+        <tag>软件安装</tag>
+        <tag>SVN</tag>
+        <tag>Windows</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[CentOS7安装SVN]]></title>
     <url>%2F2019%2F02%2F19%2FCentOS7%E5%AE%89%E8%A3%85SVN%2F</url>
     <content type="text"><![CDATA[安装SVN 通过 yum install subversion来安装 提示已经安装。查看svn版本使用: svnserve –-version 使用命令: svnadmin create svn/repo 进入版本库中的配置目录conf，此目录有三个文件： svn服务综合配置文件、 用户名口令文件、权限配置文件 配置权限配置文件authz说明：两个站点为bbs,blog,所以分为三个组超级管理组admin、bbs管理组bbsadmin、blog管理组blogadmin。超级管理组admin可以读写所有站点内容，而bbsadmin对bbs站点可以读写，而只能读blog站点。以及blogadmin对blog站点可以读写,对bbs站点只读。 配置用户口令文件passwd,添加组用户以及密码 配置 svn服务综合配置文件svnserve.conf，取消以下项目的注释，其中一定要注意anon-access=none，因为这个是要看历史版本用的 启用/关闭svn 启动SVNsvnserve -d -r /home/svn/project/ 关闭svn通过ps -aux|grep svn 查看到的svn进程id来进行关闭]]></content>
@@ -9,8 +167,8 @@
         <category>SVN</category>
       </categories>
       <tags>
-        <tag>CentOS7</tag>
         <tag>软件安装</tag>
+        <tag>CentOS7</tag>
         <tag>SVN</tag>
       </tags>
   </entry>
@@ -104,8 +262,8 @@
       </categories>
       <tags>
         <tag>软件安装</tag>
-        <tag>快捷键</tag>
         <tag>IDEA</tag>
+        <tag>快捷键</tag>
       </tags>
   </entry>
   <entry>
@@ -117,8 +275,8 @@
         <category>IDEA</category>
       </categories>
       <tags>
-        <tag>IDEA</tag>
         <tag>插件安装</tag>
+        <tag>IDEA</tag>
         <tag>服务免重启</tag>
       </tags>
   </entry>
@@ -331,8 +489,8 @@
       </categories>
       <tags>
         <tag>Tomcat</tag>
-        <tag>Nginx</tag>
         <tag>负载均衡</tag>
+        <tag>Nginx</tag>
       </tags>
   </entry>
   <entry>
@@ -370,8 +528,8 @@
         <category>中间件</category>
       </categories>
       <tags>
-        <tag>图片压缩</tag>
         <tag>Nginx</tag>
+        <tag>图片压缩</tag>
         <tag>Gzip</tag>
       </tags>
   </entry>
@@ -384,8 +542,8 @@
       </categories>
       <tags>
         <tag>服务器</tag>
-        <tag>图片压缩</tag>
         <tag>Nginx</tag>
+        <tag>图片压缩</tag>
       </tags>
   </entry>
   <entry>
@@ -683,8 +841,8 @@
         <category>知识点</category>
       </categories>
       <tags>
-        <tag>JSP</tag>
         <tag>知识点</tag>
+        <tag>JSP</tag>
       </tags>
   </entry>
   <entry>
@@ -738,8 +896,8 @@
         <category>SSM框架搭建</category>
       </categories>
       <tags>
-        <tag>SSM</tag>
         <tag>搭建</tag>
+        <tag>SSM</tag>
         <tag>多模块</tag>
       </tags>
   </entry>
@@ -782,8 +940,8 @@
         <category>SSM框架搭建</category>
       </categories>
       <tags>
-        <tag>SSM</tag>
         <tag>搭建</tag>
+        <tag>SSM</tag>
       </tags>
   </entry>
   <entry>
@@ -838,8 +996,8 @@
         <category>Maven</category>
       </categories>
       <tags>
-        <tag>搭建</tag>
         <tag>Maven</tag>
+        <tag>搭建</tag>
         <tag>Idea15</tag>
       </tags>
   </entry>
