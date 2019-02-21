@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Kali-Linux-Revealed(About Kali Linux)]]></title>
+    <url>%2F2019%2F02%2F21%2FKali-Linux-Revealed-About-Kali-Linux%2F</url>
+    <content type="text"><![CDATA[Pursepose and Use CasesThese tasks and activities include: Information Collection:Collecting data about the target network and its structure,idetifying computers,their operating systems,and the services that they run.Idetifying potentially(可能)sensitive parts of the information system.Extracting all sorts of listings from running directory services. Vulnerability(漏洞) Analysis:Quickly testing whether a local or remote system is afffected bt a number of known vulnerabilities or insecure(不安全) configurations.Vulnerability scanners use databases containing thousands of signatures(签名) to idetify potential(潜在) vulnerabilities. Web Application Analysis:idetifying misconfigurations and security weakness in web applications. It is crucial(重要) to idetify and mitigate these issues given that the public availability of these applications makes them idel targets for attacker. Database Assessment:From SQL injection to attacking credentials,–Page 32]]></content>
+      <categories>
+        <category>安全测评</category>
+      </categories>
+      <tags>
+        <tag>Kali Linux</tag>
+        <tag>渗透</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[树莓派操作摄像头]]></title>
     <url>%2F2019%2F02%2F20%2F%E6%A0%91%E8%8E%93%E6%B4%BE%E6%93%8D%E4%BD%9C%E6%91%84%E5%83%8F%E5%A4%B4%2F</url>
     <content type="text"><![CDATA[连接方式：连接器的位置：90度垂直连接器，HDMI口旁边那个。连接时触点一侧朝向HDMI接口 1. 首先进行系统和软件升级12sudo apt-get updatesudo apt-get upgrade 2. 设置摄像头enable1sudo raspi-config ①首先选择Interfacing Options②选择Camera③选择Yes，然后回车④显示设置成功提示⑤重启树莓派1sudo reboot 3. 使用摄像头拍一张照片1raspistill -o image.jpg #会在当前目录下生成一张叫image.jpg的图片 4. 使用摄像头录制一段(h264格式的)视频12raspivid -o video.h264raspivid -o video.h264 -t 10000 #录制一段10S中的视频 5. 以demo模式录制视频（没太懂）1raspivid -o video.h264 -t 10000 -d 以下是原英文的 How to use the Raspberry Pi camera software raspivid is a command line application that allows you to capture video with the camera module, while the applicationraspistill allows you to capture images. -o or –output specifies the output filename and -t or –timeout specifies the amount of time that the preview will be displayed in milliseconds. Note that this set to 5s by default and that raspistill will capture the final frame of the preview period. -d or –demo runs the demo mode that will cycle through the various image effects that are available. Example commandsCapture an image in jpeg format:1raspistill -o image.jpg Capture a 5s video in h264 format: 1raspivid -o video.h264 Capture a 10s video:1raspivid -o video.h264 -t 10000 Capture a 10s video in demo mode:1raspivid -o video.h264 -t 10000 -d To see a list of possible options for running raspivid or raspistill, you can run: raspivid | less raspistill | less Use the arrow keys to scroll and type q to exit. Extended documentation is available. Note that we recommend that you change SSH password if you are using a camera, in order to prevent unwanted access. How to stream video from the Raspberry Pi camera over a networkTo view the feed on LinuxInstall the dependencies by running the following in a terminal:1sudo apt-get install mplayer netcat Find your IP address by running ifconfig. (Your IP address will be listed in the console output and will probably be of the form 192.168.1.XXX). Run the following command in a terminal to view the feed using MPlayer:1nc -l -p 5001 | mplayer -fps 31 -cache 1024 - To view the feed on WindowsInstall and run Linux instead. Find your IP address by running ipconfig. (Your IP address will be listed in the console output and will probably be of the form 192.168.1.XXX). Download MPlayer. Download Netcat. Note that your browser may complain that these files are malicious, as they are unsigned executables. Press the Windows key and the ‘r’ key simultaneously to bring up the “Run” dialog. Enter cmd.exe into the dialog and press enter/return to open a DOS prompt. Enter the following command at the prompt to view the feed using MPlayer: [Path to nc.exe]\nc.exe -L -p 5001 | [Path to mplayer.exe]\mplayer.exe -fps 31 -cache 1024 - To view the feed on OS XDownload MPlayer. Alternatively, you can download mplayer using Brew, which we recommend. Find your IP address by running ifconfig. (Your IP address will be listed in the console output and will probably be of the form 192.168.1.XXX). Run the following command in Terminal to view the feed using MPlayer: nc -l -p 5001 | mplayer -fps 31 -cache 1024 - To view the feed on a Raspberry Pi: Find your IP address by running ifconfig. (Your IP address will be listed in the console output and will probably be of the form 192.168.1.XXX). Run the following commands in a terminal on the receiving Pi: mkfifo buffer nc -p 5001 -l &gt; buffer | /opt/vc/src/hello_pi/hello_video/hello_video.bin buffer To transmit the feed from the Pi with camera module attached After setting up the “receiving” machine as per the instructions above, run the following commands in a terminal on the “transmitting” Pi: raspivid -t 999999 -o – | nc [insert the IP address of the client] 5001 You can then use the commands listed in the “How to use the Raspberry Pi camera software” section above to change the capture time or to add a video effect]]></content>
@@ -153,8 +165,8 @@
         <category>SVN</category>
       </categories>
       <tags>
-        <tag>软件安装</tag>
         <tag>SVN</tag>
+        <tag>软件安装</tag>
         <tag>Windows</tag>
       </tags>
   </entry>
@@ -167,9 +179,9 @@
         <category>SVN</category>
       </categories>
       <tags>
-        <tag>软件安装</tag>
         <tag>CentOS7</tag>
         <tag>SVN</tag>
+        <tag>软件安装</tag>
       </tags>
   </entry>
   <entry>
@@ -194,8 +206,8 @@
         <category>Git</category>
       </categories>
       <tags>
-        <tag>Git</tag>
         <tag>软件安装</tag>
+        <tag>Git</tag>
       </tags>
   </entry>
   <entry>
@@ -240,7 +252,7 @@
   <entry>
     <title><![CDATA[frp-内网映射 服务端部署]]></title>
     <url>%2F2019%2F02%2F19%2Ffrp-%E5%86%85%E7%BD%91%E6%98%A0%E5%B0%84-%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%83%A8%E7%BD%B2%2F</url>
-    <content type="text"><![CDATA[frp作用 利用处于内网或者防火墙后的服务器，对外网环境提供HTTP或HTTPS服务 对于http、https服务支持基于域名的虚拟主机，支持自定义域名绑定，使多个域名可以共用一个80端口 对往往提供tcp和udp服务，可以在夹中ssh访问处于公司内网的主机 配置说明 配置前准备公网服务器1台及独立固定IP地址 服务器安装 首先下载frp，下载页面点击frp下载地址，下载的时候根据自己服务器和映射主机的需求进行判断下载 服务器(Linux) 123456cd /usr/localmkdir frp#上传frp解压出来的内容到该目录下#删除和客户端相关的内容 frpc*(删掉frpc、frpc.ini两个文件)rm -rf frpc* 1234#编辑frps.ini[common]bind_port = 7000 #与客户端绑定的进行通信的端口vhost_http_port = 6081 #访问客户端web服务自定义的端口号,可以直接定义为80端口 123#启动服务./frps -c ./frps.ini # 前台启动nohup ./frps -c frps.ini &gt; ./temp/print.out 2&gt;&amp;1 &amp; #后台启动命令，并输出日志到print.out 这个地方要提前创建好文件路径 客户端首先删掉frps、frps.ini两个文件,然后再进行配置,然后编辑frpc.ini 1234567891011121314151617[common]server_addr = 120.56.37.48 #公网服务器ipserver_port = 7000 #与服务端bind_port一致##公网通过ssh访问内部服务器[ssh]type = tcp #连接协议local_ip = 192.168.2.62 #内网服务器iplocal_port = 22 #ssh默认端口号remote_port = 6000 #自定义的访问内部ssh端口号## 公网访问内部web服务器以http方式[web]type = http #访问协议local_ip = 192.168.2.62local_port = 8081 #内网web服务的端口号custom_domains = repo.iwi.com #所绑定的公网服务器域名，一级、二级域名都可以]]></content>
+    <content type="text"><![CDATA[frp作用 利用处于内网或者防火墙后的服务器，对外网环境提供HTTP或HTTPS服务 对于http、https服务支持基于域名的虚拟主机，支持自定义域名绑定，使多个域名可以共用一个80端口 对往往提供tcp和udp服务，可以在夹中ssh访问处于公司内网的主机 配置说明 配置前准备公网服务器1台及独立固定IP地址 服务器安装 首先下载frp，下载页面点击frp下载地址，下载的时候根据自己服务器和映射主机的需求进行判断下载 服务器(Linux) 123456cd /usr/localmkdir frp#上传frp解压出来的内容到该目录下#删除和客户端相关的内容 frpc*(删掉frpc、frpc.ini两个文件)rm -rf frpc* 1234#编辑frps.ini[common]bind_port = 7000 #与客户端绑定的进行通信的端口vhost_http_port = 6081 #访问客户端web服务自定义的端口号,可以直接定义为80端口 123#启动服务./frps -c ./frps.ini # 前台启动nohup ./frps -c frps.ini &gt; ./temp/print.out 2&gt;&amp;1 &amp; #后台启动命令，并输出日志到print.out 这个地方要提前创建好文件路径 客户端首先删掉frps、frps.ini两个文件,然后再进行配置,然后编辑frpc.ini 1234567891011121314151617[common]server_addr = xxx.xxx.xxx.xxx #公网服务器ipserver_port = 7000 #与服务端bind_port一致##公网通过ssh访问内部服务器[ssh]type = tcp #连接协议local_ip = 192.168.2.62 #内网服务器iplocal_port = 22 #ssh默认端口号remote_port = 6000 #自定义的访问内部ssh端口号## 公网访问内部web服务器以http方式[web]type = http #访问协议local_ip = 192.168.2.62local_port = 8081 #内网web服务的端口号custom_domains = repo.iwi.com #所绑定的公网服务器域名，一级、二级域名都可以]]></content>
       <categories>
         <category>软件安装</category>
         <category>frp</category>
@@ -489,8 +501,8 @@
       </categories>
       <tags>
         <tag>Tomcat</tag>
-        <tag>负载均衡</tag>
         <tag>Nginx</tag>
+        <tag>负载均衡</tag>
       </tags>
   </entry>
   <entry>
@@ -528,8 +540,8 @@
         <category>中间件</category>
       </categories>
       <tags>
-        <tag>Nginx</tag>
         <tag>图片压缩</tag>
+        <tag>Nginx</tag>
         <tag>Gzip</tag>
       </tags>
   </entry>
@@ -542,8 +554,8 @@
       </categories>
       <tags>
         <tag>服务器</tag>
-        <tag>Nginx</tag>
         <tag>图片压缩</tag>
+        <tag>Nginx</tag>
       </tags>
   </entry>
   <entry>
@@ -555,8 +567,8 @@
         <category>Android</category>
       </categories>
       <tags>
-        <tag>Android</tag>
         <tag>服务</tag>
+        <tag>Android</tag>
         <tag>Activity</tag>
       </tags>
   </entry>
@@ -569,8 +581,8 @@
         <category>Android</category>
       </categories>
       <tags>
-        <tag>连续触发</tag>
         <tag>Android</tag>
+        <tag>连续触发</tag>
       </tags>
   </entry>
   <entry>
@@ -605,8 +617,8 @@
         <category>服务器</category>
       </categories>
       <tags>
-        <tag>服务器</tag>
         <tag>CentOS7</tag>
+        <tag>服务器</tag>
         <tag>防火墙</tag>
       </tags>
   </entry>
@@ -630,8 +642,8 @@
         <category>软件安装</category>
       </categories>
       <tags>
-        <tag>CentOS7</tag>
         <tag>JDK</tag>
+        <tag>CentOS7</tag>
         <tag>安装JDK</tag>
       </tags>
   </entry>
@@ -668,8 +680,8 @@
         <category>服务器</category>
       </categories>
       <tags>
-        <tag>服务器</tag>
         <tag>CentOS7</tag>
+        <tag>服务器</tag>
         <tag>静态IP</tag>
       </tags>
   </entry>
@@ -833,16 +845,16 @@
   </entry>
   <entry>
     <title><![CDATA[JSP知识点]]></title>
-    <url>%2F2019%2F02%2F01%2FJSP%E4%B8%AD%E9%9A%90%E8%97%8FIFrame%E7%9A%84%E6%8F%90%E4%BA%A4%E5%8A%9F%E8%83%BD%2F</url>
-    <content type="text"><![CDATA[隐藏iframe提交功能1234//隐藏Iframe提交功能document.forms[0].target = "hiddenFrame";document.forms[0].action = url;document.forms[0].submit(); jsp调用servlet进行页面跳转12request.getRequestDispatcher("/Newpage.jsp").forward(request,response);主要的部分就是红字部分，由于跳转到的页面就在根目录下面，因此只需要跟到（“/Newpage.jsp”）就可以了！]]></content>
+    <url>%2F2019%2F02%2F01%2FJSP%E7%9F%A5%E8%AF%86%E7%82%B9%2F</url>
+    <content type="text"><![CDATA[隐藏iframe提交功能1234//隐藏Iframe提交功能document.forms[0].target = "hiddenFrame";document.forms[0].action = url;document.forms[0].submit(); jsp调用servlet进行页面跳转12request.getRequestDispatcher("/Newpage.jsp").forward(request,response);主要的部分就是红字部分，由于跳转到的页面就在根目录下面，因此只需要跟到（“/Newpage.jsp”）就可以了！ JSP之间传递中文汉字A.jsp中keyword是中文的123456xyd.buttonClick("cms-search",function()&#123; var key = "keyword="+$("[data-out-name='cms-keyword']").val(); var url = "&lt;%=_basePath%&gt;/page/my-cms-search.jsp?"+key; // 这个地方是两遍（encodeURI），一定要记住 location.href = encodeURI(encodeURI(url));&#125;); B.jsp中接收传递的参数123//搜索String keyword = request.getParameter("keyword")==null ? "" : (String)request.getParameter("keyword");keyword = URLDecoder.decode(keyword);]]></content>
       <categories>
         <category>前端开发语言</category>
         <category>JSP</category>
         <category>知识点</category>
       </categories>
       <tags>
-        <tag>知识点</tag>
         <tag>JSP</tag>
+        <tag>知识点</tag>
       </tags>
   </entry>
   <entry>
@@ -1252,8 +1264,8 @@
         <category>知识点</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>知识点</tag>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
