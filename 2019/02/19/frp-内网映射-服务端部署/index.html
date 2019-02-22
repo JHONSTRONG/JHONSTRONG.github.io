@@ -108,7 +108,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://xydcom.cn/images/banner/banner_31.png">
 <meta property="og:image" content="https://xydcom.cn/2019/02/19/frp-内网映射-服务端部署/screenshot_1.png">
-<meta property="og:updated_time" content="2019-02-21T08:37:58.863Z">
+<meta property="og:updated_time" content="2019-02-22T07:34:19.645Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="frp-内网映射 服务端部署">
 <meta name="twitter:description" content="frp作用 利用处于内网或者防火墙后的服务器，对外网环境提供HTTP或HTTPS服务 对于http、https服务支持基于域名的虚拟主机，支持自定义域名绑定，使多个域名可以共用一个80端口 对往往提供tcp和udp服务，可以在夹中ssh访问处于公司内网的主机  配置说明 配置前准备公网服务器1台及独立固定IP地址  服务器安装 首先下载frp，下载页面点击frp下载地址，下载的时候根据自己服务器">
@@ -762,7 +762,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-02-21 16:37:58" itemprop="dateModified" datetime="2019-02-21T16:37:58+08:00">2019-02-21</time>
+                <time title="修改时间：2019-02-22 15:34:19" itemprop="dateModified" datetime="2019-02-22T15:34:19+08:00">2019-02-22</time>
               
             
           </span>
@@ -849,11 +849,16 @@
 <ol start="2">
 <li><p>服务器(Linux)</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local</span><br><span class="line">mkdir frp</span><br><span class="line"></span><br><span class="line">#上传frp解压出来的内容到该目录下</span><br><span class="line">#删除和客户端相关的内容  frpc*(删掉frpc、frpc.ini两个文件)</span><br><span class="line">rm -rf frpc*</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#编辑frps.ini</span><br><span class="line">[common]</span><br><span class="line">bind_port = 7000           #与客户端绑定的进行通信的端口</span><br><span class="line">vhost_http_port = 6081     #访问客户端web服务自定义的端口号,可以直接定义为80端口</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#启动服务</span><br><span class="line">./frps -c ./frps.ini # 前台启动</span><br><span class="line">nohup ./frps -c frps.ini &gt; ./temp/print.out 2&gt;&amp;1 &amp;  #后台启动命令，并输出日志到print.out 这个地方要提前创建好文件路径</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#编辑frps.ini</span><br><span class="line">[common]</span><br><span class="line">bind_port = 7000           #与客户端绑定的进行通信的端口</span><br><span class="line">vhost_http_port = 80     #访问的域名后面跟的端口号，如果是80，直接域名到项目就能访问，如果其他，需要在域名后跟这个端口号然后再跟项目名访问</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#启动服务</span><br><span class="line">./frps -c ./frps.ini # 前台启动</span><br><span class="line">#创建日志文件夹</span><br><span class="line">mkdir logs</span><br><span class="line">nohup ./frps -c frps.ini &gt; ./logs/print.out 2&gt;&amp;1 &amp;  #后台启动命令，并输出日志到print.out 这个地方要提前创建好文件路径</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>客户端<br>首先删掉frps、frps.ini两个文件,然后再进行配置,然后编辑frpc.ini</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[common]</span><br><span class="line">server_addr = xxx.xxx.xxx.xxx   #公网服务器ip</span><br><span class="line">server_port = 7000            #与服务端bind_port一致</span><br><span class="line"></span><br><span class="line">##公网通过ssh访问内部服务器</span><br><span class="line">[ssh]</span><br><span class="line">type = tcp              #连接协议</span><br><span class="line">local_ip = 192.168.2.62 #内网服务器ip</span><br><span class="line">local_port = 22         #ssh默认端口号</span><br><span class="line">remote_port = 6000      #自定义的访问内部ssh端口号</span><br><span class="line"></span><br><span class="line">## 公网访问内部web服务器以http方式</span><br><span class="line">[web]</span><br><span class="line">type = http         #访问协议</span><br><span class="line">local_ip = 192.168.2.62</span><br><span class="line">local_port = 8081   #内网web服务的端口号</span><br><span class="line">custom_domains = repo.iwi.com   #所绑定的公网服务器域名，一级、二级域名都可以</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[common]</span><br><span class="line">server_addr = xxx.xxx.xxx.xxx   #公网服务器ip</span><br><span class="line">server_port = 7000            #与服务端bind_port一致</span><br><span class="line"></span><br><span class="line">## 公网访问内部web服务器以http方式</span><br><span class="line">[web]</span><br><span class="line">type = http         #访问协议</span><br><span class="line">local_ip = 192.168.2.62</span><br><span class="line">local_port = 8080   #本地启动服务的端口号</span><br><span class="line">custom_domains = frp.xxx.cn   #所绑定的公网服务器域名，一级、二级域名都可以</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>启动frpc</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./frpc -c ./frpc.ini</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>设置A记录将二级域名（frp.xxx.cn）指向frp服务器</p>
 </li>
 </ol>
 
