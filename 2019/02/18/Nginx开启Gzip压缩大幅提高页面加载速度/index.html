@@ -99,7 +99,7 @@
 
 
   <meta name="description" content="刚刚给博客加了一个500px相册插件，lightbox引入了很多js文件和css文件，页面一下子看起来非常臃肿，所以还是把Gzip打开了。环境：Debian 6  Vim打开Nginx配置文件vim /usr/local/nginx/conf/nginx.conf 找到如下一段，进行修改 12345678gzip on;gzip_min_length 1k;gzip_buffers 4 16k;">
-<meta name="keywords" content="图片压缩,Nginx,Gzip">
+<meta name="keywords" content="Nginx,图片压缩,Gzip">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Nginx开启Gzip压缩大幅提高页面加载速度">
 <meta property="og:url" content="https://xydcom.cn/2019/02/18/Nginx开启Gzip压缩大幅提高页面加载速度/index.html">
@@ -563,7 +563,7 @@
       
     
 
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">138</span></a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">141</span></a>
 
   </li>
         
@@ -582,7 +582,7 @@
       
     
 
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">66</span></a>
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">67</span></a>
 
   </li>
         
@@ -601,7 +601,7 @@
       
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">104</span></a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">106</span></a>
 
   </li>
         
@@ -694,6 +694,8 @@
   
   
 
+  
+    <div class="reading-progress-bar"></div>
   
 
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
@@ -869,9 +871,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/图片压缩/" rel="tag"># 图片压缩</a>
-          
             <a href="/tags/Nginx/" rel="tag"># Nginx</a>
+          
+            <a href="/tags/图片压缩/" rel="tag"># 图片压缩</a>
           
             <a href="/tags/Gzip/" rel="tag"># Gzip</a>
           
@@ -965,7 +967,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">104</span>
+                    <span class="site-state-item-count">106</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1110,7 +1112,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">66</span>
+                      
+                    
+                    <span class="site-state-item-count">67</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -1399,7 +1403,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">138</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">141</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1541,6 +1551,8 @@
 
 
 
+  
+
 
 
   
@@ -1551,6 +1563,9 @@
 
   
   <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/reading_progress/reading_progress.js"></script>
 
 
   
@@ -1968,6 +1983,15 @@
   
 
   
+  
+  
+  <script src="/lib/bookmark/bookmark.min.js?v=1.0"></script>
+  <script>
+  
+    bookmark.scrollToMark('auto', "#更多");
+  
+  </script>
+
 
   
 
