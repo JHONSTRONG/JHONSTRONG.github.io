@@ -107,7 +107,7 @@
 <meta property="og:description" content="最近修复SQL注入的问题，单当遇到in操作的时候，直接使用?占位符是行不通的，因此进行查询发现NamedParameterJDBCTemplate能够修复这种问题，因此在这里记录下NamedParameterJDBCTemplate的使用方式，常规NamedParameterJDBCTemplate提供execute方法、query及queryForXXX方法、update和batchUpda">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://xydcom.cn/images/banner/banner_41.png">
-<meta property="og:updated_time" content="2019-02-27T03:01:51.083Z">
+<meta property="og:updated_time" content="2019-02-27T03:03:17.343Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NamedParameterJdbcTemplete使用方法总结">
 <meta name="twitter:description" content="最近修复SQL注入的问题，单当遇到in操作的时候，直接使用?占位符是行不通的，因此进行查询发现NamedParameterJDBCTemplate能够修复这种问题，因此在这里记录下NamedParameterJDBCTemplate的使用方式，常规NamedParameterJDBCTemplate提供execute方法、query及queryForXXX方法、update和batchUpda">
@@ -746,7 +746,7 @@
                 
               
 
-              <time title="创建时间：2019-02-27 08:45:57 / 修改时间：11:01:51" itemprop="dateCreated datePublished" datetime="2019-02-27T08:45:57+08:00">2019-02-27</time>
+              <time title="创建时间：2019-02-27 08:45:57 / 修改时间：11:03:17" itemprop="dateCreated datePublished" datetime="2019-02-27T08:45:57+08:00">2019-02-27</time>
             
 
             
@@ -847,6 +847,9 @@
 <h3 id="多行数据"><a href="#多行数据" class="headerlink" title="多行数据"></a>多行数据</h3><p>API：<code>public &lt; T&gt; List&lt; T&gt; query(String sql, Map&lt; String, ?&gt; paramMap, RowMapper&lt; T&gt; rowMapper)</code><br>API：<code>public &lt; T&gt; List&lt; T&gt; query(String sql, SqlParameterSource paramSource, RowMapper&lt; T&gt; rowMapper)</code><br>API：<code>public &lt; T&gt; List&lt; T&gt; query(String sql, RowMapper&lt; T&gt; rowMapper)</code><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">List&lt; Student&gt; studentList = template.query(</span><br><span class="line">                <span class="string">"select * from student"</span>,  </span><br><span class="line">                <span class="keyword">new</span> BeanPropertyRowMapper&lt;&gt;(Student.class)</span><br><span class="line">);</span><br></pre></td></tr></table></figure></p>
 <h3 id="多行数据（Map）"><a href="#多行数据（Map）" class="headerlink" title="多行数据（Map）"></a>多行数据（Map）</h3><p>API：<code>public List&lt; Map&lt; String, Object&gt;&gt; queryForList(String sql, Map&lt; String, ?&gt; paramMap)</code><br>API：<code>public List&lt; Map&lt; String, Object&gt;&gt; queryForList(String sql, SqlParameterSource paramSource)</code><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Map&lt;String, Object&gt;&gt; mapList = template.queryForList(<span class="string">"select * from student"</span>, <span class="keyword">new</span> HashMap&lt;&gt;());</span><br></pre></td></tr></table></figure></p>
 <h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><h3 id="SQL注入中in问题的解决"><a href="#SQL注入中in问题的解决" class="headerlink" title="SQL注入中in问题的解决"></a>SQL注入中in问题的解决</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">queryListByMapSqlParameterSource</span><span class="params">(List&lt;String&gt; userids)</span></span>&#123;</span><br><span class="line">  String sql = <span class="string">"select * from user_table u where u.user_id in (:userids )"</span>;</span><br><span class="line"></span><br><span class="line">  MapSqlParameterSource parameters = <span class="keyword">new</span> MapSqlParameterSource();</span><br><span class="line">  parameters.addValue(<span class="string">"userids"</span>, userids);</span><br><span class="line"></span><br><span class="line">  List&lt;Map&lt;String,Object&gt;&gt; list = namedJdbcTemplate.queryForList(sql, parameters);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (Map&lt;String, Object&gt; map : list) &#123;</span><br><span class="line">    System.out.println(<span class="string">"-------------------"</span>);</span><br><span class="line">    System.out.println(map.get(<span class="string">"user_id"</span>));</span><br><span class="line">    System.out.println(map.get(<span class="string">"user_name"</span>));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>本文引自<a href="https://blog.csdn.net/u011179993/article/details/74791304" target="_blank" rel="noopener">NamedParameterJdbcTemplate常用方法总结</a><br>本文引自<a href="https://blog.csdn.net/brianyeye/article/details/37650461" target="_blank" rel="noopener">springjdbc-NamedParameterJdbcTemplate处理in查询</a></p>
+</blockquote>
 
       
     </div>
