@@ -76,7 +76,7 @@
     root: '/',
     scheme: 'Gemini',
     version: '6.7.0',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
     fancybox: false,
     fastclick: false,
     lazyload: false,
@@ -99,6 +99,7 @@
 
 
   <meta name="description" content="本操作手册用作从信贷系统导出操作员基本数据、机构信息数据等基础数据，然后在客户管理平台中导入的引导手册  基础数据准备需要先从行方获取对应的数据，获取数据的对应规则和对应字段的顺序一定要给行方人员说明清楚，然后他根据规则从信贷系统中根据你要的规则从DB2中导出数据，导出的文件是.del类型的文件 修改脚本 将行方给的.del文件放到服务器上，记录下路径，本例为/home/20190301/us">
+<meta name="keywords" content="Oracle,DB2,数据导入导出">
 <meta property="og:type" content="article">
 <meta property="og:title" content="DB2数据表Oracle数据库导入">
 <meta property="og:url" content="https://xydcom.cn/2019/03/01/DB2数据表Oracle数据库导入/index.html">
@@ -106,7 +107,7 @@
 <meta property="og:description" content="本操作手册用作从信贷系统导出操作员基本数据、机构信息数据等基础数据，然后在客户管理平台中导入的引导手册  基础数据准备需要先从行方获取对应的数据，获取数据的对应规则和对应字段的顺序一定要给行方人员说明清楚，然后他根据规则从信贷系统中根据你要的规则从DB2中导出数据，导出的文件是.del类型的文件 修改脚本 将行方给的.del文件放到服务器上，记录下路径，本例为/home/20190301/us">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://xydcom.cn/images/banner/banner_41.png">
-<meta property="og:updated_time" content="2019-03-01T09:15:32.071Z">
+<meta property="og:updated_time" content="2019-03-01T09:27:31.940Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="DB2数据表Oracle数据库导入">
 <meta name="twitter:description" content="本操作手册用作从信贷系统导出操作员基本数据、机构信息数据等基础数据，然后在客户管理平台中导入的引导手册  基础数据准备需要先从行方获取对应的数据，获取数据的对应规则和对应字段的顺序一定要给行方人员说明清楚，然后他根据规则从信贷系统中根据你要的规则从DB2中导出数据，导出的文件是.del类型的文件 修改脚本 将行方给的.del文件放到服务器上，记录下路径，本例为/home/20190301/us">
@@ -116,8 +117,6 @@
 
 
 
-
-  <link rel="canonical" href="https://xydcom.cn/2019/03/01/DB2数据表Oracle数据库导入/">
 
 
 
@@ -562,7 +561,7 @@
       
     
 
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">143</span></a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">149</span></a>
 
   </li>
         
@@ -581,7 +580,7 @@
       
     
 
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">68</span></a>
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">69</span></a>
 
   </li>
         
@@ -600,7 +599,7 @@
       
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">108</span></a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">111</span></a>
 
   </li>
         
@@ -745,7 +744,7 @@
                 
               
 
-              <time title="创建时间：2019-03-01 17:04:15 / 修改时间：17:15:32" itemprop="dateCreated datePublished" datetime="2019-03-01T17:04:15+08:00">2019-03-01</time>
+              <time title="创建时间：2019-03-01 17:04:15 / 修改时间：17:27:31" itemprop="dateCreated datePublished" datetime="2019-03-01T17:04:15+08:00">2019-03-01</time>
             
 
             
@@ -840,7 +839,7 @@
 </ol>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@MCDB ~]<span class="comment"># su - oracle</span></span><br><span class="line">上一次登录：五 3月  1 23:53:37 CST 2019pts/2 上</span><br><span class="line">-bash: $<span class="string">'\302\240'</span>: <span class="built_in">command</span> not found</span><br><span class="line">[oracle@MCDB ~]$ sqlplus /nolog</span><br><span class="line"></span><br><span class="line">SQL*Plus: Release 11.2.0.4.0 Production on Fri Mar 1 23:58:49 2019</span><br><span class="line"></span><br><span class="line">Copyright (c) 1982, 2013, Oracle.  All rights reserved.</span><br><span class="line"></span><br><span class="line">SQL&gt;</span><br></pre></td></tr></table></figure>
 <ol start="4">
-<li>执行下面的命令，开始导入数据</li>
+<li>执行下面的命令，开始导入数据（执行前需要修改成自己的路径和文件）</li>
 </ol>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">host sqlldr userid=jnmcbusi/123456@jnmcdb control=/home/20190301/SYS_OPER_TEMP.ctl <span class="built_in">log</span>=/home/ctl/user.log</span><br></pre></td></tr></table></figure>
 <ol start="5">
@@ -869,6 +868,16 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/Oracle/" rel="tag"># Oracle</a>
+          
+            <a href="/tags/DB2/" rel="tag"># DB2</a>
+          
+            <a href="/tags/数据导入导出/" rel="tag"># 数据导入导出</a>
+          
+        </div>
+      
 
       
       
@@ -887,6 +896,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/02/Oracle-MySQL实现根据一个表更新另一张表/" rel="prev" title="Oracle/MySQL实现根据一个表更新另一张表">
+                Oracle/MySQL实现根据一个表更新另一张表 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -930,6 +943,8 @@
 
   <aside id="sidebar" class="sidebar">
     
+      <div id="sidebar-dimmer"></div>
+    
     <div class="sidebar-inner">
 
       
@@ -962,7 +977,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">108</span>
+                    <span class="site-state-item-count">111</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1111,7 +1126,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">68</span>
+                      
+                    
+                    <span class="site-state-item-count">69</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -1410,7 +1427,19 @@
                     
                       
                     
-                    <span class="site-state-item-count">143</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">149</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1492,7 +1521,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; 2018 – <span itemprop="copyrightYear">2019</span>
   <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>
@@ -1527,6 +1556,8 @@
     
       <div class="back-to-top">
         <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
         
       </div>
     
@@ -2012,6 +2043,83 @@
 
 
   
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function(i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap');
+      $(e).after($wrap);
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+        var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+          return $(e).text();
+        }).toArray().join('\n');
+        var ta = document.createElement('textarea');
+        var range = document.createRange(); //For Chrome
+        var sel = window.getSelection(); //For Chrome
+        var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+        ta.style.top = yPosition + 'px'; //Prevent page scroll
+        ta.style.position = 'absolute';
+        ta.style.opacity = '0';
+        ta.value = code;
+        ta.textContent = code; //For FireFox
+        ta.contentEditable = true;
+        ta.readOnly = false;
+        document.body.appendChild(ta);
+        range.selectNode(ta);
+        sel.removeAllRanges();
+        sel.addRange(range);
+        ta.setSelectionRange(0, code.length);
+        var result = document.execCommand('copy');
+        
+          if (result) $(this).text('复制成功');
+          else $(this).text('复制失败');
+        
+        ta.blur(); //For iOS
+        $(this).blur();
+      })).on('mouseleave', function(e) {
+        var $b = $(this).find('.copy-btn');
+        setTimeout(function() {
+          $b.text('复制');
+        }, 300);
+      }).append(e);
+    })
+  </script>
+
 
   
 

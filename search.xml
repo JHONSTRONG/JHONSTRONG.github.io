@@ -1,13 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Java中Calendar使用及日期增减]]></title>
+    <url>%2F2019%2F03%2F02%2FJava%E4%B8%ADCalendar%E4%BD%BF%E7%94%A8%E5%8F%8A%E6%97%A5%E6%9C%9F%E5%A2%9E%E5%87%8F%2F</url>
+    <content type="text"><![CDATA[Calendar的使用12345678910111213Calendar cal = Calendar.getInstance(); //首先需要实例化一个calendarcal.get(Calendar.DATE);//-----------------------当天 1-31cal.get(Calendar.DAY_OF_MONTH);//---------------当天 1-12cal.get(Calendar.DAY_OF_WEEK);//----------------从星期天开始计算，如果今天星期二，那么返回3cal.get(Calendar.DAY_OF_YEAR);//----------------cal.get(Calendar.HOUR);//-----------------------12小时制cal.get(Calendar.HOUR_OF_DAY);//----------------24小时制，一般使用这个属性赋值cal.get(Calendar.MILLISECOND);//----------------cal.get(Calendar.MINUTE);//---------------------cal.get(Calendar.SECOND);//---------------------cal.get(Calendar.WEEK_OF_MONTH);//--------------cal.get(Calendar.WEEK_OF_YEAR);//---------------cal.get(Calendar.MONTH);//-----------------------月份获取需要 +1，那么，赋值时需要 -1 日期加减1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162/** * 日期相加减 * @param time * 时间字符串 yyyy-MM-dd HH:mm:ss * @param num * 加的数，-num就是减去 * @return * 减去相应的数量的年的日期 * @throws ParseException */ public static Date yearAddNum(Date time, Integer num) &#123; //SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //Date date = format.parse(time); Calendar calendar = Calendar.getInstance(); calendar.setTime(time); calendar.add(Calendar.YEAR, num); Date newTime = calendar.getTime(); return newTime; &#125; /** * * @param time * 时间 * @param num * 加的数，-num就是减去 * @return * 减去相应的数量的月份的日期 * @throws ParseException Date */ public static Date monthAddNum(Date time, Integer num)&#123; //SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //Date date = format.parse(time); Calendar calendar = Calendar.getInstance(); calendar.setTime(time); calendar.add(Calendar.MONTH, num); Date newTime = calendar.getTime(); return newTime; &#125; /** * * @param time * 时间 * @param num * 加的数，-num就是减去 * @return * 减去相应的数量的天的日期 * @throws ParseException Date */ public static Date dayAddNum(Date time, Integer num)&#123; //SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //Date date = format.parse(time); Calendar calendar = Calendar.getInstance(); calendar.setTime(time); calendar.add(Calendar.DAY_OF_MONTH, num); Date newTime = calendar.getTime(); return newTime; &#125; 引用java日期加减年月日Java Calendar使用]]></content>
+      <categories>
+        <category>后端开发语言</category>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>日期操作</tag>
+        <tag>Calendar</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[js获取时间]]></title>
+    <url>%2F2019%2F03%2F02%2Fjs%E8%8E%B7%E5%8F%96%E6%97%B6%E9%97%B4%2F</url>
+    <content type="text"><![CDATA[获取基础时间数据1var myDate = new Date();//获取系统的当前时间 格式化基础时间根据需求，格式化获取到的基础数据12345678910111213myDate.getYear();//获取当前年份(2位)myDate.getFullYear(); //获取完整的年份(4位,1970-????)myDate.getMonth(); //获取当前月份(0-11,0代表1月)myDate.getDate(); //获取当前日(1-31)myDate.getDay(); //获取当前星期X(0-6,0代表星期天)myDate.getTime(); //获取当前时间(从1970.1.1开始的毫秒数)myDate.getHours(); //获取当前小时数(0-23)myDate.getMinutes(); //获取当前分钟数(0-59)myDate.getSeconds(); //获取当前秒数(0-59)myDate.getMilliseconds(); //获取当前毫秒数(0-999)myDate.toLocaleDateString(); //获取当前日期var mytime=myDate.toLocaleTimeString(); //获取当前时间myDate.toLocaleString( ); //获取日期与时间]]></content>
+      <categories>
+        <category>前端开发语言</category>
+        <category>Javascript</category>
+      </categories>
+      <tags>
+        <tag>Javascript</tag>
+        <tag>获取时间</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Oracle/MySQL实现根据一个表更新另一张表]]></title>
+    <url>%2F2019%2F03%2F02%2FOracle-MySQL%E5%AE%9E%E7%8E%B0%E6%A0%B9%E6%8D%AE%E4%B8%80%E4%B8%AA%E8%A1%A8%E6%9B%B4%E6%96%B0%E5%8F%A6%E4%B8%80%E5%BC%A0%E8%A1%A8%2F</url>
+    <content type="text"><![CDATA[最近接到一个从DB2数据导出，Oracle数据库导入的工作，导入到Oracle时肯定不能直接使用业务表，需要创建临时表，然后通过临时表更新业务表，那么问题来了，有更新有插入，该如何处理，之前记得MySQL是支持update A,B…操作的，Oracle之前没有听过，因此百度了下，得到的结论如下文所示 OracleOracle中可以使用MERGE INTO语句1234567891011121314151617181920MERGE INTO T_USER T1 USING ( SELECT userid AS id, NAME AS username, sex AS usersex FROM DUAL) T2 ON (T1.userid = T2.id) WHEN MATCHED THEN UPDATESET t1. NAME = t2.username, t1.sex = t2.usersex WHEN NOT MATCHED THEN INSERT (userid, NAME, sex)VALUES ( t2.id, t2.username, t2.usersex ) MySQLMySQL有则更新，无则插入mysql中可以使用ON DUPLICATE KEY进行处理，但是需要注意的是需要有主键，下面的实例中需要userid是主键1234INSERT INTO T_USER (userid, NAME, sex)VALUES (id, username, usersex) ON DUPLICATE KEY UPDATE NAME = username, sex = usersex; 单纯表更新这种方式只是单纯的根据一个表的数据更新另一张的数据12345UPDATE table_1 t1, table_2 t2SET t1. COLUMN = t2. COLUMNWHERE t1.id = t2.pid 引用：Oracle实现一张表根据另一张表更新（有则更新无则插入）]]></content>
+      <categories>
+        <category>数据库</category>
+        <category>Oracle/MySQL</category>
+      </categories>
+      <tags>
+        <tag>Oracle</tag>
+        <tag>MySQL</tag>
+        <tag>跨表更新</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[DB2数据表Oracle数据库导入]]></title>
     <url>%2F2019%2F03%2F01%2FDB2%E6%95%B0%E6%8D%AE%E8%A1%A8Oracle%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AF%BC%E5%85%A5%2F</url>
-    <content type="text"><![CDATA[本操作手册用作从信贷系统导出操作员基本数据、机构信息数据等基础数据，然后在客户管理平台中导入的引导手册 基础数据准备需要先从行方获取对应的数据，获取数据的对应规则和对应字段的顺序一定要给行方人员说明清楚，然后他根据规则从信贷系统中根据你要的规则从DB2中导出数据，导出的文件是.del类型的文件 修改脚本 将行方给的.del文件放到服务器上，记录下路径，本例为/home/20190301/user.del 创建临时表 1234-- 只需要创建一个表结构相同的表CREATE TABLE SYS_OPER_TEMP AS SELECT * FROM SYS_OPER WHERE 1=2;-- 下面只会显示表的结构，没有数据SELECT * FROM SYS_OPER_TEMP; 修改下这块代码中的第二行为第一步中的路径，修改第三行为你要导入的表，这个地方最好是创建一个临时表，防止与服务器的数据冲突造成业务异常，同时还需要保证要导入的表不能有数据，第六行的括号里面包裹的内容是上面创建的临时表的字段，而且字段的顺序要和del文件的顺序保持一致，然后保存为一个.ctl的文件，本例为SYS_OPER_TEMP.ctl，然后将这个文件也上传到/home/20190301目录下 1234567891011121314load datainfile &quot;/home/20190301/org.del&quot;into table SYS_OPER_TEMPfields terminated by &quot;,&quot; optionally enclosed by &apos;&quot;&apos;trailing nullcols( USERID, USERNAME, LOGINID, DEPTID, ORGID, PHONENUM, IDCARDNO) 远程登录服务器执行su - oracle切换到oracle用户，然后执行sqlplus /nolog，登录Oracle 12345678910[root@MCDB ~]# su - oracle上一次登录：五 3月 1 23:53:37 CST 2019pts/2 上-bash: $'\302\240': command not found[oracle@MCDB ~]$ sqlplus /nologSQL*Plus: Release 11.2.0.4.0 Production on Fri Mar 1 23:58:49 2019Copyright (c) 1982, 2013, Oracle. All rights reserved.SQL&gt; 执行下面的命令，开始导入数据 1host sqlldr userid=jnmcbusi/123456@jnmcdb control=/home/20190301/SYS_OPER_TEMP.ctl log=/home/ctl/user.log 剩下的就是从临时表更新业务表了 附件Oracle查询一个表的数据更新另一张表的数据 123456789101112131415161718MERGE INTO SYS_OPER T1USING (SELECT USERID, ORGID, DEPTID, USERNAME, LOGINID, PHONENUM, IDCARDNO FROM SYS_OPER_TEMP) T2ON (T1.USERID = T2.USERID)WHEN MATCHED THEN UPDATE SET T1.ORGID = T2.ORGID, T1.DEPTID = T2.DEPTIDWHEN NOT MATCHED THEN INSERT (USERID, ORGID, DEPTID, USERNAME, LOGINID, PASSWORD, PHONENUM, IDCARDNO) VALUES (T2.USERID,T2.ORGID,T2.DEPTID,T2.USERNAME,T2.LOGINID,'e10adc3949ba59abbe56e057f20f883e',T2.PHONENUM,T2.IDCARDNO);]]></content>
+    <content type="text"><![CDATA[本操作手册用作从信贷系统导出操作员基本数据、机构信息数据等基础数据，然后在客户管理平台中导入的引导手册 基础数据准备需要先从行方获取对应的数据，获取数据的对应规则和对应字段的顺序一定要给行方人员说明清楚，然后他根据规则从信贷系统中根据你要的规则从DB2中导出数据，导出的文件是.del类型的文件 修改脚本 将行方给的.del文件放到服务器上，记录下路径，本例为/home/20190301/user.del 创建临时表 1234-- 只需要创建一个表结构相同的表CREATE TABLE SYS_OPER_TEMP AS SELECT * FROM SYS_OPER WHERE 1=2;-- 下面只会显示表的结构，没有数据SELECT * FROM SYS_OPER_TEMP; 修改下这块代码中的第二行为第一步中的路径，修改第三行为你要导入的表，这个地方最好是创建一个临时表，防止与服务器的数据冲突造成业务异常，同时还需要保证要导入的表不能有数据，第六行的括号里面包裹的内容是上面创建的临时表的字段，而且字段的顺序要和del文件的顺序保持一致，然后保存为一个.ctl的文件，本例为SYS_OPER_TEMP.ctl，然后将这个文件也上传到/home/20190301目录下 1234567891011121314load datainfile &quot;/home/20190301/org.del&quot;into table SYS_OPER_TEMPfields terminated by &quot;,&quot; optionally enclosed by &apos;&quot;&apos;trailing nullcols( USERID, USERNAME, LOGINID, DEPTID, ORGID, PHONENUM, IDCARDNO) 远程登录服务器执行su - oracle切换到oracle用户，然后执行sqlplus /nolog，登录Oracle 12345678910[root@MCDB ~]# su - oracle上一次登录：五 3月 1 23:53:37 CST 2019pts/2 上-bash: $'\302\240': command not found[oracle@MCDB ~]$ sqlplus /nologSQL*Plus: Release 11.2.0.4.0 Production on Fri Mar 1 23:58:49 2019Copyright (c) 1982, 2013, Oracle. All rights reserved.SQL&gt; 执行下面的命令，开始导入数据（执行前需要修改成自己的路径和文件） 1host sqlldr userid=jnmcbusi/123456@jnmcdb control=/home/20190301/SYS_OPER_TEMP.ctl log=/home/ctl/user.log 剩下的就是从临时表更新业务表了 附件Oracle查询一个表的数据更新另一张表的数据 123456789101112131415161718MERGE INTO SYS_OPER T1USING (SELECT USERID, ORGID, DEPTID, USERNAME, LOGINID, PHONENUM, IDCARDNO FROM SYS_OPER_TEMP) T2ON (T1.USERID = T2.USERID)WHEN MATCHED THEN UPDATE SET T1.ORGID = T2.ORGID, T1.DEPTID = T2.DEPTIDWHEN NOT MATCHED THEN INSERT (USERID, ORGID, DEPTID, USERNAME, LOGINID, PASSWORD, PHONENUM, IDCARDNO) VALUES (T2.USERID,T2.ORGID,T2.DEPTID,T2.USERNAME,T2.LOGINID,'e10adc3949ba59abbe56e057f20f883e',T2.PHONENUM,T2.IDCARDNO);]]></content>
       <categories>
         <category>数据库</category>
         <category>Oracle</category>
       </categories>
+      <tags>
+        <tag>Oracle</tag>
+        <tag>DB2</tag>
+        <tag>数据导入导出</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[NamedParameterJdbcTemplete使用方法总结]]></title>
@@ -25,7 +71,7 @@
   <entry>
     <title><![CDATA[MySQL行转列问题及内部排序问题]]></title>
     <url>%2F2019%2F02%2F24%2FMySQL%E8%A1%8C%E8%BD%AC%E5%88%97%E9%97%AE%E9%A2%98%E5%8F%8A%E5%86%85%E9%83%A8%E6%8E%92%E5%BA%8F%E9%97%AE%E9%A2%98%2F</url>
-    <content type="text"><![CDATA[常规情况下是用不到行转列的，但是在今天做Echarts图标的时候，发现查出来的数据是纵向的，所以查了下行转列及GROUP_CONCAT 常规行转列 数据脚本 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485-- 创建表 学生表CREATE TABLE `student` ( `stuid` VARCHAR(16) NOT NULL COMMENT '学号', `stunm` VARCHAR(20) NOT NULL COMMENT '学生姓名', PRIMARY KEY (`stuid`))COLLATE='utf8_general_ci'ENGINE=InnoDB;-- 课程表CREATE TABLE `courses` ( `courseno` VARCHAR(20) NOT NULL, `coursenm` VARCHAR(100) NOT NULL, PRIMARY KEY (`courseno`))COMMENT='课程表'COLLATE='utf8_general_ci'ENGINE=InnoDB;-- 成绩表CREATE TABLE `score` ( `stuid` VARCHAR(16) NOT NULL, `courseno` VARCHAR(20) NOT NULL, `scores` FLOAT NULL DEFAULT NULL, PRIMARY KEY (`stuid`, `courseno`))COLLATE='utf8_general_ci'ENGINE=InnoDB;-- 插入数据-- 学生表数据Insert Into student (stuid, stunm) Values('1001', '张三');Insert Into student (stuid, stunm) Values('1002', '李四');Insert Into student (stuid, stunm) Values('1003', '赵二');Insert Into student (stuid, stunm) Values('1004', '王五');Insert Into student (stuid, stunm) Values('1005', '刘青');Insert Into student (stuid, stunm) Values('1006', '周明');-- 课程表数据Insert Into courses (courseno, coursenm) Values('C001', '大学语文');Insert Into courses (courseno, coursenm) Values('C002', '新视野英语');Insert Into courses (courseno, coursenm) Values('C003', '离散数学');Insert Into courses (courseno, coursenm) Values('C004', '概率论与数理统计');Insert Into courses (courseno, coursenm) Values('C005', '线性代数');Insert Into courses (courseno, coursenm) Values('C006', '高等数学(一)');Insert Into courses (courseno, coursenm) Values('C007', '高等数学(二)');-- 成绩表数据Insert Into score(stuid, courseno, scores) Values('1001', 'C001', 67);Insert Into score(stuid, courseno, scores) Values('1002', 'C001', 68);Insert Into score(stuid, courseno, scores) Values('1003', 'C001', 69);Insert Into score(stuid, courseno, scores) Values('1004', 'C001', 70);Insert Into score(stuid, courseno, scores) Values('1005', 'C001', 71);Insert Into score(stuid, courseno, scores) Values('1006', 'C001', 72);Insert Into score(stuid, courseno, scores) Values('1001', 'C002', 87);Insert Into score(stuid, courseno, scores) Values('1002', 'C002', 88);Insert Into score(stuid, courseno, scores) Values('1003', 'C002', 89);Insert Into score(stuid, courseno, scores) Values('1004', 'C002', 90);Insert Into score(stuid, courseno, scores) Values('1005', 'C002', 91);Insert Into score(stuid, courseno, scores) Values('1006', 'C002', 92);Insert Into score(stuid, courseno, scores) Values('1001', 'C003', 83);Insert Into score(stuid, courseno, scores) Values('1002', 'C003', 84);Insert Into score(stuid, courseno, scores) Values('1003', 'C003', 85);Insert Into score(stuid, courseno, scores) Values('1004', 'C003', 86);Insert Into score(stuid, courseno, scores) Values('1005', 'C003', 87);Insert Into score(stuid, courseno, scores) Values('1006', 'C003', 88);Insert Into score(stuid, courseno, scores) Values('1001', 'C004', 88);Insert Into score(stuid, courseno, scores) Values('1002', 'C004', 89);Insert Into score(stuid, courseno, scores) Values('1003', 'C004', 90);Insert Into score(stuid, courseno, scores) Values('1004', 'C004', 91);Insert Into score(stuid, courseno, scores) Values('1005', 'C004', 92);Insert Into score(stuid, courseno, scores) Values('1006', 'C004', 93);Insert Into score(stuid, courseno, scores) Values('1001', 'C005', 77);Insert Into score(stuid, courseno, scores) Values('1002', 'C005', 78);Insert Into score(stuid, courseno, scores) Values('1003', 'C005', 79);--select st.stuid,st.stunm from student st;select sc.stuid , sc.courseno,sc.scores from score sc ;select cs.courseno,cs.coursenm from courses cs; 要求查询每个学生的 每门课程与每门成绩 123456789101112select st.stuid 编号, st.stunm 姓名 ,Max(case c.coursenm when '大学语文' then s.scores else 0 end ) '大学语文',max(case c.coursenm when '新视野英语' then IFNULL(s.scores,0)else 0 end) '新视野英语',Max(case c.coursenm when '离散数学' then IFNULL(s.scores,0) ELSE 0 END) '离散数学',MAX(case c.coursenm when '概率论与数理统计' then IFNULL(s.scores,0) else 0 end) '概率论与数理统计',MAX(case c.coursenm when '线性代数' then IFNULL(s.scores,0) else 0 END) '线性代数',MAX(case c.coursenm when '高等数学(一)' THEN IFNULL(s.scores,0) else 0 end) '高等数学(一)',MAX(case c.coursenm when '高等数学(二)' THEN IFNULL(s.scores,0) else 0 end) '高等数学(二)'from student stLEFT JOIN score s on st.stuid = s.stuidLEFT JOIN courses c on c.courseno = s.coursenoGROUP BY st.stuid GROUP_CONCAT该函数返回带有来自一个组的连接的非NULL值的字符串结果。白话解释：group_concat()会计算哪些行属于同一组，将属于同一组的列显示出来。要返回哪些列，由函数参数(就是字段名)决定。分组必须有个标准，就是根据group by指定的列进行分组12345678SELECT s.stuid 编号, GROUP_CONCAT(courseno) 课程号, GROUP_CONCAT(s.scores) 成绩FROM score sGROUP BY s.stuid 查询结果图 GROUP_CONCAT内部排序不能直接查询出来就算了，在Echarts里面需要进行日期的排序，因此就有了如下SQL，也就是出来的数据能够自定义进行排序 1GROUP_CONCAT( columnA,ORDER BY columnA) 本文引自mysql行转列转换]]></content>
+    <content type="text"><![CDATA[常规情况下是用不到行转列的，但是在今天做Echarts图标的时候，发现查出来的数据是纵向的，所以查了下行转列及GROUP_CONCAT 常规行转列 数据脚本 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485-- 创建表 学生表CREATE TABLE `student` ( `stuid` VARCHAR(16) NOT NULL COMMENT '学号', `stunm` VARCHAR(20) NOT NULL COMMENT '学生姓名', PRIMARY KEY (`stuid`))COLLATE='utf8_general_ci'ENGINE=InnoDB;-- 课程表CREATE TABLE `courses` ( `courseno` VARCHAR(20) NOT NULL, `coursenm` VARCHAR(100) NOT NULL, PRIMARY KEY (`courseno`))COMMENT='课程表'COLLATE='utf8_general_ci'ENGINE=InnoDB;-- 成绩表CREATE TABLE `score` ( `stuid` VARCHAR(16) NOT NULL, `courseno` VARCHAR(20) NOT NULL, `scores` FLOAT NULL DEFAULT NULL, PRIMARY KEY (`stuid`, `courseno`))COLLATE='utf8_general_ci'ENGINE=InnoDB;-- 插入数据-- 学生表数据Insert Into student (stuid, stunm) Values('1001', '张三');Insert Into student (stuid, stunm) Values('1002', '李四');Insert Into student (stuid, stunm) Values('1003', '赵二');Insert Into student (stuid, stunm) Values('1004', '王五');Insert Into student (stuid, stunm) Values('1005', '刘青');Insert Into student (stuid, stunm) Values('1006', '周明');-- 课程表数据Insert Into courses (courseno, coursenm) Values('C001', '大学语文');Insert Into courses (courseno, coursenm) Values('C002', '新视野英语');Insert Into courses (courseno, coursenm) Values('C003', '离散数学');Insert Into courses (courseno, coursenm) Values('C004', '概率论与数理统计');Insert Into courses (courseno, coursenm) Values('C005', '线性代数');Insert Into courses (courseno, coursenm) Values('C006', '高等数学(一)');Insert Into courses (courseno, coursenm) Values('C007', '高等数学(二)');-- 成绩表数据Insert Into score(stuid, courseno, scores) Values('1001', 'C001', 67);Insert Into score(stuid, courseno, scores) Values('1002', 'C001', 68);Insert Into score(stuid, courseno, scores) Values('1003', 'C001', 69);Insert Into score(stuid, courseno, scores) Values('1004', 'C001', 70);Insert Into score(stuid, courseno, scores) Values('1005', 'C001', 71);Insert Into score(stuid, courseno, scores) Values('1006', 'C001', 72);Insert Into score(stuid, courseno, scores) Values('1001', 'C002', 87);Insert Into score(stuid, courseno, scores) Values('1002', 'C002', 88);Insert Into score(stuid, courseno, scores) Values('1003', 'C002', 89);Insert Into score(stuid, courseno, scores) Values('1004', 'C002', 90);Insert Into score(stuid, courseno, scores) Values('1005', 'C002', 91);Insert Into score(stuid, courseno, scores) Values('1006', 'C002', 92);Insert Into score(stuid, courseno, scores) Values('1001', 'C003', 83);Insert Into score(stuid, courseno, scores) Values('1002', 'C003', 84);Insert Into score(stuid, courseno, scores) Values('1003', 'C003', 85);Insert Into score(stuid, courseno, scores) Values('1004', 'C003', 86);Insert Into score(stuid, courseno, scores) Values('1005', 'C003', 87);Insert Into score(stuid, courseno, scores) Values('1006', 'C003', 88);Insert Into score(stuid, courseno, scores) Values('1001', 'C004', 88);Insert Into score(stuid, courseno, scores) Values('1002', 'C004', 89);Insert Into score(stuid, courseno, scores) Values('1003', 'C004', 90);Insert Into score(stuid, courseno, scores) Values('1004', 'C004', 91);Insert Into score(stuid, courseno, scores) Values('1005', 'C004', 92);Insert Into score(stuid, courseno, scores) Values('1006', 'C004', 93);Insert Into score(stuid, courseno, scores) Values('1001', 'C005', 77);Insert Into score(stuid, courseno, scores) Values('1002', 'C005', 78);Insert Into score(stuid, courseno, scores) Values('1003', 'C005', 79);--select st.stuid,st.stunm from student st;select sc.stuid , sc.courseno,sc.scores from score sc ;select cs.courseno,cs.coursenm from courses cs; 要求查询每个学生的 每门课程与每门成绩 123456789101112select st.stuid 编号, st.stunm 姓名 ,Max(case c.coursenm when '大学语文' then s.scores else 0 end ) '大学语文',max(case c.coursenm when '新视野英语' then IFNULL(s.scores,0)else 0 end) '新视野英语',Max(case c.coursenm when '离散数学' then IFNULL(s.scores,0) ELSE 0 END) '离散数学',MAX(case c.coursenm when '概率论与数理统计' then IFNULL(s.scores,0) else 0 end) '概率论与数理统计',MAX(case c.coursenm when '线性代数' then IFNULL(s.scores,0) else 0 END) '线性代数',MAX(case c.coursenm when '高等数学(一)' THEN IFNULL(s.scores,0) else 0 end) '高等数学(一)',MAX(case c.coursenm when '高等数学(二)' THEN IFNULL(s.scores,0) else 0 end) '高等数学(二)'from student stLEFT JOIN score s on st.stuid = s.stuidLEFT JOIN courses c on c.courseno = s.coursenoGROUP BY st.stuid GROUP_CONCAT该函数返回带有来自一个组的连接的非NULL值的字符串结果。白话解释：group_concat()会计算哪些行属于同一组，将属于同一组的列显示出来。要返回哪些列，由函数参数(就是字段名)决定。分组必须有个标准，就是根据group by指定的列进行分组12345678SELECT s.stuid 编号, GROUP_CONCAT(courseno) 课程号, GROUP_CONCAT(s.scores) 成绩FROM score sGROUP BY s.stuid 查询结果图 GROUP_CONCAT内部排序不能直接查询出来就算了，在Echarts里面需要进行日期的排序，因此就有了如下SQL，也就是出来的数据能够自定义进行排序 1GROUP_CONCAT( columnA ORDER BY columnA) 本文引自mysql行转列转换]]></content>
       <categories>
         <category>数据库</category>
         <category>MySQL</category>
@@ -150,8 +196,8 @@
         <category>树莓派</category>
       </categories>
       <tags>
-        <tag>常用命令</tag>
         <tag>树莓派</tag>
+        <tag>常用命令</tag>
       </tags>
   </entry>
   <entry>
@@ -323,8 +369,8 @@
       </categories>
       <tags>
         <tag>软件安装</tag>
-        <tag>IDEA</tag>
         <tag>快捷键</tag>
+        <tag>IDEA</tag>
       </tags>
   </entry>
   <entry>
@@ -336,8 +382,8 @@
         <category>IDEA</category>
       </categories>
       <tags>
-        <tag>插件安装</tag>
         <tag>IDEA</tag>
+        <tag>插件安装</tag>
         <tag>服务免重启</tag>
       </tags>
   </entry>
@@ -365,9 +411,9 @@
         <category>Oracle</category>
       </categories>
       <tags>
+        <tag>Oracle</tag>
         <tag>数据库</tag>
         <tag>性能优化</tag>
-        <tag>Oracle</tag>
       </tags>
   </entry>
   <entry>
@@ -380,8 +426,8 @@
         <category>知识点</category>
       </categories>
       <tags>
-        <tag>数据库</tag>
         <tag>Oracle</tag>
+        <tag>数据库</tag>
       </tags>
   </entry>
   <entry>
@@ -394,8 +440,8 @@
       </categories>
       <tags>
         <tag>MySQL</tag>
-        <tag>数据库</tag>
         <tag>大小写敏感</tag>
+        <tag>数据库</tag>
       </tags>
   </entry>
   <entry>
@@ -616,8 +662,8 @@
         <category>Android</category>
       </categories>
       <tags>
-        <tag>服务</tag>
         <tag>Android</tag>
+        <tag>服务</tag>
         <tag>Activity</tag>
       </tags>
   </entry>
@@ -630,8 +676,8 @@
         <category>Android</category>
       </categories>
       <tags>
-        <tag>Android</tag>
         <tag>连续触发</tag>
+        <tag>Android</tag>
       </tags>
   </entry>
   <entry>
