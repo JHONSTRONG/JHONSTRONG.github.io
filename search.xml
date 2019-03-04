@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Kali Linux学习之路-安装]]></title>
+    <url>%2F2019%2F03%2F03%2FKali-Linux%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF-%E5%AE%89%E8%A3%85%2F</url>
+    <content type="text"><![CDATA[从今天开始准备学习一下Kali Linux，也算是个人的一点兴趣爱好，喜欢干些自己之前没有涉及过的区域，今天第一天开篇，讲讲Kali Linux操作系统和系统的安装，后续会讲到自己在使用过程中碰到的问题，以及一些使用的技巧，这个坑呢算是从这里开始挖了，到最后能不能填完，还得看有没有充裕的时间了 Kali Linux Kali Linux is a Debian-based Linux distribution aimed at advanced Penetration Testing and Security Auditing. Kali contains several hundred tools which are geared towards various information security tasks, such as Penetration Testing, Security research, Computer Forensics and Reverse Engineering. Kali Linux is developed, funded and maintained by Offensive Security, a leading information security training company. 上面引用的这段是官网上说的，Kali Linux是基于Debian系统的分布式系统，主要用作高级渗透测试和安全审计。它包含了百种工具，适用于各种安全任务，像渗透测试，安全研究，计算机取证或者逆向工程等。 安装Kali Linux可以在Win系统或者Linux系统下进行安装，官网推荐使用U盘进行安装，当然也可以在Laptop上安装，我们这里就单纯讲在U盘上安装，因为方便，随时找个电脑拿过U盘来，插上就能启动Kali- Windows操作系统安装Kali需要准备的材料 4G以上空间的U盘一个：推荐8G以上的，因为后面要做数据持久化，也就是修改内容都可以直接存储在U盘里面 Window操作系统的电脑一台，用作给U盘装Kali Kali的系统安装镜像（下面会讲到该怎么下载及具体的下载地址） Win32DiskImager软件（下面会讲到下载地址）准备材料 下载Kali 操作系统镜像Kali操作系统的下载地址，打开这个地址，然后选择Kali Linux 64 Bit这个版本的镜像，然后下载，下载的时候尽量使用下载工具，因为我之前使用HTTP下载的时候都有出现过中断的情况，具体的操作步骤如下图所示 下载Win32DiskImagerWin32DiskImager下载地址，这个的下载和安装很简单，就不上图了，自己安装即可安装Kali Win系统插入U判断，保证U盘是空的或者备份好自己的文件 打开Win32DiskImager软件，并选择Kali 镜像，其中设备区域中的G是我插入U盘的盘符，并选择写入按钮，具体操作见下图 大概20分钟左右（看U盘写入速度），即可完成刻录，值此系统安装成功 将U盘插到电脑上重启，U盘优先启动，各个电脑不同有的是重启摁F2、F12、Delete键，有的是按其他，选择完U盘启动之后即可进入Kali Linux系统界面 Kali Linux的默认账号和密码是root/toor，如果没有改过密码的情况下，那应该是toor 持久化数据到U盘（即修改信息后U盘可保存）常规情况下，系统做完之后，插在电脑上启动，修改的账号密码等等信息是不会保存的，需要一些额外的设置，才能保存到U盘当中，以下是详细的操作流程 准备工具 MiniTool Partition Wizard Free Edition for Windows.（下载地址）]]></content>
+      <categories>
+        <category>安全测评</category>
+        <category>Kali Linux</category>
+      </categories>
+      <tags>
+        <tag>系统安装</tag>
+        <tag>Kali</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Java中Calendar使用及日期增减]]></title>
     <url>%2F2019%2F03%2F02%2FJava%E4%B8%ADCalendar%E4%BD%BF%E7%94%A8%E5%8F%8A%E6%97%A5%E6%9C%9F%E5%A2%9E%E5%87%8F%2F</url>
     <content type="text"><![CDATA[Calendar的使用12345678910111213Calendar cal = Calendar.getInstance(); //首先需要实例化一个calendarcal.get(Calendar.DATE);//-----------------------当天 1-31cal.get(Calendar.DAY_OF_MONTH);//---------------当天 1-12cal.get(Calendar.DAY_OF_WEEK);//----------------从星期天开始计算，如果今天星期二，那么返回3cal.get(Calendar.DAY_OF_YEAR);//----------------cal.get(Calendar.HOUR);//-----------------------12小时制cal.get(Calendar.HOUR_OF_DAY);//----------------24小时制，一般使用这个属性赋值cal.get(Calendar.MILLISECOND);//----------------cal.get(Calendar.MINUTE);//---------------------cal.get(Calendar.SECOND);//---------------------cal.get(Calendar.WEEK_OF_MONTH);//--------------cal.get(Calendar.WEEK_OF_YEAR);//---------------cal.get(Calendar.MONTH);//-----------------------月份获取需要 +1，那么，赋值时需要 -1 日期加减1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162/** * 日期相加减 * @param time * 时间字符串 yyyy-MM-dd HH:mm:ss * @param num * 加的数，-num就是减去 * @return * 减去相应的数量的年的日期 * @throws ParseException */ public static Date yearAddNum(Date time, Integer num) &#123; //SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //Date date = format.parse(time); Calendar calendar = Calendar.getInstance(); calendar.setTime(time); calendar.add(Calendar.YEAR, num); Date newTime = calendar.getTime(); return newTime; &#125; /** * * @param time * 时间 * @param num * 加的数，-num就是减去 * @return * 减去相应的数量的月份的日期 * @throws ParseException Date */ public static Date monthAddNum(Date time, Integer num)&#123; //SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //Date date = format.parse(time); Calendar calendar = Calendar.getInstance(); calendar.setTime(time); calendar.add(Calendar.MONTH, num); Date newTime = calendar.getTime(); return newTime; &#125; /** * * @param time * 时间 * @param num * 加的数，-num就是减去 * @return * 减去相应的数量的天的日期 * @throws ParseException Date */ public static Date dayAddNum(Date time, Integer num)&#123; //SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //Date date = format.parse(time); Calendar calendar = Calendar.getInstance(); calendar.setTime(time); calendar.add(Calendar.DAY_OF_MONTH, num); Date newTime = calendar.getTime(); return newTime; &#125; 引用java日期加减年月日Java Calendar使用]]></content>
@@ -36,8 +49,8 @@
         <category>Oracle/MySQL</category>
       </categories>
       <tags>
-        <tag>Oracle</tag>
         <tag>MySQL</tag>
+        <tag>Oracle</tag>
         <tag>跨表更新</tag>
       </tags>
   </entry>
@@ -129,8 +142,8 @@
         <category>树莓派</category>
       </categories>
       <tags>
-        <tag>引脚图</tag>
         <tag>树莓派</tag>
+        <tag>引脚图</tag>
       </tags>
   </entry>
   <entry>
@@ -196,8 +209,8 @@
         <category>树莓派</category>
       </categories>
       <tags>
-        <tag>树莓派</tag>
         <tag>常用命令</tag>
+        <tag>树莓派</tag>
       </tags>
   </entry>
   <entry>
@@ -274,8 +287,8 @@
         <category>SVN</category>
       </categories>
       <tags>
-        <tag>CentOS7</tag>
         <tag>软件安装</tag>
+        <tag>CentOS7</tag>
         <tag>SVN</tag>
       </tags>
   </entry>
@@ -369,8 +382,8 @@
       </categories>
       <tags>
         <tag>软件安装</tag>
-        <tag>快捷键</tag>
         <tag>IDEA</tag>
+        <tag>快捷键</tag>
       </tags>
   </entry>
   <entry>
@@ -382,8 +395,8 @@
         <category>IDEA</category>
       </categories>
       <tags>
-        <tag>IDEA</tag>
         <tag>插件安装</tag>
+        <tag>IDEA</tag>
         <tag>服务免重启</tag>
       </tags>
   </entry>
@@ -662,8 +675,8 @@
         <category>Android</category>
       </categories>
       <tags>
-        <tag>Android</tag>
         <tag>服务</tag>
+        <tag>Android</tag>
         <tag>Activity</tag>
       </tags>
   </entry>
@@ -676,8 +689,8 @@
         <category>Android</category>
       </categories>
       <tags>
-        <tag>连续触发</tag>
         <tag>Android</tag>
+        <tag>连续触发</tag>
       </tags>
   </entry>
   <entry>
@@ -712,8 +725,8 @@
         <category>服务器</category>
       </categories>
       <tags>
-        <tag>服务器</tag>
         <tag>CentOS7</tag>
+        <tag>服务器</tag>
         <tag>防火墙</tag>
       </tags>
   </entry>
@@ -775,8 +788,8 @@
         <category>服务器</category>
       </categories>
       <tags>
-        <tag>服务器</tag>
         <tag>CentOS7</tag>
+        <tag>服务器</tag>
         <tag>静态IP</tag>
       </tags>
   </entry>
