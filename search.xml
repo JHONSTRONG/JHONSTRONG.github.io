@@ -1,6 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[第5章 访问数据库]]></title>
+    <url>%2F2019%2F04%2F23%2F%E7%AC%AC5%E7%AB%A0-%E8%AE%BF%E9%97%AE%E6%95%B0%E6%8D%AE%E5%BA%93%2F</url>
+    <content type="text"><![CDATA[]]></content>
+      <categories>
+        <category>后端开发框架</category>
+        <category>Spring Boot</category>
+      </categories>
+      <tags>
+        <tag>Spring Boot</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[第4章 Spring AOP]]></title>
+    <url>%2F2019%2F04%2F23%2F%E7%AC%AC4%E7%AB%A0-Spring-AOP%2F</url>
+    <content type="text"><![CDATA[]]></content>
+      <categories>
+        <category>后端开发框架</category>
+        <category>Spring Boot</category>
+      </categories>
+      <tags>
+        <tag>Spring Boot</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[第3章 全注解下的Spring IoC]]></title>
+    <url>%2F2019%2F04%2F23%2F%E7%AC%AC3%E7%AB%A0-%E5%85%A8%E6%B3%A8%E8%A7%A3%E4%B8%8B%E7%9A%84Spring-IoC%2F</url>
+    <content type="text"><![CDATA[]]></content>
+      <categories>
+        <category>后端开发框架</category>
+        <category>Spring Boot</category>
+      </categories>
+      <tags>
+        <tag>Spring Boot</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[第2章 开发环境搭建和基本开发]]></title>
+    <url>%2F2019%2F04%2F23%2F%E7%AC%AC2%E7%AB%A0-%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E5%92%8C%E5%9F%BA%E6%9C%AC%E5%BC%80%E5%8F%91%2F</url>
+    <content type="text"><![CDATA[]]></content>
+      <categories>
+        <category>后端开发框架</category>
+        <category>Spring Boot</category>
+      </categories>
+      <tags>
+        <tag>Spring Boot</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[第1章 Spring Boot来临]]></title>
+    <url>%2F2019%2F04%2F23%2F%E7%AC%AC1%E7%AB%A0-Spring-Boot%E6%9D%A5%E4%B8%B4%2F</url>
+    <content type="text"><![CDATA[1.1 Srping的历史1.2 注解还是XMLSpring早起的1.x版本，JDK不支持注解，JDK5加入注解 XML配置文件：过于繁复 注解：会使得注解分部的导出都是，难于控制，需要了解很多框架的内部实现才能准确适用注解开发所需的功能 不成文共识：业务类适用注解，例如，对于MVC开发控制适用@Controller,业务层适用@Service，持久层适用@Repository；对于一些共用的Bean，例如数据库、第三方资源等适用XML进行配置 1.3 Spring Boot的优点优点如下： 创建独立的Spring应用程序 嵌入Tomcat、Jetty或者Undertow，无需部署war文件 允许通过Maven来根据需要获取starter 尽可能的自动配置Spring 提供生产就绪功能，如指标、健康检查和外部配置 绝对没有代码生成，对XML没有要求配置 spring-boot-starter-web捆绑了Spring MVC所以来的包，spring-boot-starter-tomcat绑定了内嵌的Tomcat，这样使得开发者能够尽可能快的搭建开发环境，快速进行开发和部署，这就是Spring Boot的特色 1.4 传统Spring MVC和Spring Boot的对比 传统Spring MVC项目开发：需要配置DispatcherServlet，还需要配置Spring IoC的容器 使用Spring Boot开发后，只需要创建一个Maven工程，并把其名字定义为chapter1，然后这样就可以看到一个Maven的pom.xml，将其内容修改为如下代码清单1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"&gt; &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt; &lt;parent&gt; &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt; &lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt; &lt;version&gt;2.1.4.RELEASE&lt;/version&gt; &lt;relativePath/&gt; &lt;!-- lookup parent from repository --&gt; &lt;/parent&gt; &lt;groupId&gt;com.example&lt;/groupId&gt; &lt;artifactId&gt;chapter1&lt;/artifactId&gt; &lt;packaging&gt;jar&lt;/packaging&gt; &lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt; &lt;name&gt;chapter1&lt;/name&gt; &lt;description&gt;Demo project for Spring Boot&lt;/description&gt; &lt;properties&gt; &lt;java.version&gt;1.8&lt;/java.version&gt; &lt;/properties&gt; &lt;dependencies&gt; &lt;!-- Spring Boot Starter依赖引入 --&gt; &lt;!-- AOP包 --&gt; &lt;dependency&gt; &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt; &lt;artifactId&gt;spring-boot-starter-aop&lt;/artifactId&gt; &lt;/dependency&gt; &lt;!-- Web开发包，将载入Spring MVC所需要的包，且内嵌tomcat --&gt; &lt;dependency&gt; &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt; &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt; &lt;/dependency&gt; &lt;!-- 加载测试依赖包 --&gt; &lt;dependency&gt; &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt; &lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt; &lt;scope&gt;test&lt;/scope&gt; &lt;/dependency&gt; &lt;/dependencies&gt; &lt;!--引入插件--&gt; &lt;build&gt; &lt;plugins&gt; &lt;plugin&gt; &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt; &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt; &lt;/plugin&gt; &lt;/plugins&gt; &lt;/build&gt;&lt;/project&gt; Page21]]></content>
+      <categories>
+        <category>后端开发框架</category>
+        <category>Spring Boot</category>
+      </categories>
+      <tags>
+        <tag>Spring Boot</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[HSSFWorkBook操作导出Excel]]></title>
+    <url>%2F2019%2F04%2F16%2FHSSFWorkBook%E6%93%8D%E4%BD%9C%E5%AF%BC%E5%87%BAExcel%2F</url>
+    <content type="text"><![CDATA[官方文档http://poi.apache.org/apidocs/dev/org/apache/poi/hssf/usermodel/HSSFWorkbook.html 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123124125126127128129130131132133134135136137138139140141142143144145146147148149150151152153154155156157158159160161162163164165166167168169170171172173174175176177178179180181182183184185186187188189190191192193194195196197198199200201202203204205206207208209210211212213214215public ActionResult excelPrint() &#123; HSSFWorkbook workbook = new HSSFWorkbook();// 创建一个Excel文件 HSSFSheet sheet = workbook.createSheet();// 创建一个Excel的Sheet sheet.createFreezePane(1, 3);// 冻结 // 设置列宽 sheet.setColumnWidth(0, 1000); sheet.setColumnWidth(1, 3500); sheet.setColumnWidth(2, 3500); sheet.setColumnWidth(3, 6500); sheet.setColumnWidth(4, 6500); sheet.setColumnWidth(5, 6500); sheet.setColumnWidth(6, 6500); sheet.setColumnWidth(7, 2500); // Sheet样式 HSSFCellStyle sheetStyle = workbook.createCellStyle(); // 背景色的设定 sheetStyle.setFillBackgroundColor(HSSFColor.GREY_25_PERCENT.index); // 前景色的设定 sheetStyle.setFillForegroundColor(HSSFColor.GREY_25_PERCENT.index); // 填充模式 sheetStyle.setFillPattern(HSSFCellStyle.FINE_DOTS); // 设置列的样式 for (int i = 0; i &lt;= 14; i++) &#123; sheet.setDefaultColumnStyle((short) i, sheetStyle); &#125; // 设置字体 HSSFFont headfont = workbook.createFont(); headfont.setFontName("黑体"); headfont.setFontHeightInPoints((short) 22);// 字体大小 headfont.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);// 加粗 // 另一个样式 HSSFCellStyle headstyle = workbook.createCellStyle(); headstyle.setFont(headfont); headstyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);// 左右居中 headstyle.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);// 上下居中 headstyle.setLocked(true); headstyle.setWrapText(true);// 自动换行 // 另一个字体样式 HSSFFont columnHeadFont = workbook.createFont(); columnHeadFont.setFontName("宋体"); columnHeadFont.setFontHeightInPoints((short) 10); columnHeadFont.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD); // 列头的样式 HSSFCellStyle columnHeadStyle = workbook.createCellStyle(); columnHeadStyle.setFont(columnHeadFont); columnHeadStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);// 左右居中 columnHeadStyle.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);// 上下居中 columnHeadStyle.setLocked(true); columnHeadStyle.setWrapText(true); columnHeadStyle.setLeftBorderColor(HSSFColor.BLACK.index);// 左边框的颜色 columnHeadStyle.setBorderLeft((short) 1);// 边框的大小 columnHeadStyle.setRightBorderColor(HSSFColor.BLACK.index);// 右边框的颜色 columnHeadStyle.setBorderRight((short) 1);// 边框的大小 columnHeadStyle.setBorderBottom(HSSFCellStyle.BORDER_THIN); // 设置单元格的边框为粗体 columnHeadStyle.setBottomBorderColor(HSSFColor.BLACK.index); // 设置单元格的边框颜色 // 设置单元格的背景颜色（单元格的样式会覆盖列或行的样式） columnHeadStyle.setFillForegroundColor(HSSFColor.WHITE.index); HSSFFont font = workbook.createFont(); font.setFontName("宋体"); font.setFontHeightInPoints((short) 10); // 普通单元格样式 HSSFCellStyle style = workbook.createCellStyle(); style.setFont(font); style.setAlignment(HSSFCellStyle.ALIGN_LEFT);// 左右居中 style.setVerticalAlignment(HSSFCellStyle.VERTICAL_TOP);// 上下居中 style.setWrapText(true); style.setLeftBorderColor(HSSFColor.BLACK.index); style.setBorderLeft((short) 1); style.setRightBorderColor(HSSFColor.BLACK.index); style.setBorderRight((short) 1); style.setBorderBottom(HSSFCellStyle.BORDER_THIN); // 设置单元格的边框为粗体 style.setBottomBorderColor(HSSFColor.BLACK.index); // 设置单元格的边框颜色． style.setFillForegroundColor(HSSFColor.WHITE.index);// 设置单元格的背景颜色． // 另一个样式 HSSFCellStyle centerstyle = workbook.createCellStyle(); centerstyle.setFont(font); centerstyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);// 左右居中 centerstyle.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);// 上下居中 centerstyle.setWrapText(true); centerstyle.setLeftBorderColor(HSSFColor.BLACK.index); centerstyle.setBorderLeft((short) 1); centerstyle.setRightBorderColor(HSSFColor.BLACK.index); centerstyle.setBorderRight((short) 1); centerstyle.setBorderBottom(HSSFCellStyle.BORDER_THIN); // 设置单元格的边框为粗体 centerstyle.setBottomBorderColor(HSSFColor.BLACK.index); // 设置单元格的边框颜色． centerstyle.setFillForegroundColor(HSSFColor.WHITE.index);// 设置单元格的背景颜色． try &#123; // 创建第一行 HSSFRow row0 = sheet.createRow(0); // 设置行高 row0.setHeight((short) 900); // 创建第一列 HSSFCell cell0 = row0.createCell(0); cell0.setCellValue(new HSSFRichTextString("中非发展基金投资项目调度会工作落实情况对照表")); cell0.setCellStyle(headstyle); /** * 合并单元格 * 第一个参数：第一个单元格的行数（从0开始） * 第二个参数：第二个单元格的行数（从0开始） * 第三个参数：第一个单元格的列数（从0开始） * 第四个参数：第二个单元格的列数（从0开始） */ CellRangeAddress range = new CellRangeAddress(0, 0, 0, 7); sheet.addMergedRegion(range); // 创建第二行 HSSFRow row1 = sheet.createRow(1); HSSFCell cell1 = row1.createCell(0); cell1.setCellValue(new HSSFRichTextString("本次会议时间：2009年8月31日 前次会议时间：2009年8月24日")); cell1.setCellStyle(centerstyle); // 合并单元格 range = new CellRangeAddress(1, 2, 0, 7); sheet.addMergedRegion(range); // 第三行 HSSFRow row2 = sheet.createRow(3); row2.setHeight((short) 750); HSSFCell cell = row2.createCell(0); cell.setCellValue(new HSSFRichTextString("责任者")); cell.setCellStyle(columnHeadStyle); cell = row2.createCell(1); cell.setCellValue(new HSSFRichTextString("成熟度排序")); cell.setCellStyle(columnHeadStyle); cell = row2.createCell(2); cell.setCellValue(new HSSFRichTextString("事项")); cell.setCellStyle(columnHeadStyle); cell = row2.createCell(3); cell.setCellValue(new HSSFRichTextString("前次会议要求/n/新项目的项目概要")); cell.setCellStyle(columnHeadStyle); cell = row2.createCell(4); cell.setCellValue(new HSSFRichTextString("上周工作进展")); cell.setCellStyle(columnHeadStyle); cell = row2.createCell(5); cell.setCellValue(new HSSFRichTextString("本周工作计划")); cell.setCellStyle(columnHeadStyle); cell = row2.createCell(6); cell.setCellValue(new HSSFRichTextString("问题和建议")); cell.setCellStyle(columnHeadStyle); cell = row2.createCell(7); cell.setCellValue(new HSSFRichTextString("备 注")); cell.setCellStyle(columnHeadStyle); // 访问数据库，得到数据集 List&lt;DeitelVO&gt; deitelVOList = getEntityManager().queryDeitelVOList(); int m = 4; int k = 4; for (int i = 0; i &lt; deitelVOList.size(); i++) &#123; DeitelVO vo = deitelVOList.get(i); String dname = vo.getDname(); List&lt;Workinfo&gt; workList = vo.getWorkInfoList(); HSSFRow row = sheet.createRow(m); cell = row.createCell(0); cell.setCellValue(new HSSFRichTextString(dname)); cell.setCellStyle(centerstyle); // 合并单元格 range = new CellRangeAddress(m, m + workList.size() - 1, 0, 0); sheet.addMergedRegion(range); m = m + workList.size(); for (int j = 0; j &lt; workList.size(); j++) &#123; Workinfo w = workList.get(j); // 遍历数据集创建Excel的行 row = sheet.getRow(k + j); if (null == row) &#123; row = sheet.createRow(k + j); &#125; cell = row.createCell(1); cell.setCellValue(w.getWnumber()); cell.setCellStyle(centerstyle); cell = row.createCell(2); cell.setCellValue(new HSSFRichTextString(w.getWitem())); cell.setCellStyle(style); cell = row.createCell(3); cell.setCellValue(new HSSFRichTextString(w.getWmeting())); cell.setCellStyle(style); cell = row.createCell(4); cell.setCellValue(new HSSFRichTextString(w.getWbweek())); cell.setCellStyle(style); cell = row.createCell(5); cell.setCellValue(new HSSFRichTextString(w.getWtweek())); cell.setCellStyle(style); cell = row.createCell(6); cell.setCellValue(new HSSFRichTextString(w.getWproblem())); cell.setCellStyle(style); cell = row.createCell(7); cell.setCellValue(new HSSFRichTextString(w.getWremark())); cell.setCellStyle(style); &#125; k = k + workList.size(); &#125; // 列尾 int footRownumber = sheet.getLastRowNum(); HSSFRow footRow = sheet.createRow(footRownumber + 1); HSSFCell footRowcell = footRow.createCell(0); footRowcell.setCellValue(new HSSFRichTextString(" 审 定：XXX 审 核：XXX 汇 总：XX")); footRowcell.setCellStyle(centerstyle); range = new CellRangeAddress(footRownumber + 1, footRownumber + 1, 0, 7); sheet.addMergedRegion(range); HttpServletResponse response = getResponse(); HttpServletRequest request = getRequest(); String filename = "未命名.xls";//设置下载时客户端Excel的名称 // 请见：http://zmx.javaeye.com/blog/622529 filename = Util.encodeFilename(filename, request); response.setContentType("application/vnd.ms-excel"); response.setHeader("Content-disposition", "attachment;filename=" + filename); OutputStream ouputStream = response.getOutputStream(); workbook.write(ouputStream); ouputStream.flush(); ouputStream.close(); &#125; catch (Exception e) &#123; e.printStackTrace(); &#125; return null; &#125;]]></content>
+      <categories>
+        <category>后端插件</category>
+        <category>Excel</category>
+      </categories>
+      <tags>
+        <tag>Excel导出</tag>
+        <tag>HSSFWorkBook</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Oracle数据泵导出impdp/expdp]]></title>
+    <url>%2F2019%2F03%2F07%2FOracle%E6%95%B0%E6%8D%AE%E6%B3%B5%E5%AF%BC%E5%87%BAimpdp-expdp%2F</url>
+    <content type="text"><![CDATA[最近项目上用测试数据库，需要从生产上导出数据，然后本地数据库导入操作，使用exp/imp一直报错，显示文件头无法识别，因此改换成数据泵导入导出，因此进行记录。从中也发现数据泵导入导出比常规imp/exp导入导出要快很多 数据泵是服务器提供的功能，因此从客户机不能使用数据泵导入导出操作，不知道这个观点对不对，没有尝试过 逻辑目录 常规查看逻辑路径的方式常规情况下，一般数据库会有默认的，可以打开PLSQL，在左侧Objects栏中可以看到默认的数据泵导入导出路径目录，具体如下图所示 命令方式查看逻辑路径方式123456789101112131415161718192021[oracle@MCDB ~]$ sqlplus /nologSQL*Plus: Release 11.2.0.4.0 Production on Thu Mar 7 14:59:54 2019Copyright (c) 1982, 2013, Oracle. All rights reserved.SQL&gt; conn jnmcbusi/123456;Connected.SQL&gt; select * from dba_directories;OWNER DIRECTORY_NAME DIRECTORY_PATH------------------------------ ------------------------------SYS DUMP_DIR /home/mgplat_bak/dump_dirSYS XMLDIR /home/oracle/app/oracle/product/11.2.0/dbhome_1/rdbms/xmlSYS ORACLE_OCM_CONFIG_DIR /home/oracle/app/oracle/product/11.2.0/dbhome_1/ccr/hosts/MCDB/stateSYS DATA_PUMP_DIR /home/oracle/app/admin/jnmcdb/dpdump/SYS ORACLE_OCM_CONFIG_DIR2 /home/oracle/app/oracle/product/11.2.0/dbhome_1/ccr/state 创建逻辑目录如果没有逻辑目录，可以进行创建，创建目前知道的有两种方法，创建的时候一定要记得，保证服务器上有这个目录，如果没有，先手动创建，因为Oracle不会创建物理路径 在PLSQL中右键Directories目录，然后点击New...，打开创建界面，然后填写Name和Path这里要注意，填写的Path是服务器上的路径地址，如果是Linux，也要填写服务器上的地址 使用命令创建逻辑目录使用命令创建的时候最好是sysdba，如果没有，也可以使用普通用户尝试一下，我的是成功 12345678[oracle@MCDB ~]$ sqlplus /nologsql&gt; conn username/password@orcl;sql&gt; create directory dump_dir as '/home/mgplat_bak/dump_dir'## `expdp`导出数据- 导出用户及对象```sqlexpdp username/password@orcl dumpfile=daba_back.dmp directory=dump_dir schemas=jnmcbusi 导出指定表 1expdp username/password@orcl dumpfile=daba_back.dmp directory=dump_dir tables=table1,table2 按条件查询导出 1expdp username/password@orcl dumpfile=daba_back.dmp directory=dump_dir tables=table1 query='where deptno=20' 按表空间导出 1expdp username/password@orcl dumpfile=tablespace.dmp directory=dump_dir tablespaces=temp,example 导出整个数据库 1expdp system/manager@orcl directory=dump_dir dumpfile=full.dmp full=y impdp导入数据导入之前确认用户已经创建，如果没有创建，使用下面的命令创建用户 创建表空间 1create tablespace tb_name datafile 'D:\tablespace\tb_name.dbf' size 1024m AUTOEXTEND ON; 创建用户 1create user user_name identified by A123456a default tablespace tb_name temporary tablespace TEMP; 用户授权 123sql&gt;grant read,write on directory dump_dir to user_name;sql&gt;grant dba,resource,unlimited tablespace to user_name; 导入用户 1impdp scott/tiger@orcl directory=dump_dir dumpfile=expdp.dmp schemas=scott; 导入表 1impdp system/manager@orcl directory=dump_dir dumpfile=expdp.dmptables=scott.dept,scott.emp remap_schema=scott:system; 导入表空间 1impdp system/manager@orcl directory=dump_dir dumpfile=tablespace.dmp tablespaces=example; 导入数据库 1impdb system/manager@orcl directory=dump_dir dumpfile=full.dmp full=y; 追加数据 1impdp system/manager@orcl directory=dump_dir dumpfile=expdp.dmp schemas=systemtable_exists_action]]></content>
+      <categories>
+        <category>数据库</category>
+        <category>Oracle</category>
+      </categories>
+      <tags>
+        <tag>Oracle</tag>
+        <tag>数据库</tag>
+        <tag>数据泵</tag>
+        <tag>导入导出</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Oracle数据库异常解决]]></title>
+    <url>%2F2019%2F03%2F07%2FOracle%E6%95%B0%E6%8D%AE%E5%BA%93%E5%BC%82%E5%B8%B8%E8%A7%A3%E5%86%B3%2F</url>
+    <content type="text"><![CDATA[本篇文章是对Oralce遇到的各种问题的一个收集整理，用作后续的排查问题使用 ORA-31655：尚未为作业选择数据或元数据对象 【场景】数据泵导入数据，执行下面的数据导入时123456789101112131415D:\app&gt;impdp jnmcbusi/123456@orcl directory=data_pump_dir dumpfile=MKM_ORGUSER_MAP.dmp tablespaces=jnmcdb_dataImport: Release 11.2.0.1.0 - Production on 星期四 3月 7 11:20:46 2019Copyright (c) 1982, 2009, Oracle and/or its affiliates. All rights reserved.连接到: Oracle Database 11g Enterprise Edition Release 11.2.0.1.0 - 64bit ProductionWith the Partitioning, OLAP, Data Mining and Real Application Testing optionsORA-31655: 尚未为作业选择数据或元数据对象已成功加载/卸载了主表 "JNMCBUSI"."SYS_IMPORT_TABLESPACE_01"启动 "JNMCBUSI"."SYS_IMPORT_TABLESPACE_01": jnmcbusi/********@orcl directory=data_pump_dir dumpfile=MKM_ORGUSER_MAP.dmp tablespaces=jnmcdb_data作业 "JNMCBUSI"."SYS_IMPORT_TABLESPACE_01" 已于 11:20:48 成功完成 【原因】数据泵导入数据的时候，因生产环境和本地环境的表空间不同，需要设置新老不同的表空间 【处理方案】1234567891011121314151617D:\app&gt;impdp jnmcbusi/123456@orcl directory=data_pump_dir dumpfile=MKM_CUST_AREA_FX.dmp remap_tablespace=data_custtemp:jnmcdb_dataImport: Release 11.2.0.1.0 - Production on 星期四 3月 7 11:34:36 2019Copyright (c) 1982, 2009, Oracle and/or its affiliates. All rights reserved.连接到: Oracle Database 11g Enterprise Edition Release 11.2.0.1.0 - 64bit ProductionWith the Partitioning, OLAP, Data Mining and Real Application Testing options已成功加载/卸载了主表 "JNMCBUSI"."SYS_IMPORT_FULL_01"启动 "JNMCBUSI"."SYS_IMPORT_FULL_01": jnmcbusi/********@orcl directory=data_pump_dir dumpfile=MKM_CUST_AREA_FX.dmp remap_tablespace=data_custtemp:jnmcdb_data处理对象类型 TABLE_EXPORT/TABLE/TABLE处理对象类型 TABLE_EXPORT/TABLE/TABLE_DATA. . 导入了 "JNMCBUSI"."MKM_CUST_AREA_FX" 814.9 MB 8607689 行作业 "JNMCBUSI"."SYS_IMPORT_FULL_01" 已于 11:36:11 成功完成]]></content>
+      <categories>
+        <category>数据库</category>
+        <category>Oracle</category>
+      </categories>
+      <tags>
+        <tag>Oracle</tag>
+        <tag>数据库</tag>
+        <tag>异常处理</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Windows下Oracle11g安装]]></title>
     <url>%2F2019%2F03%2F06%2FWindows%E4%B8%8BOracle11g%E5%AE%89%E8%A3%85%2F</url>
     <content type="text"><![CDATA[5年多没有碰Oracle了，从原来的9i已经到现在的12c了，今天项目上要用到Oracle11g的测试环境，因此在Window上部署了一版Oracle，期间碰到的坑还是蛮多的，比如说要安装的电脑上本来安装着10g，需要现卸载，但是咨询说是简版的oracle，卸载程序不生效，又各种捣鼓卸载，删注册表等等，介于此，特此在这记录一下 准备材料下载Oracle的两个安装包，下载地址分别是： win64_11gR2_database_1of2链接：https://pan.baidu.com/s/1AewnMe-mwm54_aRTFAHbSg提取码：vbxg win64_11gR2_database_2of2链接：https://pan.baidu.com/s/1rj9WBsut79NYTgLpEHq3uQ提取码：un5g 如果下载慢，可以去官网上下载，但是下载下来的是12c，哈哈，没有找到之前版本的下载地址下载地址 解压 将下载下来的两个压缩包进行解压，然后合并到一块，可以直接右键解压到当前目录（尽量一个一个解压，防止出现问题），如图所示 解压完成之后，会出现一个合并的database文件夹，文件夹总体大小大概在2.12G左右，具体见下图所示 安装步骤 打开database文件夹，双击setup.exe文件启动安装程序，如果是win10，会显示下面的图片，可以直接点击“是”继续安装，或者修改配置文件，配置文件在下面的步骤中讲到 修改配置文件，修复上面的提示框打开%解压目录%\stage\cvu\cvu_prereq.xml文件，然后修改配置文件内容，修改方法为找到Windows 7所在的OPERATING_SYSTEM，然后整个复制OPERATING_SYSTEM及内部的内容，然后粘贴在OPERATING_SYSTEM的兄弟节点的最后，然后修改RELEASE为6.2，Windows 7改为Windows 10，修改后的内容和粘贴后的配置文件截图如下所示，修改完成后再启动安装程序：12345678&lt;OPERATING_SYSTEM RELEASE="6.2"&gt; &lt;VERSION VALUE="3"/&gt; &lt;ARCHITECTURE VALUE="64-bit"/&gt; &lt;NAME VALUE="Windows 10"/&gt; &lt;ENV_VAR_LIST&gt; &lt;ENV_VAR NAME="PATH" MAX_LENGTH="1023" /&gt; &lt;/ENV_VAR_LIST&gt;&lt;/OPERATING_SYSTEM&gt; 在此打开安装程序，界面显示如下，其中的电子邮件和我希望...可选填，不填后面会提醒“是否确认不希望收到相关配置中的…”，直接点击是就可以了 网格安装选项、安装类型，具体操作见下图 典型安装 后面我就盗图了，因为已经安装过了，所以提示其他内容了 先决条件检查，检查电脑硬件是否满足条件 概要信息，即安装信息的概要显示 安装过程不用管，界面显示如下图 数据库软件安装完成后，会弹出安装数据库默认实例ORCL名称数据库的向导界面，如下图所示 数据库实例创建完后，系统默认是把所有的账户锁定（除sys和system外），建议点开“口令管理”，将scott账号解锁，并设置密码，操作如下图所示 安装完成后的界面如下 创建自己业务上需要的数据库即新建数据库实例 点击Win键，找到Oracle文件夹下面的Database Configuration Assitant菜单，并点击打开，具体见下图 打开之后，点击下一步，勾选创建数据库后点击下一步 选择一般用途或事务处理，点击下一步，填写数据库实例，然后点击下一步 剩下的一路Next，字符集看自己需求，如果有需要，可以对应的设置，直到下面的界面，然后点击完成会出一个汇总信息界面，点击确定，就会打开创建的Progress界面 在对应的数据库实例下面创建表空间，表数据空间等 在客户端机子上修改tnsnames.ora文件，添加新创建数据库的信息，修改里面的HOST为Oracle服务器的IP地址，SERVICE_NAME为你创建数据库实例的名称 12345678khgl_116 = (DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = 68.0.0.116)(PORT = 1521)) (CONNECT_DATA = (SERVER = DEDICATED) (SERVICE_NAME = ORCL) ) ) 使用创建数据库时的sys用户连接数据库，并执行下面的命令创建表空间和表数据控件 123456789101112131415161718-- 创建表空间create temporary tablespace jnmcdb_table tempfile 'D:\app\Administrator\oradata\orcl\jnmcdb_table.dbf' size 50m autoextend on next 50m maxsize 20480m extent management local;-- 创建表数据空间create tablespace jnmcdb_data logging datafile 'D:\app\Administrator\oradata\orcl\jnmcdb_data.dbf' size 50m autoextend on next 50m maxsize 20480m extent management local;-- 创建用户关联到表空间和表数据空间 create user jnmcbusi identified by 123456 default tablespace jnmcdb_data temporary tablespace jnmcdb_table ; 数据导入1imp username/password@ORALCEID（数据库名，以下图，在登录后左上方） file=D:\20140227.dmp full=y ignore=y 问题解决 本机可以正常访问，局域网内其他主机访问显示ORA-12541:TNS:无监听程序，修复方法见下图]]></content>
@@ -155,8 +257,8 @@
         <category>树莓派</category>
       </categories>
       <tags>
-        <tag>树莓派</tag>
         <tag>引脚图</tag>
+        <tag>树莓派</tag>
       </tags>
   </entry>
   <entry>
@@ -222,8 +324,8 @@
         <category>树莓派</category>
       </categories>
       <tags>
-        <tag>常用命令</tag>
         <tag>树莓派</tag>
+        <tag>常用命令</tag>
       </tags>
   </entry>
   <entry>
