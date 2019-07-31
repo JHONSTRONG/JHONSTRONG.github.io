@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Tomcat日志定时备份和Oracle数据库定时备份]]></title>
+    <url>%2F2019%2F07%2F31%2Ftomcat%E6%97%A5%E5%BF%97%E5%AE%9A%E6%97%B6%E5%A4%87%E4%BB%BD%E5%92%8COracle%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%9A%E6%97%B6%E5%A4%87%E4%BB%BD%2F</url>
+    <content type="text"><![CDATA[Oracle数据库备份备份脚本123456789101112131415161718export NLS_LANG=AMERICAN_AMERICA.ZHS16GBK#以上代码为Oracle数据库运行账号oracle的系统环境变量设置，必须添加，否则crontab任务计划不能执行。dateTime=`date +%Y%m%d` #当前系统时间days=7 #删除7天前的备份数据sorsid=sid #oralce连接信息orowner=user # 备份此用户下面的数据bakuser=user #用此用户来执行备份，必须要有备份操作的权限bakpass="password" #执行备注的用户密码bakdir=/home/oracle/databack #备份文件路径，需要提前创建好bakdata=$orowner"_"$dateTime.dmp #备份数据库名称baklog=$orowner"_"$dateTime.log #备份执行时候生成的日志文件名称ordatabak=$orowner"_"$dateTime.tar.gz #最后保存的Oracle数据库备份文件remotePath=/home/databack/ #上传到远程服务器的路径cd $bakdir #进入备份目录mkdir -p $orowner #按需要备份的Oracle用户创建目录cd $orowner #进入目录export ORACLE_HOME=/home/oracle/app/oracle/product/11.2.0/dbhome_1exp 'user/"password"@orsid' owner=$orowner file=$bakdir/$orowner/$bakdata log=$bakdir/$orowner/$baklog direct=y #执行备份 使用crontab添加定时任务10 1 * * * . ~/.bash_profile; /home/oracle/databack/ordatabak.sh 日志备份日志备份脚本1234567891011121314#! /bin/bashlogdir="/home/MGPLAT/logs"DATE=`date "+%Y%m%d%H%M"`export DATEcd $&#123;logdir&#125;cd /home/mgplat-logbaktest -d $&#123;DATE&#125; || mkdir $&#123;DATE&#125;cp /home/MGPLAT/logs/catalina.out /home/mgplat-logbak/$&#123;DATE&#125;/catalina.outcd /home/mgplat-logbak/$&#123;DATE&#125;tar -zcvf $&#123;DATE&#125;.tar catalina.outrm -rf catalina.outsleep 2cd /home/MGPLAT/logsecho &gt; catalina.out 使用crontab添加定时任务10 0 * * * /home/mgplat-logbak/mgplatlogbackup.sh]]></content>
+      <categories>
+        <category>数据库</category>
+        <category>Oracle</category>
+        <category>数据库备份</category>
+      </categories>
+      <tags>
+        <tag>Oracle</tag>
+        <tag>数据库</tag>
+        <tag>数据库备份</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[第10章 深入Spring MVC开发]]></title>
     <url>%2F2019%2F05%2F25%2F%E7%AC%AC10%E7%AB%A0-%E6%B7%B1%E5%85%A5Spring-MVC%E5%BC%80%E5%8F%91%2F</url>
     <content type="text"><![CDATA[]]></content>
@@ -427,8 +442,8 @@
         <category>SVN</category>
       </categories>
       <tags>
-        <tag>软件安装</tag>
         <tag>SVN</tag>
+        <tag>软件安装</tag>
         <tag>Windows</tag>
       </tags>
   </entry>
@@ -441,9 +456,9 @@
         <category>SVN</category>
       </categories>
       <tags>
-        <tag>软件安装</tag>
         <tag>CentOS7</tag>
         <tag>SVN</tag>
+        <tag>软件安装</tag>
       </tags>
   </entry>
   <entry>
@@ -468,8 +483,8 @@
         <category>Git</category>
       </categories>
       <tags>
-        <tag>Git</tag>
         <tag>软件安装</tag>
+        <tag>Git</tag>
       </tags>
   </entry>
   <entry>
@@ -879,8 +894,8 @@
         <category>服务器</category>
       </categories>
       <tags>
-        <tag>CentOS7</tag>
         <tag>服务器</tag>
+        <tag>CentOS7</tag>
         <tag>防火墙</tag>
       </tags>
   </entry>
@@ -942,8 +957,8 @@
         <category>服务器</category>
       </categories>
       <tags>
-        <tag>CentOS7</tag>
         <tag>服务器</tag>
+        <tag>CentOS7</tag>
         <tag>静态IP</tag>
       </tags>
   </entry>
@@ -1115,8 +1130,8 @@
         <category>知识点</category>
       </categories>
       <tags>
-        <tag>知识点</tag>
         <tag>JSP</tag>
+        <tag>知识点</tag>
       </tags>
   </entry>
   <entry>

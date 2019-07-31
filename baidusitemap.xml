@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://xydcom.cn/2019/07/31/tomcat%E6%97%A5%E5%BF%97%E5%AE%9A%E6%97%B6%E5%A4%87%E4%BB%BD%E5%92%8COracle%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%9A%E6%97%B6%E5%A4%87%E4%BB%BD/</loc>
+    <lastmod>2019-07-31</lastmod>
+  </url>  <url>
     <loc>https://xydcom.cn/2019/05/22/Oracle%E5%AF%BC%E5%85%A5%E5%AF%BC%E5%87%BA%E5%AD%97%E7%AC%A6%E9%9B%86/</loc>
     <lastmod>2019-07-19</lastmod>
   </url>  <url>
@@ -32,7 +35,7 @@
     <lastmod>2019-04-25</lastmod>
   </url>  <url>
     <loc>https://xydcom.cn/2019/04/23/%E7%AC%AC1%E7%AB%A0-Spring-Boot%E6%9D%A5%E4%B8%B4/</loc>
-    <lastmod>2019-04-24</lastmod>
+    <lastmod>2019-04-25</lastmod>
   </url>  <url>
     <loc>https://xydcom.cn/2019/04/16/HSSFWorkBook%E6%93%8D%E4%BD%9C%E5%AF%BC%E5%87%BAExcel/</loc>
     <lastmod>2019-04-16</lastmod>
