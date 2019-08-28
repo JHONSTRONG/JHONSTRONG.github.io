@@ -1,6 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[第15章 实践一下——抢购商品]]></title>
+    <url>%2F2019%2F08%2F28%2F%E7%AC%AC15%E7%AB%A0-%E5%AE%9E%E8%B7%B5%E4%B8%80%E4%B8%8B%E2%80%94%E2%80%94%E6%8A%A2%E8%B4%AD%E5%95%86%E5%93%81%2F</url>
+    <content type="text"><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title><![CDATA[第14章 Spring5新框架——WebFlux]]></title>
+    <url>%2F2019%2F08%2F28%2F%E7%AC%AC14%E7%AB%A0-Spring5%E6%96%B0%E6%A1%86%E6%9E%B6%E2%80%94%E2%80%94WebFlux%2F</url>
+    <content type="text"><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title><![CDATA[第13章 学点Spring其他的技术]]></title>
+    <url>%2F2019%2F08%2F28%2F%E7%AC%AC13%E7%AB%A0-%E5%AD%A6%E7%82%B9Spring%E5%85%B6%E4%BB%96%E7%9A%84%E6%8A%80%E6%9C%AF%2F</url>
+    <content type="text"><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title><![CDATA[第12章 安全——Spring Security]]></title>
+    <url>%2F2019%2F08%2F28%2F%E7%AC%AC12%E7%AB%A0-%E5%AE%89%E5%85%A8%E2%80%94%E2%80%94Spring-Security%2F</url>
+    <content type="text"><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title><![CDATA[第11章 构建REST风格网站]]></title>
+    <url>%2F2019%2F08%2F28%2F%E7%AC%AC11%E7%AB%A0-%E6%9E%84%E5%BB%BAREST%E9%A3%8E%E6%A0%BC%E7%BD%91%E7%AB%99%2F</url>
+    <content type="text"><![CDATA[构建REST风格网站REST风格不是一种标准，而是一种风格，这种风格，在各个微服务之间用于交互的方式，每一个资源知识对应一个网站，而一个代表资源网站应该是一个名词，而不是动词，这代表资源的操作 REST简述REST（Representational State Transfer）名词解释 资源：他可以是系统权限用户、角色和菜单，也可以是一些媒体类型，如文本、图像，可以使用一个URI指向它，每个资源对应一个特定的URI，在REST中每一个资源都会对应一个独一无二的URI 表现层：有了资源还需要确定如何表现这个资源，例如，一个用户可以使用JSON、xml护着其他的形式表现出来 状态转换：显示中资源并不是一成不变的，是一个变化的过程，一个资源可以经历创建、访问、修改、删除的过程。对于HTTP协议，是一个没有状态的协议，这也就意味着对于资源的状态变化只能在服务端保存和修改 有了上面的描述，下面稍微总结一下REST风格架构的特点 服务器存在一系列的资源，每一个资源通过单独唯一的URI进行标识 服务端和服务器端之间相互传递资源，而资源会以魔偶中表现层得以展示 客户端通过HTTP协议所定义的动作对资源进行操作，已实现资源的状态转换HTTP的动作REST风格的URI设计123456789101112# 获取用户信息，1是用户编号GET /user/1# 查询多个用户信息GET /users/&#123;userName&#125;/&#123;note&#125;# 创建用户POST /user/&#123;userName&#125;/&#123;sex&#125;/&#123;note&#125;# 修改用户全部属性PUT /user/&#123;id&#125;/&#123;userName&#125;/&#123;sex&#125;/&#123;note&#125;# 修改用户名称PATCH /user/&#123;id&#125;/&#123;userName&#125;# 删除用户DELETE /user/&#123;id&#125; 注意，在URI中并没有出现动词，而是对应参数主要通过URI设计去获取。对于参数超过5个的可以考虑使用JSON方式来传递参数。 REST风格的一些误区在设计URI时REST风格存在一些规范，例如，一般不应该在URI中存在动词GET /user/get/1这里的get是一个动词，在REST风格是不应该存在这样的动词的另一个误区是加入版本号，例如：GET /v1/user/1其中v1代表一个版本号，而user表示用户信息，1则表示用户编号。这是一个错误的表达，因为在REST风格中资源的URI是唯一的，如果存在版本号，可以设置HTTP请求头，使用请求头的信息进行区分，例如，设置请求头的versin参数为1.0Accept:version=1.0在很多时候REST都不推荐使用类似于PUT users?userName=user_name&amp;note=note这样传递参数。这是一个更新用户的URI，按REST风格的建议是采用PUT /users/{userName}/{note}但是有时候会出现参数很多的情况，如果参数过多，考虑请求体取参数 客户观请求RestTemplate在当今的微服务中，会将一个大系统拆分为多个微服务系统。按照微服务应用的建议，每个微服务都会暴漏REST风格URI请求给别的微服务系统所调用，为了方便系统之间的相互调用，Spring给予模板类RestTemplate，通过它可以很方便的对REST请求进行系统之间的调用，完成系统之间的数据集成，在Spring Cloud中还可以声明式调用 使用RestTemplate请求后端RestTemplate的底层是通过HttpURLConnection实现的12345678public static User getUser(Long id)&#123; //创建一个RestTemplate对象 RestTemplate restTemplate = new RestTemplate(); //消费服务，第一个参数是url，第二个是返回类型，第三个是URI路径参数 User user = restTemplate.getForObject("http://localhost8080/user&#123;id&#125;",User.class,id); System.out.println(user.getUserName()); return user;&#125; 这是进行了一次最为简单的GET请求，这里的getForObject方法是需要关注的核心方法。]]></content>
+  </entry>
+  <entry>
+    <title><![CDATA[nginx反向代理出现cookie信息丢失]]></title>
+    <url>%2F2019%2F08%2F15%2Fnginx%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E5%87%BA%E7%8E%B0cookie%E4%BF%A1%E6%81%AF%E4%B8%A2%E5%A4%B1%2F</url>
+    <content type="text"><![CDATA[熬夜到这个点，还在加班加点，欲哭无泪，被兄弟们坑的不行不行的，慢慢填坑…今天在发布的时候发现使用Nginx反向代理到前后端分离的项目（假的前后端分离还是用Cookie）上之后，出现Cookie信息丢失的情况，查来查去，最终锁定还是在Nginx上，因为Tomcat在本地已经设置了跨越，js中也设置了withCredentials，还是出现Cookie上不去的问题，今天把处理的方案记下来，供分享 Cookie个人理解机制Cookie不仅仅是在域（域名）上存在分离，也在目录上做了隔离 常规情况像下面这种配置一般是没有问题的，因为两个项目名是一样的，因此不会出现cookie丢失的情况123location /projectname&#123; proxy_pass http://127.0.0.1:8080/projectname;&#125; 特殊情况当nginx接收到的地址和要转发的地址在路径上有差异的时候，就会出现cookie的丢失问题，例如下：123location /projectnameA&#123; proxy_pass http://127.0.0.1:8080/projectnameB;&#125; location指向的地址和实际代理的地址的项目名不同，就需要添加proxy_cookie_path /projectnameB /projectnameA，一定要注意项目名前面有斜杠，后面没斜杠（在这个坑里面待了十几分钟才爬上来….），正确的配置如下：1234location /projectnameA&#123; proxy_pass http://127.0.0.1:8080/projectnameB; proxy_cookie_path /projectnameB /projectnameA;&#125; 其他设置好上面这些，还需要设置Nginx的跨域处理，可以在http、location中加入如下代码123add_header Access-Control-Allow-Origin *;add_header Access-Control-Allow-Headers X-Requested-With;add_header Access-Control-Allow-Methods GET,POST,OPTIONS; 其实项目前后端分离之后是很不建议再使用Cookie携带信息到后台的这种操作，应该是使用Token设置过期时间，保证项目的正常运行，因为跨域的项目在安全测评中是过不了的，所以能改则改，千万别到时候被别人给攻击了，可以使用JWT配合Redis的方案进行处理，后期的博客中会加入这些相关的内容，敬请期待]]></content>
+      <categories>
+        <category>中间件</category>
+        <category>Nginx</category>
+      </categories>
+      <tags>
+        <tag>Nginx</tag>
+        <tag>中间件</tag>
+        <tag>cookie</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[MongoDB安装]]></title>
+    <url>%2F2019%2F08%2F12%2FMongoDB%E5%AE%89%E8%A3%85%2F</url>
+    <content type="text"><![CDATA[Linux安装下载 首先打开社区Server版下载地址，具体如下图 使用命令下载并解压123[root@VM_0_12_centos download]# wget https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-4.0.12.tgz # 下载 [root@VM_0_12_centos download]# tar -zxvf mongodb-linux-x86_64-4.0.12.tgz #解压[root@VM_0_12_centos download]# mv mongodb-linux-x86_64-4.0.12 /usr/local/mongodb #迁移到/usr/local下 安装 添加环境变量将安装目录添加到环境变量$PATH当中1export PATH=/usr/local/mongodb/bin:$PATH 创建数据库目录MongoDB的数据存储在data目录的db目录下，但是这个目录在安装过程中不会自动创建，所以你需要手动创建data目录，并在目录中创建db目录1mkdir -p /data/mongodb/data/ 启动使用命令./mongod --dbpath=/data/mongodb/data启动，其中--dbpath指定数据保存的路径，如果不加默认是在/data/db下123456789101112131415161718192021222324252627282930313233343536373839404142434445464748[root@VM_0_12_centos bin]# ./mongod --dbpath=/data/mongodb/data2019-08-15T01:22:00.311+0800 I STORAGE [main] Max cache overflow file size custom option: 02019-08-15T01:22:00.316+0800 I CONTROL [initandlisten] MongoDB starting : pid=30521 port=27017 dbpath=/data/mongodb/data 64-bit host=VM_0_12_centos2019-08-15T01:22:00.316+0800 I CONTROL [initandlisten] db version v4.0.122019-08-15T01:22:00.316+0800 I CONTROL [initandlisten] git version: 5776e3cbf9e7afe86e6b29e22520ffb6766e95d42019-08-15T01:22:00.316+0800 I CONTROL [initandlisten] allocator: tcmalloc2019-08-15T01:22:00.316+0800 I CONTROL [initandlisten] modules: none2019-08-15T01:22:00.316+0800 I CONTROL [initandlisten] build environment:2019-08-15T01:22:00.316+0800 I CONTROL [initandlisten] distarch: x86_642019-08-15T01:22:00.316+0800 I CONTROL [initandlisten] target_arch: x86_642019-08-15T01:22:00.317+0800 I CONTROL [initandlisten] options: &#123; storage: &#123; dbPath: "/data/mongodb/data" &#125; &#125;2019-08-15T01:22:00.317+0800 I STORAGE [initandlisten]2019-08-15T01:22:00.317+0800 I STORAGE [initandlisten] ** WARNING: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine2019-08-15T01:22:00.317+0800 I STORAGE [initandlisten] ** See http://dochub.mongodb.org/core/prodnotes-filesystem2019-08-15T01:22:00.317+0800 I STORAGE [initandlisten] wiredtiger_open config: create,cache_size=407M,cache_overflow=(file_max=0M),session_max=20000,eviction=(threads_min=4,threads_max=4),config_base=false,statistics=(fast),log=(enabled=true,archive=true,path=journal,compressor=snappy),file_manager=(close_idle_time=100000),statistics_log=(wait=0),verbose=(recovery_progress),2019-08-15T01:22:02.127+0800 I STORAGE [initandlisten] WiredTiger message [1565803322:127781][30521:0x7f809d2daa40], txn-recover: Set global recovery timestamp: 02019-08-15T01:22:02.396+0800 I RECOVERY [initandlisten] WiredTiger recoveryTimestamp. Ts: Timestamp(0, 0)2019-08-15T01:22:04.382+0800 I CONTROL [initandlisten]2019-08-15T01:22:04.382+0800 I CONTROL [initandlisten] ** WARNING: Access control is not enabled for the database.2019-08-15T01:22:04.382+0800 I CONTROL [initandlisten] ** Read and write access to data and configuration is unrestricted.2019-08-15T01:22:04.382+0800 I CONTROL [initandlisten] ** WARNING: You are running this process as the root user, which is not recommended.2019-08-15T01:22:04.382+0800 I CONTROL [initandlisten]2019-08-15T01:22:04.382+0800 I CONTROL [initandlisten] ** WARNING: This server is bound to localhost.2019-08-15T01:22:04.382+0800 I CONTROL [initandlisten] ** Remote systems will be unable to connect to this server.2019-08-15T01:22:04.382+0800 I CONTROL [initandlisten] ** Start the server with --bind_ip &lt;address&gt; to specify which IP2019-08-15T01:22:04.382+0800 I CONTROL [initandlisten] ** addresses it should serve responses from, or with --bind_ip_all to2019-08-15T01:22:04.382+0800 I CONTROL [initandlisten] ** bind to all interfaces. If this behavior is desired, start the2019-08-15T01:22:04.382+0800 I CONTROL [initandlisten] ** server with --bind_ip 127.0.0.1 to disable this warning.2019-08-15T01:22:04.382+0800 I CONTROL [initandlisten]2019-08-15T01:22:04.382+0800 I CONTROL [initandlisten]2019-08-15T01:22:04.382+0800 I CONTROL [initandlisten] ** WARNING: /sys/kernel/mm/transparent_hugepage/enabled is 'always'.2019-08-15T01:22:04.382+0800 I CONTROL [initandlisten] ** We suggest setting it to 'never'2019-08-15T01:22:04.382+0800 I CONTROL [initandlisten]2019-08-15T01:22:04.382+0800 I CONTROL [initandlisten] ** WARNING: /sys/kernel/mm/transparent_hugepage/defrag is 'always'.2019-08-15T01:22:04.382+0800 I CONTROL [initandlisten] ** We suggest setting it to 'never'2019-08-15T01:22:04.382+0800 I CONTROL [initandlisten]2019-08-15T01:22:04.382+0800 I CONTROL [initandlisten] ** WARNING: soft rlimits too low. rlimits set to 7282 processes, 100001 files. Number of processes should be at least 50000.5 : 0.5 times number of files.2019-08-15T01:22:04.382+0800 I CONTROL [initandlisten]2019-08-15T01:22:04.383+0800 I STORAGE [initandlisten] createCollection: admin.system.version with provided UUID: 5c53404c-28ee-4357-b3a2-3443e8b8b6742019-08-15T01:22:04.497+0800 I COMMAND [initandlisten] setting featureCompatibilityVersion to 4.02019-08-15T01:22:04.500+0800 I STORAGE [initandlisten] createCollection: local.startup_log with generated UUID: a95b9964-563d-447e-b678-08034f942c6b2019-08-15T01:22:04.561+0800 I FTDC [initandlisten] Initializing full-time diagnostic data capture with directory '/data/mongodb/data/diagnostic.data'2019-08-15T01:22:04.562+0800 I STORAGE [LogicalSessionCacheRefresh] createCollection: config.system.sessions with generated UUID: a161a0bc-dee2-4f7b-bc38-1a6fab780dd42019-08-15T01:22:04.563+0800 I NETWORK [initandlisten] waiting for connections on port 270172019-08-15T01:22:04.660+0800 I INDEX [LogicalSessionCacheRefresh] build index on: config.system.sessions properties: &#123; v: 2, key: &#123; lastUse: 1 &#125;, name: "lsidTTLIndex", ns: "config.system.sessions", expireAfterSeconds: 1800 &#125;2019-08-15T01:22:04.660+0800 I INDEX [LogicalSessionCacheRefresh] building index using bulk method; build may temporarily use up to 500 megabytes of RAM2019-08-15T01:22:04.668+0800 I INDEX [LogicalSessionCacheRefresh] build index done. scanned 0 total records. 0 secs2019-08-15T01:22:04.916+0800 I COMMAND [LogicalSessionCacheRefresh] command config.$cmd command: createIndexes &#123; createIndexes: "system.sessions", indexes: [ &#123; key: &#123; lastUse: 1 &#125;, name: "lsidTTLIndex", expireAfterSeconds: 1800 &#125; ], $db: "config" &#125; numYields:0 reslen:114 locks:&#123; Global: &#123; acquireCount: &#123; r: 2, w: 2 &#125; &#125;, Database: &#123; acquireCount: &#123; w: 2, W: 1 &#125; &#125;, Collection: &#123; acquireCount: &#123; w: 2 &#125; &#125; &#125; storage:&#123;&#125; protocol:op_msg 105ms]]></content>
+      <categories>
+        <category>软件安装</category>
+        <category>数据库</category>
+        <category>MongoDB</category>
+      </categories>
+      <tags>
+        <tag>软件安装</tag>
+        <tag>数据库</tag>
+        <tag>MongoDB</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[IDEA中自动生成serialVersionUID]]></title>
     <url>%2F2019%2F08%2F11%2FIDEA%E4%B8%AD%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90serialVersionUID%2F</url>
     <content type="text"><![CDATA[最近项目中使用Redis，需要对象进行序列化才能进行保存，看书上提供的entity对象中都会有一个serialVersionUID，查了下这是继承Serializable之后，需要生成一个，否则在反序列化的时候会出现无法反序列化的情况 未配置情况下，在IDEA中的效果是如下的未配置的时候，Alt+Enter会不显示自动生成SerialVersionUID的功能 配置步骤在IDEA中找到Fiel-&gt;Settings-&gt;搜索框输入inspect-&gt; 点击Inspections-&gt;输入serialV，找到下图中的两个选项勾上 配置完成后效果在实体类上Alt+Enter，可以看到有了自动生成SerialVersionSID的功能，点击即可自动添加上]]></content>
@@ -20,8 +74,8 @@
     <content type="text"><![CDATA[Windows安装下载下载地址为Redis安装下载地址 打开页面，选择对应的版本(Linux的下载地址和这个下载地址不一样) 下载之后，解压到任意目录下，并记下这个目录环境变量配置 测试是否正常 打开一个cmd窗口，输入下面的命令启动redis(可以不输入后面的配置文件，会自动选择默认配置文件)1redis-server redis.windows.conf 另起一个cmd窗口，原来的不要关闭 连接到数据库 1redis-cli -h 127.0.0.1 -p 6379 设置key 1set myKey abc 获取键值对 1get myKey Linux安装]]></content>
       <categories>
         <category>软件安装</category>
-        <category>Redis</category>
         <category>数据库</category>
+        <category>Redis</category>
       </categories>
       <tags>
         <tag>软件安装</tag>
@@ -47,12 +101,12 @@
   <entry>
     <title><![CDATA[第10章 深入Spring MVC开发]]></title>
     <url>%2F2019%2F05%2F25%2F%E7%AC%AC10%E7%AB%A0-%E6%B7%B1%E5%85%A5Spring-MVC%E5%BC%80%E5%8F%91%2F</url>
-    <content type="text"><![CDATA[]]></content>
+    <content type="text"><![CDATA[深入Spring MVC 开发获取控制器参数无注解下获取参数使用@RequestParam获取参数前后端可能出现命名规则不同，这时需要把前端的参数与后台的参数对应起来。Spring MVC提供注解@RequestParam来确定前后端参数名称的映射关系，代码如下1234567891011121314@GetMapping("/annotation")@ResponseBodypublic Map&lt;String,Object&gt; requestParam( @RequestParam("int_val") Integer intVal, @RequestParam("long_val") Integer longVal, @RequestParam("str_val") Integer stringVal)&#123; Map&lt;String,Object&gt; paramsMap = new HashMap&lt;&gt;(); paramsMap.put("intVal",intVal); paramsMap.put("longVal",longVal); paramsMap.put("stringVal",stringVal); return paramsMap;&#125; 在浏览器中输入http://localhost:8080/my/annotation?int_val=1&amp;long_val=2&amp;str_val=str，就能够看到请求的结果。但是如果把3个HTTP参数中去掉任意一个，就会报异常错误，因为默认的情况下@RequestParam标注的参数是不能为空的，为了它能够为空，可以配置其属性required为false，代码如下，这样就可以传空了1@RequestParam(value="int_val",required = false) Integer intVal, 传递数组在Spring MVC中，除了可以传递简单的参数外，还可以传递数组。支持用逗号隔开的数组参数123456789101112@GetMapping("/requestArray")@ResponseBodypublic Map&lt;String,Object&gt; requestArray( int[] intArr, Long[] longArr, String[] strArr)&#123; Map&lt;String,Object&gt; paramMap = new HashMap&lt;&gt;(); paramMap.put("intArr",intArr); paramMap.put("longArr",longArr); paramMap.put("strArr",strArr); return paramMap;&#125; 在浏览器中输入http://localhost:8080/my/requestArray?intArr=1,2,3&amp;longArr=4,5,6&amp;strArr=str1,str2,str3，可以看到需要传递数组参数时，每个参数的数组元素只需要通过逗号分隔即可 传递JSON下面演示下使用ajax传递json数据，首先是js代码123456789101112131415var params = &#123; userName:userName, note:note&#125;;$.post(&#123; url:"./insert", //此处需要告知传递参数类型为JSON，不能缺少 contentType:"application/json", //将JSON转化为字符串 data:JSON.stringify(params), success:function(res)&#123; console.log(res); &#125;&#125;) 123456@PostMapping("/insert")@ResponseBodypublic User insert(@RequestBody User user)&#123; userService.insertUser(user); return user;&#125; 上面的js代码中contentType:&quot;application/json&quot;,和data:JSON.stringify(params),必须要加上，到达后台之后可以通过@RequestBody转化成自己想要的对象 通过URL传递参数REST风格的的接口，常规是通过URL传递参数的，例如获取编号为1的用户，url就写成/user/1，这里的1代表的是用户编号（id），通过注解@PathVariable的组合获取参数URL参数，代码如下12345@GetMapping("/&#123;id&#125;")@ResponseBodypublic User get(@PathVariable("id") Long id)&#123; return userService.getUser(id);&#125; 数据验证JSR-303验证JSR-303的主要是通过注解的方式进行的，这里先定义一个需要验证的POJO，此时需要在其属性中加入相关的注解，代码如下1234567891011121314151617181920212223242526272829303132333435public class ValidtorPojo &#123; //非空判断 @NotNull(message = "id不能为空") private Long id; //只能是将来的日期 @Future(message = "需要一个将来的日期") //@Past//只能是过去的日期 //日期格式转换 @DateTimeFormat(pattern = "yyyy-MM-dd") //不能为空 @NotNull private Date date; //最小0.1元 @DecimalMin(value="0.1") @DecimalMax(value="100000.00") private Double aDouble = null; @Min(value=1,message = "最小值为1") @Max(value=99,message = "最大值为99") private Integer integer; @Range(min = 1,max = 888,message = "范围为1至888") private Long range; //邮箱验证 @Email(message = "邮箱格式错误") private String email; @Size(min=20,max = 30,message = "字符串长度要求20到30") private String size;&#125; 12345678910111213141516171819202122@RequestMapping(value="/valid/validate") @ResponseBody public Map&lt;String,Object&gt; validate(@Valid @RequestBody ValidtorPojo vp, Errors errors)&#123; Map&lt;String,Object&gt; errorMap = new HashMap&lt;&gt;(); //获取错误列表 List&lt;ObjectError&gt; oes = errors.getAllErrors(); for(ObjectError oe : oes)&#123; String key = null; String msg = null; //字段错误 if(oe instanceof FieldError)&#123; FieldError fe = (FieldError)oe; key = fe.getField();//获取错误验证字段名 &#125;else&#123; //非字段错误 key = oe.getObjectName();//获取验证对象名称 &#125; msg = oe.getDefaultMessage(); errorMap.put(key,msg); &#125; return errorMap; &#125; 代码中使用@RequetBody代表接收一个JSON参数，这样Spring就会获取页面提交过来的JSON 数据，然后@Valid注解则表示启动验证机制，这样Spring就会启动JSR-303验证机制进行验证，它会自动地将验证结果放入Errors对象中，这样就可以从中得到相关验证过后的消息。这些验证只能是简单的验证，复杂类的验证比如说总价的验证=单价*数量，这样的逻辑就不能通过JSR-303验证了，为此Spring还提供了自己的验证机制。 参数验证机制在Spring控制器中，还允许使用注解@InitBinder，这个注解的作用是允许在进入控制器方法钱修改WebDataBinder机制。下面在验证机制和日期格式绑定的场景下演示，不过在此之前，需要稍微人事下SPring MVC的验证机制。下面是自定义验证的代码12345678910111213141516171819202122232425262728public class UserValidator implements Validator &#123; //设置验证器只支持User类验证 @Override public boolean supports(Class&lt;?&gt; aClass) &#123; return aClass.equals(User.class); &#125; //验证逻辑 @Override public void validate(Object o, Errors errors) &#123; //对象如果为空 if(o == null)&#123; //直接在参数处报错，这样就不能进入控制器的方法 errors.rejectValue("",null,"用户不能为空"); return; &#125; //强制转换 User user = (User) o; //用户名非空字符串 if(StringUtils.isEmpty(user.getUserName))&#123; //增加错误，可以进入控制器方法 errors.rejectValue("userName",null,"用户名不能为空"); &#125; &#125;&#125; 有了这个验证器，Spring还不会自动启动它，因为还没有绑定给WebDataBinder机制，在Spring MVC中提供了一个注解@InitBinder，他的作用是在执行控制器方法前，处理器会限制性@InitBinder标注的方法。这时可以讲WebDataBinder对象作为参数传递到方法中，通过这层关系得到WebDatBinder对象，这个对象有一个SetValidator方法，它可以绑定自定义的验证器，这样就可以在获取参数之后，通过自定义的验证器去验证参数，知识WebDataBinder除了可以绑定验证器之外，还可以进行参数的自定义，例如，不适用@DataTimeFormat获取日期参数。假设还继续使用代码StringToUserConverter转换器，使用下面的代码验证和设置日志格式绑定验证器12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667package com.xyd.mc.demo.database.controller;import com.xyd.mc.demo.database.validator.UserValidator;import org.springframework.beans.propertyeditors.CustomDateEditor;import org.springframework.stereotype.Controller;import org.springframework.validation.Errors;import org.springframework.validation.FieldError;import org.springframework.validation.ObjectError;import org.springframework.web.bind.WebDataBinder;import org.springframework.web.bind.annotation.*;import javax.validation.Valid;import java.text.SimpleDateFormat;import java.util.HashMap;import java.util.List;import java.util.Map;/** * @project: mc * @description: * @author: zp * @create: 2019-08-28 20:14 **/@Controller@RequestMapping("/user")public class TestController &#123; /** * 调用控制前先执行这个方法 * @param binder */ @InitBinder public void initBinder(WebDataBinder binder)&#123; //绑定验证器 binder.setValidator(new UserValidator()); //定义日期参数格式，参数不在徐注解@DateTimeFormat，boolean参数表示是允许为空 binder.registerCustomEditor(Date.class,new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"),false)); &#125; @GetMapping("/validator") @ResponseBody public Map&lt;String,Object&gt; validator(@Valid User user,Errors errors,Date date)&#123; Map&lt;String,Object&gt; map = new HashMap&lt;&gt;(); map.put("user",user); map.put("date",date); //判断是否有错误存在 if(errors.hasErrors())&#123; //获取全部错误 List&lt;ObjectError&gt; oes = errors.getAllErrors(); for(ObjectError oe:oes)&#123; //判断是否字段错误 if(oe instanceof FieldError)&#123; //字段错误 FieldError fe = (FieldError) oe; map.put(fe.getField(),fe.getDefaultMessage()); &#125;else&#123; //对象错误 map.put(oe.getObjectName(),oe.getDefaultMessage()); &#125; &#125; &#125; return map; &#125;&#125; 这里的initBinder方法因为标注注解@InitBinder，因此会在控制器方法前执行，并且将WebDataBinder对象传递进去，这个方法里绑定了自定义的验证器UserValidator，而且设置了日期的格式，所以在控制器方法中不在需要@DateTimeFormate去定义日期格式。通过这样的自定义，在使用注解@Valid注解User参数后，Spring MVC会遍历对应的验证器，当遍历到UserValidator时，会去执行他的support方法，因为该方法会返回true，所以SPring MVC会用这个验证去验证User类的数据这里还要关注下控制器中的方法的Errors参数，他是SPring MVC通过验证器验证后得到的错误信息，由Spring MVC执行完验证规则后进行传递，这里首先是判断是否存在错误，如果存在错误，则遍历错误，然后将错误信息放入Map中返回，因为方法标注了@ResponseBody，所以最后会转换成JSON相应请求 拦截器拦截器设计首先所有的拦截器都需要实现HandlerInterceptor接口，拦截器中有三个方法，分别是preHandle、postHandle、afterCompletion，他们的执行顺序如下 执行preHandle方法，该方法会返回一个布尔值。如果为false，则结束所有的流程；如果为true则执行下一步 执行处理器逻辑，它包括控制器的功能 执行postHandle方法 执行师徒解析和视图渲染 执行afterCompletion方法因为这个接口是Java8 的接口，所以3个方法都被声明为default，并且提供了空实现。当我们需要自定义方法的时候，主需要实现HandlerInterceptor，覆盖其对应的方法即可。 开发拦截器12345678910111213141516171819202122232425262728293031323334package com.xyd.mc.interceptor;import org.springframework.web.servlet.HandlerInterceptor;import org.springframework.web.servlet.ModelAndView;import javax.servlet.http.HttpServletRequest;import javax.servlet.http.HttpServletResponse;/** * @project: mc * @description: 项目拦截器 * @author: zp * @create: 2019-08-28 21:12 **/public class ApplicationInterceptor implements HandlerInterceptor &#123; @Override public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception &#123; System.out.println("处理器前方法"); //返回true，不会拦截 return true; &#125; @Override public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception &#123; System.out.println("处理器后方法"); &#125; @Override public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception &#123; System.out.println("处理器完成方法"); &#125;&#125; 这里的代码重写了3个方法，在这些方法中打印了一些信息，这样就可以定位拦截器的执行书序。有了这个拦截器，Spring MVC并不会发现他，还需要进行注册才能拦截，为此在配置文件中实现WebMvcConfigurer接口，最后覆盖其addInterceptors方法进行注册拦截器123456789101112131415161718192021222324252627282930313233343536373839404142434445464748package com.xyd.mc;import com.xyd.mc.interceptor.ApplicationInterceptor;import org.mybatis.spring.annotation.MapperScan;import org.springframework.beans.factory.annotation.Autowired;import org.springframework.boot.SpringApplication;import org.springframework.boot.autoconfigure.SpringBootApplication;import org.springframework.boot.autoconfigure.domain.EntityScan;import org.springframework.cache.annotation.EnableCaching;import org.springframework.context.annotation.Bean;import org.springframework.data.redis.connection.MessageListener;import org.springframework.data.redis.connection.RedisConnectionFactory;import org.springframework.data.redis.core.RedisTemplate;import org.springframework.data.redis.listener.ChannelTopic;import org.springframework.data.redis.listener.RedisMessageListenerContainer;import org.springframework.data.redis.listener.Topic;import org.springframework.data.redis.serializer.RedisSerializer;import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;import org.springframework.stereotype.Repository;import org.springframework.web.servlet.config.annotation.InterceptorRegistration;import org.springframework.web.servlet.config.annotation.InterceptorRegistry;import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;import javax.annotation.PostConstruct;@SpringBootApplication(scanBasePackages = &#123;"com.xyd.mc"&#125;)@EntityScan(basePackages = "com.xyd.mc.*.*.pojo")@MapperScan( basePackages = "com.xyd.mc.*", sqlSessionTemplateRef = "sqlSessionTemplate", annotationClass = Repository.class)@EnableCachingpublic class McApplication implements WebMvcConfigurer &#123; /********其他代码********/ /** * 添加拦截器 * @param registry */ @Override public void addInterceptors(InterceptorRegistry registry) &#123; //注册拦截器到Spring MVC机制，然后他会返回一个拦截器注册 InterceptorRegistration ir = registry.addInterceptor(new ApplicationInterceptor()); //指定拦截器的匹配模式，限制拦截器拦截请求 ir.addPathPatterns("/*/*"); &#125;&#125; 这里implements了WebMvcConfigurer接口，并重写了addInterceptors方法，将咱们写的拦截器加进去，他会拦截所有的请求只要是符合/*/*的请求 多个拦截器的顺序 对于处理器前方法采用先注册限制性，而处理器后方法和完成方法则是先注册后执行的原则。 一旦一个拦截器返回false，则后续的拦截器、处理器和所有拦截器的处理器后方法都不会被执行]]></content>
   </entry>
   <entry>
     <title><![CDATA[第9章 初识Spring MVC]]></title>
     <url>%2F2019%2F05%2F25%2F%E7%AC%AC9%E7%AB%A0-%E5%88%9D%E8%AF%86Spring-MVC%2F</url>
-    <content type="text"><![CDATA[]]></content>
+    <content type="text"><![CDATA[初识SpringMVCSpring MVC流程 通过application.properties定制InternalReourceViewResolver初始化12spring.mvc.view.prefix=/WEB-INF/jsp/spring.mvc.view.suffix=.jsp 通过修改这样的配置，就能在Spring Boot的机制下定制InternalResourceViewResolver这个视图解析器的初始化，也就是在返回视图名称之后，就会以前缀prefix和后缀suffix以及视图名称组成全路径定位视图。例如在控制器中返回user/detail，那么就会找到/WEB-INF/jsp/user/detail.jsp作为视图。 定制Spring MVC的初始化123456789spring.mvc.async.request-timeout= # 异步请求超时时间（单位毫秒）spring.mvc.contentnegotiation.favor-parameter=false # 是否使用请求参数spring.mvc.date-format= # 日期格式配置，如yyyy-MM-ddspring.mvc.favicon.enabled=false #Spring MVC 图标是否启用spring.mvc.formcontent.filter.enabled=true # Servlet 规范要求表格数据可用于HTTP POST而不是HTTP PUT或PATCH请求，这个选项将使得过滤器拦截HTTP PUT和PATCH，切内容类型是application/x-www-form-urlencoded的请求，并且将其转换为POST请求spring.mvc.ignore-default-model-on-redirect=true # 如果配置了default，那么她就会忽略重定向的场景spring.mvc.servlet.load-on-startup=1 # 启用Spring Web服务Servlet的有限顺序配置spring.mvc.static-path-pattern= /** # 指定静态资源路径spring.mvc.throw-exception-if-no-handler-found=false # 如果请求找不到处理器，是否抛出NoHandlerFoundException异常 Spring MVC实例]]></content>
   </entry>
   <entry>
     <title><![CDATA[第8章 文档数据库MongoDB]]></title>
@@ -188,7 +242,7 @@
   <entry>
     <title><![CDATA[Oracle数据库异常解决]]></title>
     <url>%2F2019%2F03%2F07%2FOracle%E6%95%B0%E6%8D%AE%E5%BA%93%E5%BC%82%E5%B8%B8%E8%A7%A3%E5%86%B3%2F</url>
-    <content type="text"><![CDATA[本篇文章是对Oralce遇到的各种问题的一个收集整理，用作后续的排查问题使用 ORA-31655：尚未为作业选择数据或元数据对象 【场景】数据泵导入数据，执行下面的数据导入时123456789101112131415D:\app&gt;impdp jnmcbusi/123456@orcl directory=data_pump_dir dumpfile=MKM_ORGUSER_MAP.dmp tablespaces=jnmcdb_dataImport: Release 11.2.0.1.0 - Production on 星期四 3月 7 11:20:46 2019Copyright (c) 1982, 2009, Oracle and/or its affiliates. All rights reserved.连接到: Oracle Database 11g Enterprise Edition Release 11.2.0.1.0 - 64bit ProductionWith the Partitioning, OLAP, Data Mining and Real Application Testing optionsORA-31655: 尚未为作业选择数据或元数据对象已成功加载/卸载了主表 "JNMCBUSI"."SYS_IMPORT_TABLESPACE_01"启动 "JNMCBUSI"."SYS_IMPORT_TABLESPACE_01": jnmcbusi/********@orcl directory=data_pump_dir dumpfile=MKM_ORGUSER_MAP.dmp tablespaces=jnmcdb_data作业 "JNMCBUSI"."SYS_IMPORT_TABLESPACE_01" 已于 11:20:48 成功完成 【原因】数据泵导入数据的时候，因生产环境和本地环境的表空间不同，需要设置新老不同的表空间 【处理方案】1234567891011121314151617D:\app&gt;impdp jnmcbusi/123456@orcl directory=data_pump_dir dumpfile=MKM_CUST_AREA_FX.dmp remap_tablespace=data_custtemp:jnmcdb_dataImport: Release 11.2.0.1.0 - Production on 星期四 3月 7 11:34:36 2019Copyright (c) 1982, 2009, Oracle and/or its affiliates. All rights reserved.连接到: Oracle Database 11g Enterprise Edition Release 11.2.0.1.0 - 64bit ProductionWith the Partitioning, OLAP, Data Mining and Real Application Testing options已成功加载/卸载了主表 "JNMCBUSI"."SYS_IMPORT_FULL_01"启动 "JNMCBUSI"."SYS_IMPORT_FULL_01": jnmcbusi/********@orcl directory=data_pump_dir dumpfile=MKM_CUST_AREA_FX.dmp remap_tablespace=data_custtemp:jnmcdb_data处理对象类型 TABLE_EXPORT/TABLE/TABLE处理对象类型 TABLE_EXPORT/TABLE/TABLE_DATA. . 导入了 "JNMCBUSI"."MKM_CUST_AREA_FX" 814.9 MB 8607689 行作业 "JNMCBUSI"."SYS_IMPORT_FULL_01" 已于 11:36:11 成功完成]]></content>
+    <content type="text"><![CDATA[本篇文章是对Oralce遇到的各种问题的一个收集整理，用作后续的排查问题使用 ORA-31655：尚未为作业选择数据或元数据对象 【场景】数据泵导入数据，执行下面的数据导入时123456789101112131415D:\app&gt;impdp jnmcbusi/123456@orcl directory=data_pump_dir dumpfile=MKM_ORGUSER_MAP.dmp tablespaces=jnmcdb_dataImport: Release 11.2.0.1.0 - Production on 星期四 3月 7 11:20:46 2019Copyright (c) 1982, 2009, Oracle and/or its affiliates. All rights reserved.连接到: Oracle Database 11g Enterprise Edition Release 11.2.0.1.0 - 64bit ProductionWith the Partitioning, OLAP, Data Mining and Real Application Testing optionsORA-31655: 尚未为作业选择数据或元数据对象已成功加载/卸载了主表 "JNMCBUSI"."SYS_IMPORT_TABLESPACE_01"启动 "JNMCBUSI"."SYS_IMPORT_TABLESPACE_01": jnmcbusi/********@orcl directory=data_pump_dir dumpfile=MKM_ORGUSER_MAP.dmp tablespaces=jnmcdb_data作业 "JNMCBUSI"."SYS_IMPORT_TABLESPACE_01" 已于 11:20:48 成功完成 【原因】数据泵导入数据的时候，因生产环境和本地环境的表空间不同，需要设置新老不同的表空间 【处理方案】1234567891011121314151617D:\app&gt;impdp jnmcbusi/123456@orcl directory=data_pump_dir dumpfile=MKM_CUST_AREA_FX.dmp remap_tablespace=data_custtemp:jnmcdb_dataImport: Release 11.2.0.1.0 - Production on 星期四 3月 7 11:34:36 2019Copyright (c) 1982, 2009, Oracle and/or its affiliates. All rights reserved.连接到: Oracle Database 11g Enterprise Edition Release 11.2.0.1.0 - 64bit ProductionWith the Partitioning, OLAP, Data Mining and Real Application Testing options已成功加载/卸载了主表 "JNMCBUSI"."SYS_IMPORT_FULL_01"启动 "JNMCBUSI"."SYS_IMPORT_FULL_01": jnmcbusi/********@orcl directory=data_pump_dir dumpfile=MKM_CUST_AREA_FX.dmp remap_tablespace=data_custtemp:jnmcdb_data处理对象类型 TABLE_EXPORT/TABLE/TABLE处理对象类型 TABLE_EXPORT/TABLE/TABLE_DATA. . 导入了 "JNMCBUSI"."MKM_CUST_AREA_FX" 814.9 MB 8607689 行作业 "JNMCBUSI"."SYS_IMPORT_FULL_01" 已于 11:36:11 成功完成 ORA-12546: TNS:permission denied 【场景】使用root账号启动sqlplus /nolog ，连接数据库【原因】root账号下尽量不要操作Oracle相关操作【处理方案】切换到oracle用户下，然后执行相关操作 ORA-08189: cannot flashback the table because row movement is not enabled 【场景】执行数据库表闪回的时候，报错【原因】该表不支持闪回，未设置闪回配置【处理方案】可以通过select flashback_on from v$database;查询是否设置了闪回，可以通过百度设置对应数据库的闪回配置 ORA-12162: TNS:net service name is incorrectly specified 【场景】sqlplus / as sysdba连接数据库的时候【原因】未设置ORACLE_HOME和ORACLE_SID的问题【处理方案】12export ORACLE_HOME="D:\ProgramFiles\Oracle\product\11.2.0\dbhome_1"export ORACLE_SID=orcl 【场景】【原因】【处理方案】 【场景】【原因】【处理方案】 【场景】【原因】【处理方案】]]></content>
       <categories>
         <category>数据库</category>
         <category>Oracle</category>
@@ -665,8 +719,8 @@
       </categories>
       <tags>
         <tag>MySQL</tag>
-        <tag>大小写敏感</tag>
         <tag>数据库</tag>
+        <tag>大小写敏感</tag>
       </tags>
   </entry>
   <entry>
@@ -937,8 +991,8 @@
         <category>服务器</category>
       </categories>
       <tags>
-        <tag>CentOS7</tag>
         <tag>服务器</tag>
+        <tag>CentOS7</tag>
         <tag>防火墙</tag>
       </tags>
   </entry>
@@ -962,8 +1016,8 @@
         <category>软件安装</category>
       </categories>
       <tags>
-        <tag>JDK</tag>
         <tag>CentOS7</tag>
+        <tag>JDK</tag>
         <tag>安装JDK</tag>
       </tags>
   </entry>
@@ -1000,8 +1054,8 @@
         <category>服务器</category>
       </categories>
       <tags>
-        <tag>CentOS7</tag>
         <tag>服务器</tag>
+        <tag>CentOS7</tag>
         <tag>静态IP</tag>
       </tags>
   </entry>
@@ -1228,8 +1282,8 @@
         <category>SSM框架搭建</category>
       </categories>
       <tags>
-        <tag>搭建</tag>
         <tag>SSM</tag>
+        <tag>搭建</tag>
         <tag>多模块</tag>
       </tags>
   </entry>
@@ -1272,8 +1326,8 @@
         <category>SSM框架搭建</category>
       </categories>
       <tags>
-        <tag>搭建</tag>
         <tag>SSM</tag>
+        <tag>搭建</tag>
       </tags>
   </entry>
   <entry>
@@ -1328,8 +1382,8 @@
         <category>Maven</category>
       </categories>
       <tags>
-        <tag>Maven</tag>
         <tag>搭建</tag>
+        <tag>Maven</tag>
         <tag>Idea15</tag>
       </tags>
   </entry>
