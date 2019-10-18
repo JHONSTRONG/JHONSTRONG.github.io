@@ -1,6 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[第1章 Vue基础-安装]]></title>
+    <url>%2F2019%2F10%2F18%2F%E7%AC%AC1%E7%AB%A0-Vue%E5%9F%BA%E7%A1%80-%E5%AE%89%E8%A3%85%2F</url>
+    <content type="text"><![CDATA[Vue基础之安装兼容性不支持IE8以下 直接script引入如果下面的下载地址没法下载，可以直接去官网进行下载，官网地址开发版生产版 CDN 学习和制作原型，可以使用最新版本，地址为 生产环境，使用地址为 如果使用原生ESModule ，这里兼容ES Module的构建文件123&lt;script type="module"&gt; import Vue from 'https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.esm.browser.js'&lt;/script&gt; NPM在用 Vue 构建大型应用时推荐使用 NPM 安装，NPM 能很好地和诸如 webpack 或 Browserify 模块打包器配合使用。同时 Vue 也提供配套工具来开发单文件组件12# 最新稳定版$ npm install vue 创建第一个Vue应用监控value值的变化1234567891011121314151617181920212223242526&lt;!DOCTYPE html&gt;&lt;html&gt; &lt;head&gt; &lt;meta charset="utf-8"&gt; &lt;title&gt;&lt;/title&gt; &lt;script src="vue.js" type="text/javascript" charset="utf-8"&gt;&lt;/script&gt; &lt;/head&gt; &lt;body&gt; &lt;div id="app"&gt; &#123;&#123;a&#125;&#125; &lt;/div&gt; &lt;script type="text/javascript"&gt; var data = &#123;a:1&#125;; var vm = new Vue(&#123; el:'#app', data:data &#125;) //监控a值的变化 vm.$watch('a',function(newVal,oldVal)&#123; console.log(newVal,oldVal); &#125;) data.a = '123123'; &lt;/script&gt; &lt;/body&gt;&lt;/html&gt; 生命周期函数12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849&lt;!DOCTYPE html&gt;&lt;html&gt; &lt;head&gt; &lt;meta charset="utf-8"&gt; &lt;title&gt;&lt;/title&gt; &lt;script src="vue.js" type="text/javascript" charset="utf-8"&gt;&lt;/script&gt; &lt;/head&gt; &lt;body&gt; &lt;div id="app"&gt; &#123;&#123;msg&#125;&#125; &lt;/div&gt; &lt;script type="text/javascript"&gt; var vm = new Vue(&#123; el:'#app', data:&#123; msg:'hi vue' &#125;, //实例化初始之后,数据观测(data observer)和event/watcher事件配置之前被调用 beforeCreate:function() &#123; console.log("beforeCreate"); &#125;, //实例创建完成之后立即调用,但是挂载阶段还没开始,$el属性目前不可见 created:function() &#123; console.log("created"); &#125;, //在挂载开始之前被调用:相关渲染函数首次被调用 beforeMount:function() &#123; console.log("beforeMount"); &#125;, //挂载成功,el被创建,vm.$el替换 mounted:function() &#123; console.log("mounted"); &#125;, //数据更新之前调用 beforeUpdate:function() &#123; console.log("beforeUpdate"); &#125;, //组件DOM已经更新,组件更新完毕 updated:function() &#123; console.log("updated"); &#125; &#125;); setTimeout(function() &#123; vm.msg = "changing....." &#125;, 3000); &lt;/script&gt; &lt;/body&gt;&lt;/html&gt; 模板语法插值v-once只赋值一次，后续不可再修改值12345678910111213141516171819202122232425&lt;!DOCTYPE html&gt;&lt;html&gt; &lt;head&gt; &lt;meta charset="utf-8"&gt; &lt;title&gt;&lt;/title&gt; &lt;script src="vue.js" type="text/javascript" charset="utf-8"&gt;&lt;/script&gt; &lt;/head&gt; &lt;body&gt; &lt;!-- v-once 只能一次赋值，后续操作将不执行 --&gt; &lt;div id="app" v-once&gt; &#123;&#123;msg&#125;&#125; &lt;/div&gt; &lt;script type="text/javascript"&gt; var vm = new Vue(&#123; el:'#app', data:&#123; msg:'zhangsan' &#125; &#125;) //因为添加了v-once,所以只能赋值一次,这里就不会再进行赋值操作了 vm.$msg = 'hi vue' &lt;/script&gt; &lt;/body&gt;&lt;/html&gt; v-html输出html标签并渲染1234567891011121314151617181920212223242526272829303132&lt;!DOCTYPE html&gt;&lt;html&gt; &lt;head&gt; &lt;meta charset="utf-8"&gt; &lt;title&gt;&lt;/title&gt; &lt;script src="vue.js" type="text/javascript" charset="utf-8"&gt;&lt;/script&gt; &lt;/head&gt; &lt;body&gt; &lt;!-- v-once 只能一次赋值，后续操作将不执行 --&gt; &lt;div id="app" v-once&gt; &#123;&#123;msg&#125;&#125; &lt;!-- 不使用的情况下是没法显示的 --&gt; &lt;p&gt; Using v-html:&#123;&#123;rawhtml&#125;&#125; &lt;/p&gt; &lt;!-- 使用v-html标签值指向变量，需要将v-html添加在一个标签上 --&gt; &lt;p&gt; Using v-html:&lt;span v-html="rawhtml"&gt;&lt;/span&gt;&lt;/p&gt; &lt;/div&gt; &lt;script type="text/javascript"&gt; var vm = new Vue(&#123; el:'#app', data:&#123; msg:'zhangsan', rawhtml:'&lt;span style="color: #FF0000;"&gt;this is should be red&lt;/span&gt;' &#125; &#125;) //因为添加了v-once,所以只能赋值一次,这里就不会再进行赋值操作了 vm.$msg = 'hi vue' &lt;/script&gt; &lt;/body&gt;&lt;/html&gt; 动态绑定元素属性12345678910111213141516171819202122232425262728293031323334353637&lt;!DOCTYPE html&gt;&lt;html&gt; &lt;head&gt; &lt;meta charset="utf-8"&gt; &lt;title&gt;&lt;/title&gt; &lt;script src="vue.js" type="text/javascript" charset="utf-8"&gt;&lt;/script&gt; &lt;/head&gt; &lt;body&gt; &lt;div id="app"&gt; &lt;!-- 绑定样式 --&gt; &lt;div v-bind:class="color"&gt; test red &lt;!-- 绑定元素的id --&gt; &lt;span v-bind:id="testBindId"&gt;123123&lt;/span&gt; &lt;/div&gt; &lt;/div&gt; &lt;script type="text/javascript"&gt; var vm = new Vue(&#123; el:'#app', data:&#123; //通过绑定的color属性修改元素的样式 color:'red', testBindId:'123123' &#125; &#125;); //通过绑定元素修改对应元素的id属性 vm.$data.testBindId = "updateId" &lt;/script&gt; &lt;style type="text/css"&gt; .red&#123; color: #FF0000; &#125; &lt;/style&gt; &lt;/body&gt;&lt;/html&gt; 使用Javascript表达式12345678910111213141516171819202122232425262728293031323334&lt;!DOCTYPE html&gt;&lt;html&gt; &lt;head&gt; &lt;meta charset="utf-8"&gt; &lt;title&gt;&lt;/title&gt; &lt;script src="vue.js" type="text/javascript" charset="utf-8"&gt;&lt;/script&gt; &lt;/head&gt; &lt;body&gt; &lt;div id="app"&gt; &lt;!-- 加法表达式 --&gt; &lt;p&gt;&#123;&#123;number+1&#125;&#125;&lt;/p&gt; &lt;!-- 三元运算符 --&gt; &lt;p&gt;&#123;&#123;ok?hello:bye&#125;&#125;&lt;/p&gt; &lt;!-- 字符串操作：将字符串拆分然后反向排序之后再拼接 --&gt; &lt;p&gt;&#123;&#123;msg.split('').reverse().join('')&#125;&#125;&lt;/p&gt; &lt;/div&gt; &lt;script type="text/javascript"&gt; var vm = new Vue(&#123; el:'#app', data:&#123; number:1, msg:'abcedfg', hello:'Hello Vue', bye:'Bye Vue', ok:true &#125; &#125;); setTimeout(function() &#123; vm.$data.ok = false; &#125;, 3000); &lt;/script&gt; &lt;/body&gt;&lt;/html&gt; 模板语法-指令指令是带有v-前缀的特殊特性。指令的特性是值逾期是单个JavaScript表达式。指令的职责是当表达式的值发生改变时，其将产生的连带影响，响应式的作用域DOM123456789101112131415161718192021222324252627282930313233343536&lt;!DOCTYPE html&gt;&lt;html&gt; &lt;head&gt; &lt;meta charset="utf-8"&gt; &lt;title&gt;&lt;/title&gt; &lt;script src="vue.js" type="text/javascript" charset="utf-8"&gt;&lt;/script&gt; &lt;/head&gt; &lt;body&gt; &lt;div id="app"&gt; &lt;p v-if="seen"&gt;现在你能看到我&lt;/p&gt; &lt;!-- 常规情况下，点击click me会触发父级点击，添加click的修饰符stop就会点击完之后不触发父级事件 --&gt; &lt;div @click="click1"&gt; &lt;div @click.stop="click2"&gt; click me &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;script type="text/javascript"&gt; var vm = new Vue(&#123; el:'#app', data:&#123; seen:false &#125;, methods:&#123; click1:function()&#123; console.log('click1'); &#125;, click2:function()&#123; console.log("click2"); &#125; &#125; &#125;) &lt;/script&gt; &lt;/body&gt;&lt;/html&gt; class和style的绑定对象语法1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162&lt;!DOCTYPE html&gt;&lt;html&gt; &lt;head&gt; &lt;meta charset="utf-8"&gt; &lt;title&gt;&lt;/title&gt; &lt;script src="vue.js" type="text/javascript" charset="utf-8"&gt;&lt;/script&gt; &lt;/head&gt; &lt;body&gt; &lt;div id="app"&gt; &lt;!-- 1. active样式是否生效，取决于isActive --&gt; &lt;!-- 2. 动态属性和静态属性可以并存 --&gt; &lt;!-- 3. 可以通过对象添加多样式 --&gt; &lt;div class="test" v-bind:class="&#123;active:isActive,green:isGreen&#125;" style="height: 12.5rem;width: 12.5rem;text-align: center;line-height: 12.5rem;"&gt; hi vue &lt;/div&gt; &lt;br&gt; &lt;!-- 通过数组绑定多样式 --&gt; &lt;div v-bind:class="['active','green']" style="height: 12.5rem;width: 12.5rem;text-align: center;line-height: 12.5rem;"&gt; 通过数组绑定多样式 &lt;/div&gt; &lt;br&gt; &lt;!-- 三元运算动态控制样式 --&gt; &lt;div v-bind:class="[isActive?'active':'',isGreen?'green':'']" style="height: 12.5rem;width: 12.5rem;text-align: center;line-height: 12.5rem;"&gt; 通过数组绑定多样式 &lt;/div&gt; &lt;!-- v-bind:style绑定样式 --&gt; &lt;div :style="&#123;color:color,fontSize:size,background:isRed?'#ff0000':''&#125;"&gt; hi vue &lt;/div&gt; &lt;/div&gt; &lt;script type="text/javascript"&gt; var vm = new Vue(&#123; el:'#app', data:&#123; isActive:true, isGreen:true, color:'#ffffff', size:'30px', isRed:true &#125; &#125;) &lt;/script&gt; &lt;style type="text/css"&gt; /* 声明样式 */ .active&#123; background-color: #FF0000; &#125; .test&#123; font-size: 30px; &#125; .green&#123; color: #00FF00; &#125; &lt;/style&gt; &lt;/body&gt;&lt;/html&gt; 条件渲染1234567891011121314151617181920212223242526272829303132333435363738&lt;!DOCTYPE html&gt;&lt;html&gt; &lt;head&gt; &lt;meta charset="utf-8"&gt; &lt;title&gt;&lt;/title&gt; &lt;script src="vue.js" type="text/javascript" charset="utf-8"&gt;&lt;/script&gt; &lt;/head&gt; &lt;body&gt; &lt;div id="app"&gt; &lt;!-- 通过if else 判断是走哪个 --&gt; &lt;div v-if="type === 'A'"&gt; A &lt;/div&gt; &lt;div v-else-if="type === B"&gt; B &lt;/div&gt; &lt;div v-else-if="type === C"&gt; C &lt;/div&gt; &lt;div v-else&gt; NOT A/B/C &lt;/div&gt; &lt;!-- 使用v-show控制显示 --&gt; &lt;div v-show="isShow"&gt; &lt;p&gt;是否显示&lt;/p&gt; &lt;/div&gt; &lt;/div&gt; &lt;script type="text/javascript"&gt; var vm = new Vue(&#123; el:'#app', data:&#123; type:'A', isShow:true &#125; &#125;) &lt;/script&gt; &lt;/body&gt;&lt;/html&gt;]]></content>
+      <categories>
+        <category>前端开发框架</category>
+        <category>Vue</category>
+      </categories>
+      <tags>
+        <tag>安装</tag>
+        <tag>Vue</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Oracle导入导出步骤]]></title>
+    <url>%2F2019%2F10%2F18%2FOracle%E5%AF%BC%E5%85%A5%E5%AF%BC%E5%87%BA%E6%AD%A5%E9%AA%A4%2F</url>
+    <content type="text"><![CDATA[Oracle导入导出步骤导出查看字符集查看下字符集，需要在导出和导入的时候使用123456789101112131415# 切换到oracle用户[oracle@MCDB bin]$ su - oracle# 连接到Oracle数据库[oracle@MCDB bin]$ sqlplus /nologSQL*Plus: Release 11.2.0.4.0 Production on Fri Oct 18 18:18:06 2019Copyright (c) 1982, 2013, Oracle. All rights reserved.# 使用用户登录SQL&gt; conn mgplat/mgplatConnected.SQL&gt; select userenv('language') from dual;USERENV('LANGUAGE')----------------------------------------------------AMERICAN_AMERICA.ZHS16GBK 查看数据库实例用作下面导出命令中的instanceid12345SQL&gt; select name from v$database;NAME---------JNMCDB （重要）设置环境123export ORACLE_HOME=/home/oracle/app/oracle/product/11.2.0/dbhome_1export ORACLE_SID=JNMCDBexport NLS_LANG=AMERICAN_AMERICA.ZHS16GBK 执行导出命令1[oracle@MCDB bin]$ exp username/password@serverip:serverport/instanceid file=/home/oracle/temp.dmp owner=username 导入创建表空间和用户需要看导出文件中的表空间，常规会创建一个数空间和一个临时表空间1234567891011121314[root@MCDB ~]#su - oracle[oracle@MCDB ~]$ sqlplus /nologSQL*Plus: Release 11.2.0.4.0 Production on Fri Oct 18 16:18:31 2019Copyright (c) 1982, 2013, Oracle. All rights reserved.SQL&gt; conn /as sysdba;Connected.# 创建临时表空间SQL&gt; create temporary tablespace USR_XYD_DATA_TEMP tempfile '/home/oracle/app/oradata/jnmcdb/usr_xyd_data_temp.dbf' size 50m autoextend on next 50m maxsize 20480m extent management local;# 创建表空间SQL&gt; create tablespace USR_XYD_DATA logging datafile '/home/oracle/app/oradata/jnmcdb/user_xyd_data.dbf' size 50m autoextend on next 50m maxsize 20480m extent management local;# 创建用户（注意换成对应的表空间和临时表空间）SQL&gt; create user XYD identified by xydtech default tablespace USR_XYD_DATA temporary tablespace USR_XYD_DATA_TEMP ;# 赋权限(这里根据实际需求来，为了简单我直接给了DBA)SQL&gt; grant dba to XYD; （重要）设置字符集、ORACLE_HOME、ORACLE_SID上面导出的时候会有对应的字符集，如果只有dmp文件没法连接导出的数据时，可通过下面的命令查看字符集这个命令会输出一个数字，拿着这个数字（这里是0345），放在下面的SQL里面执行下，字符集就出来了，这里的字符集是ZHS16GBK12[root@MCDB oracle]# cat XYD.dmp |od -x|head -1|awk '&#123;print $2 $3&#125;'|cut -c 3-60354 12SQL&gt; select nls_charset_name(to_number('0354','xxxx')) from dual; ZHS16GBK 设置环境123export ORACLE_HOME=/home/oracle/app/oracle/product/11.2.0/dbhome_1/export ORACLE_SID=JNMCDBexport NLS_LANG=AMERICAN_AMERICA.ZHS16GBK 导入命令1234567891011121314151617[oracle@MCDB ~]$ imp username/password@serverip:serverport/instanceid file=/home/oracle/XYD.dmp full=yImport: Release 11.2.0.4.0 - Production on Fri Oct 18 16:23:34 2019Copyright (c) 1982, 2011, Oracle and/or its affiliates. All rights reserved.Connected to: Oracle Database 11g Enterprise Edition Release 11.2.0.4.0 - 64bit ProductionWith the Partitioning, OLAP, Data Mining and Real Application Testing optionsExport file created by EXPORT:V11.02.00 via conventional pathimport done in ZHS16GBK character set and AL16UTF16 NCHAR character set. importing XYD's objects into XYD. . importing table "AA" 198 rows imported. . importing table "BANKLOG_BASEINFO" 11 rows imported. . importing table "BANKLOG_FLOWLIST" 280 rows imported. . importing table "BB" 0 rows imported. . importing table "BUSIFL_DOCLIST" 7 rows imported. . importing table "BUSIFL_DOCREG" 14 rows imported. . importing table "BUSIFL_HISTORYTASK" 8 rows imported. . importing table "BUSIFL_INSTANCE" 6 rows imported.....]]></content>
+      <categories>
+        <category>数据库</category>
+        <category>Oracle</category>
+      </categories>
+      <tags>
+        <tag>Oracle</tag>
+        <tag>导入导出</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Dubbo入门知识]]></title>
+    <url>%2F2019%2F10%2F17%2Fdubbo%E5%85%A5%E9%97%A8%E7%9F%A5%E8%AF%86%2F</url>
+    <content type="text"><![CDATA[Dubbo入门知识Dubbo简介 Apache Dubbo |ˈdʌbəʊ| is a high-performance, light weight, java based RPC framework. Dubbo offers three key functionalities, which include interface based remote call, fault tolerance &amp; load balancing, and automatic service registration &amp; discovery. 从上面的描述可以看出Dubbo是一个高性能、轻量化的Java为基础的RPC框架，其能提供基于接口的远程调用，容错、负载均衡以及自动服务注册和发现。从功能上来看是和SpringCloud一样，包含服务注册、订阅、治理等方面的功能。 工作原理解析图 节点说明 Registry：服务注册于发现的注册中心 Consumer：调用远程服务的消费方 Provider：暴露服务的服务提供方 Monitor：统计服务调用次数和调用时间监控中心 Container：服务器运行容器 过程说明 0：服务容器负责启动，加载，运行服务提供者 1：服务提供者在启动时，向注册中心注册自己提供的服务 2：服务消费者在启动时，向注册中心订阅自己所需要的服务 3：注册中心返回服务提供者地址列表给消费者，如有变更，注册中心将基于长链接推送边封数据给消费者 4：服务消费者，从提供者地址列表中，基于软负载均衡酸防，西安一台提供者进行调用，如果调用失败，再选择另一台调用 5：服务消费者和提供者，在内存中累计调用次数和调用时间，定时每分钟发送一次统计数据到监控中心 简单实践该简单实践是Dubbo官网的Quick start]]></content>
+      <categories>
+        <category>后端框架</category>
+        <category>Dubbo</category>
+      </categories>
+      <tags>
+        <tag>Dubbo</tag>
+        <tag>入门</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[第15章 实践一下——抢购商品]]></title>
     <url>%2F2019%2F08%2F28%2F%E7%AC%AC15%E7%AB%A0-%E5%AE%9E%E8%B7%B5%E4%B8%80%E4%B8%8B%E2%80%94%E2%80%94%E6%8A%A2%E8%B4%AD%E5%95%86%E5%93%81%2F</url>
     <content type="text"><![CDATA[]]></content>
@@ -991,8 +1030,8 @@
         <category>服务器</category>
       </categories>
       <tags>
-        <tag>服务器</tag>
         <tag>CentOS7</tag>
+        <tag>服务器</tag>
         <tag>防火墙</tag>
       </tags>
   </entry>
@@ -1016,8 +1055,8 @@
         <category>软件安装</category>
       </categories>
       <tags>
-        <tag>CentOS7</tag>
         <tag>JDK</tag>
+        <tag>CentOS7</tag>
         <tag>安装JDK</tag>
       </tags>
   </entry>
@@ -1054,8 +1093,8 @@
         <category>服务器</category>
       </categories>
       <tags>
-        <tag>服务器</tag>
         <tag>CentOS7</tag>
+        <tag>服务器</tag>
         <tag>静态IP</tag>
       </tags>
   </entry>
@@ -1227,8 +1266,8 @@
         <category>知识点</category>
       </categories>
       <tags>
-        <tag>JSP</tag>
         <tag>知识点</tag>
+        <tag>JSP</tag>
       </tags>
   </entry>
   <entry>
