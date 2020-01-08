@@ -1,6 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[RestTemplate模拟HTTP-POST请求发送文件]]></title>
+    <url>%2F2020%2F01%2F08%2FRestTemplate%E6%A8%A1%E6%8B%9FHTTP-POST%E8%AF%B7%E6%B1%82%E5%8F%91%E9%80%81%E6%96%87%E4%BB%B6%2F</url>
+    <content type="text"><![CDATA[今天项目上碰到一个比较不常用的需求，即业务子系统之间通过接口传递文件的功能，起初想到的上传的都是图片，可以直接转Base64字符串，直接通过POST传递过去就可以了，但是本着负责的原则，别后期挖坑，还是又通过其他的方式实现的，方式就是通过RestTemplate的postForEntity方法实现文件的POST请求发送 发送端代码123456789101112131415161718192021222324252627282930313233343536public static String sendRestTempPost(String url, Map&lt;String,Object&gt; paramsMap, MultipartFile file) throws Exception&#123; //创建一个RestTemplate对象 RestTemplate restTemplate =new RestTemplate(); //MultiValueMap里面，用作发送文件 MultiValueMap&lt;String, Object&gt; params = new LinkedMultiValueMap&lt;&gt;(); //1. 首先将字符串等类型的参数放入参数对象中 if (!paramsMap.isEmpty()) &#123; for (Map.Entry&lt;String, Object&gt; entries : paramsMap.entrySet()) &#123; params.add(entries.getKey(), entries.getValue()); &#125; &#125; File tempFile = null; //2.处理文件 if(!file.isEmpty())&#123; String tempFilePath = System.getProperty("java.io.tmpdir") + file.getOriginalFilename(); tempFile = new File(tempFilePath); //生成临时文件 file.transferTo(tempFile); // 文件必须封装成FileSystemResource这个类型后端才能收到附件 FileSystemResource resource = new FileSystemResource(tempFilePath); params.add("file",resource); &#125; // 调用接口即可 ResponseEntity&lt;String&gt; responseStr = restTemplate.postForEntity(url, params, String.class); //如果文件存在的话，进行删除操作 if(tempFile!= null &amp;&amp; tempFile.exists())&#123; tempFile.delete(); &#125; //根据自己需求判断statuscode等相关字段，这里只是简单的实现，所以直接拿了body的内容返回 return responseStr.getBody();&#125; 解析 这里使用MultiValueMap而不是常规Map的原因应该是显而易见的，常规的Map应该是无法满足存放java.io.File类型的文件的能力吧，这里只是猜测 接下来是传递的参数进行了遍历，遍历从调用的方法传递过来的参数，然后组装到MultiValueMap 判断传递过来的文件是不是空的，如果不是空的，进行如下处理 首先创建一个临时文件，当然如果你在当前服务器已经保存过文件，那就更好不过了，直接读取过来，就可以操作了 然后将文件封装成FileSystemResource对象，这个是必须得封装的，不封装的话是没法传递过去的 将文件放入到MultiValueMap中 调用接口进行文件及相关参数的发送操作 最后还需要判断文件不为空的时候的删除操作 阶段总结这个地方发现了一个问题和一个优化的点： 问题是传递过去如果不带header的时候会出现传递的参数汉字会乱码的问题 优化的点是如果一次性发送多个文件的时候，该如何去做处理(这个地方尝试了一下，结果一直报错，后续再试试) 接收端代码1public JSONObject upLoadImg(String _userId,String applid,String doc_code,String file_type,String file_path,String file_id,String file_name,MultipartFile file) 解析接收端相信我写到这里，下面的应该都会吧，能拿到MultipartFile剩下的都不是问题了，直接从文件读取流，根据路径和文件名输出到硬盘路径就可以了 补充下面补充下MultipartFile文件转成流并保存的代码1234567891011121314151617181920212223242526272829303132333435363738/** * @param file //文件对象 * @param filePath //上传路径 * @param fileName //文件名 * @return 文件名 */public static String fileUp(MultipartFile file, String filePath, String fileName)&#123; String extName = ""; // 扩展名格式： try &#123; if (file.getOriginalFilename().lastIndexOf(".") &gt;= 0)&#123; extName = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")); &#125; copyFile(file.getInputStream(), filePath, fileName+extName).replaceAll("-", ""); &#125; catch (IOException e) &#123; e.printStackTrace(); System.out.println(e); &#125; return fileName+extName;&#125;/** * 写文件到当前目录的upload目录中 * * @param in * @throws IOException */private static String copyFile(InputStream in, String dir, String realName) throws IOException &#123; File file = new File(dir, realName); if (!file.exists()) &#123; if (!file.getParentFile().exists()) &#123; file.getParentFile().mkdirs(); &#125; file.createNewFile(); &#125; FileUtils.copyInputStreamToFile(in, file); return realName;&#125;]]></content>
+      <categories>
+        <category>后端开发语言</category>
+        <category>Java</category>
+        <category>RestTemplate</category>
+      </categories>
+      <tags>
+        <tag>POST</tag>
+        <tag>RestTemplate</tag>
+        <tag>HTTP</tag>
+        <tag>文件发送</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[跟着官方文档学Drools（一）]]></title>
+    <url>%2F2019%2F12%2F26%2F%E8%B7%9F%E7%9D%80%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3%E5%AD%A6Drools%EF%BC%88%E4%B8%80%EF%BC%89%2F</url>
+    <content type="text"><![CDATA[前言首先介绍一下Drools是个什么东西: Drools is a Business Rules Management System (BRMS) solution. It provides a core Business Rules Engine (BRE), a web authoring and rules management application (Drools Workbench), full runtime support for Decision Model and Notation (DMN) models at Conformance level 3 and an Eclipse IDE plugin for core development 说人话： Drools是一个商业规则引擎系统解决方案。它提供了一个核心商业规则引擎，一个网页认证和规则管理的程序，完全符合级别3的决策模型和注释（DMN）模型的运行时支持，以及用于核心开发的Eclipse IDE插件； 说人话！！！ 简单来说就是一个系统，可以定义一些规则，然后别的系统通过接口或者其他的方式访问这个系统，把数据发给这个系统，这个系统决定这个用户通不通过，或者给予什么建议等等，就是它会帮你给出决策信息，当然前提是得把决策模型创建好才行。 安装准备环境，环境要求如下： JDK1.8 Eclipse IDE（建议Mars版本） 下载Droolsruntime和tools]]></content>
+      <categories>
+        <category>中间件</category>
+        <category>Drools</category>
+      </categories>
+      <tags>
+        <tag>Drools</tag>
+        <tag>规则引擎</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Mock工具-Rap2部署]]></title>
     <url>%2F2019%2F12%2F07%2FMock%E5%B7%A5%E5%85%B7-Rap2%E9%83%A8%E7%BD%B2%2F</url>
     <content type="text"><![CDATA[Mock测试定义Mock是在测试过程中，对于一些不容易构造/获取的对象，创建一个mock对象来模拟对象的行为；用人话或者个人理解来说，就是在前后端分离情况下，或者目标接口暂时没法测试的情况下，可以通过模拟返回数据的形式，进行初步的联调测试 RAP2RAP2简介RAP2 是在 RAP1 基础上重做的新项目，它能给你提供方便的接口文档管理、Mock、导出等功能，包含两个组件(对应两个 Github Repository) RAP2部署Docker、Docker Compose安装可以按照下面的命令进行安装，也可以按照https://get.daocloud.io/进行安装，这个链接有各种关于Docker安装、卸载的相关资料12# 首先安装Docker，适用于Ubuntu，Debian,Centos等大部分Linuxcurl -sSL https://get.daocloud.io/docker | sh 12345# 安装 Docker Composecurl -L https://get.daocloud.io/docker/compose/releases/download/1.25.0/docker-compose-`uname -s`-`uname -m` &gt; /usr/local/bin/docker-compose# 设置执行权限chmod +x /usr/local/bin/docker-compose RAP2配置 在/usr/local目录下创建目录rap 下载这个Github项目下的docker-compose.yml文件到rap目录下 Rap 前端服务的端口号默认为 3000，你可以在 docker-compose.yml 中按照注释自定义 在 rap 目录下执行下面的命令： 12345678910111213141516171819202122# 启动Dockersystemctl start docker# 拉取镜像并启动docker-compose up -d# 等待5分钟，服务器性能如果不行的情况下，拉取完镜像，mysql需要一会才能启动成功# 启动后，第一次运行需要手动初始化mysql数据库# ⚠️注意: 只有第一次该这样做docker-compose exec delos node scripts/init# 部署成功后 访问http://localhost:3000 # 前端（可自定义端口号）http://localhost:38080 # 后端# 如果访问不了可能是数据库没有链接上，关闭 rap 服务docker-compose down# 再重新运行docker-compose up -d# 如果 Sequelize 报错可能是数据库表发生了变化，运行下面命令同步docker-compose exec delos node scripts/updateSchema 注意：第一次运行后 rap 目录下会被自动创建一个 docker 目录，里面存有 rap 的数据库数据，可千万不要删除。]]></content>
@@ -583,7 +612,7 @@
   <entry>
     <title><![CDATA[软件整理]]></title>
     <url>%2F2019%2F02%2F20%2F%E8%BD%AF%E4%BB%B6%E6%95%B4%E7%90%86%2F</url>
-    <content type="text"><![CDATA[应用软件 Python开发工具JetBrains PyCharm 2017.1.2 x64 原型工具Axure RP Pro 7.0（PC端）、墨刀（手机端） C++开发CodeBlocks Mysql存储过程调试dbForge Studio for MySQL 截取手机APP请求信息软件Fiddler 4 文本编辑器NodePad++、UltraEdit32、EditPlus 数据库前端软件Navicat Premium、PLSQL、Studio 3T（Mongodb） 大数据分析Tableau、Qlik 邮箱客户端FoxMail、Gmail SDCard格式化（树莓派镜像会出现Windows无法格式化情况）SDFormatter 数模设计软件（能够快速导出已完成数据库的数模）PowerDesigner 远程Linux系统Xshell、Xftp 视频播放器、听歌、视频格式化、Win10扫雷完美解码、Potplayer、网易云音乐、格式工厂、MineSweeper 云笔记有道云、Evernote（印象笔记） 安卓开发、IOS开发AndroidStudio、apicloud-studio-2.exe CAD看图软件CAD迷你看图 Json格式化、XML格式化JsonView、XMLFormat 翻墙软件（需要国外搭建服务器，简单的VPS配置操作，可在搬瓦工上买服务器，相对稳定，不会封杀）Shadowsocks、蓝灯Lantern Windows内存分析RAMMap.1.50.chs 端口开放情况PortScan Java反编译工具jd-gui反编译 C#反编译dnSpy 截图软件，这个可以录视频幺FSCapture 接口测试HTTPPostman可自动生成接口调用代码 SQL文件分割工具SQLDumpSplitter 取色工具TakeColor、抓色小猫、Chrome和IE里面也有取色工具 流程在线制作软件Processon 脑图百度脑图、Xmind 关于我们或者推广在线H5展页兔展、人人秀、企业秀 图标下载、GIF图标下载https://preloaders.net/en/free GIF图标下载地址，包含等待之类的http://www.iconfont.cn/ 阿里图标下载，各种图标http://www.easyicon.net 国外的一个图标下载的网址 MarkDown编写工具Cmd Markdown：（写出来的文档好看，文件管理不是很好，导出PDF、带样式HTML收费）Typora：（目前免费，样式好看而且可以切换多种样式皮肤，喜欢Github和Vue风格的，适合于本地写文档，可以使用Github同步自己的文档到云端，而且Github是免费的幺，导出功能免费）Atom：（Github出品的一款程序员编辑器，用了不久，无感） GIF截屏工具GifCam 鼠标键盘多电脑共享Synergy、MouseWithOutBorder（Windows自带，免费，但是得在同一个WIFI下） 文件搜索Everything 内网映射工具frp可以自己搭建服务器进行域名的映射，很简单ngrok(免费,前提是自己有服务器和域名，也可以使用公共的，比较慢) 花生壳（部分功能收费，特别是80端口） 日志查看工具emeditorLogViewer Redis可视化管理工具Redis Desktop Manager 开发使用的常用插件 地图百度地图（SDK jsAPI）等等，使用很方便 图表(柱状、饼状、折线、雷达、地图、仪表盘、漏斗、热力图、混搭配合多种主题组合)Echarts（界面比较美观，可以使用上面JSONview进行分析） 富文本编辑UEditor(本地化保存) 接口管理工具（前后端协作）Swagger apizza 网页打印工具C-lodop 图片剪切上传Cropper 文件上传WebUploader Word文档文本搜索和数据存储ES Java后台图片处理thumbnailator Java工作流开发（流程相关）Activiti 跨服务器跨不同数据库不同业务表不同业务字段数据库同步ETL kettle Oracle修改导出版本AlxcTools Web中使用Word、ExcelpageOffice 前端RSA加密JSEncrypt 规则引擎Drools 开发框架 手机APP开发框架afinal、ThinkAndroid、andBase、KJFrameForAndroid、SmartAndroid、dhroidQMUI（手机APP开发布局框架）、ButterKnife（个人理解是减少findViewById）、OkHttp框架（网络请求框架） JAVA 开发框架SSM(Spring+SpringMVC+MyBatis)，阿里数据库连接池durid 权限管理框架Apache shiro PC前端开发框架Bootstrap、Layer（PC端管理后台） 手机前端框架Framework7(阿里手机前端框架)MUI(HBuilder)SUI、MUI、WEUI（手机端）GMU(百度) Frozen UI（QQ） 相关软件 Kali Linux （还在研究各种渗透，里面有很多渗透用的工具） 人工智能、人脸识别 人脸识别OpenCV 博客、BBS论坛 博客HEXO、WordPress 论坛Xiuno]]></content>
+    <content type="text"><![CDATA[应用软件 Python开发工具JetBrains PyCharm 2017.1.2 x64 原型工具Axure RP Pro 7.0（PC端）、墨刀（手机端） C++开发CodeBlocks Mysql存储过程调试dbForge Studio for MySQL 截取手机APP请求信息软件Fiddler 4 文本编辑器NodePad++、UltraEdit32、EditPlus 数据库前端软件Navicat Premium、PLSQL、Studio 3T（Mongodb） 大数据分析Tableau、Qlik 邮箱客户端FoxMail、Gmail SDCard格式化（树莓派镜像会出现Windows无法格式化情况）SDFormatter 数模设计软件（能够快速导出已完成数据库的数模）PowerDesigner 远程Linux系统Xshell、Xftp 视频播放器、听歌、视频格式化、Win10扫雷完美解码、Potplayer、网易云音乐、格式工厂、MineSweeper 云笔记有道云、Evernote（印象笔记） 安卓开发、IOS开发AndroidStudio、apicloud-studio-2.exe CAD看图软件CAD迷你看图 Json格式化、XML格式化JsonView、XMLFormat 翻墙软件（需要国外搭建服务器，简单的VPS配置操作，可在搬瓦工上买服务器，相对稳定，不会封杀）Shadowsocks、蓝灯Lantern Windows内存分析RAMMap.1.50.chs 端口开放情况PortScan Java反编译工具jd-gui反编译 C#反编译dnSpy 截图软件，这个可以录视频幺FSCapture 接口测试HTTPPostman可自动生成接口调用代码 SQL文件分割工具SQLDumpSplitter 取色工具TakeColor、抓色小猫、Chrome和IE里面也有取色工具 流程在线制作软件Processon 脑图百度脑图、Xmind 关于我们或者推广在线H5展页兔展、人人秀、企业秀 图标下载、GIF图标下载https://preloaders.net/en/free GIF图标下载地址，包含等待之类的http://www.iconfont.cn/ 阿里图标下载，各种图标http://www.easyicon.net 国外的一个图标下载的网址 MarkDown编写工具Cmd Markdown：（写出来的文档好看，文件管理不是很好，导出PDF、带样式HTML收费）Typora：（目前免费，样式好看而且可以切换多种样式皮肤，喜欢Github和Vue风格的，适合于本地写文档，可以使用Github同步自己的文档到云端，而且Github是免费的幺，导出功能免费）Atom：（Github出品的一款程序员编辑器，用了不久，无感） GIF截屏工具GifCam 鼠标键盘多电脑共享Synergy、MouseWithOutBorder（Windows自带，免费，但是得在同一个WIFI下） 文件搜索Everything 内网映射工具frp可以自己搭建服务器进行域名的映射，很简单ngrok(免费,前提是自己有服务器和域名，也可以使用公共的，比较慢) 花生壳（部分功能收费，特别是80端口） 日志查看工具emeditorLogViewer Redis可视化管理工具Redis Desktop Manager 开发使用的常用插件 地图百度地图（SDK jsAPI）等等，使用很方便 图表(柱状、饼状、折线、雷达、地图、仪表盘、漏斗、热力图、混搭配合多种主题组合)Echarts（界面比较美观，可以使用上面JSONview进行分析） 富文本编辑UEditor(本地化保存) 接口管理工具（前后端协作）Swagger apizza 网页打印工具C-lodop 图片剪切上传Cropper 文件上传WebUploader Word文档文本搜索和数据存储ES Java后台图片处理thumbnailator Java工作流开发（流程相关）Activiti 跨服务器跨不同数据库不同业务表不同业务字段数据库同步ETL kettle Oracle修改导出版本AlxcTools Web中使用Word、ExcelpageOffice 前端RSA加密JSEncrypt 规则引擎Drools Mock工具RAP2 开发框架 手机APP开发框架afinal、ThinkAndroid、andBase、KJFrameForAndroid、SmartAndroid、dhroidQMUI（手机APP开发布局框架）、ButterKnife（个人理解是减少findViewById）、OkHttp框架（网络请求框架） JAVA 开发框架SSM(Spring+SpringMVC+MyBatis)，阿里数据库连接池durid 权限管理框架Apache shiro PC前端开发框架Bootstrap、Layer（PC端管理后台）、Ant Designer、Element UI 手机前端框架Framework7(阿里手机前端框架)MUI(HBuilder)SUI、MUI、WEUI（手机端）GMU(百度) Frozen UI（QQ） 相关软件 Kali Linux （还在研究各种渗透，里面有很多渗透用的工具） 人工智能、人脸识别 人脸识别OpenCV 博客、BBS论坛 博客HEXO、WordPress 论坛Xiuno]]></content>
       <categories>
         <category>办公知识</category>
         <category>软件整理</category>
@@ -710,8 +739,8 @@
       </categories>
       <tags>
         <tag>软件安装</tag>
-        <tag>快捷键</tag>
         <tag>IDEA</tag>
+        <tag>快捷键</tag>
       </tags>
   </entry>
   <entry>
@@ -723,8 +752,8 @@
         <category>IDEA</category>
       </categories>
       <tags>
-        <tag>IDEA</tag>
         <tag>插件安装</tag>
+        <tag>IDEA</tag>
         <tag>服务免重启</tag>
       </tags>
   </entry>

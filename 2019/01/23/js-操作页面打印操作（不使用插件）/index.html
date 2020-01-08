@@ -562,7 +562,7 @@
       
     
 
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">169</span></a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">174</span></a>
 
   </li>
         
@@ -581,7 +581,7 @@
       
     
 
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">83</span></a>
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">85</span></a>
 
   </li>
         
@@ -600,7 +600,7 @@
       
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">143</span></a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">145</span></a>
 
   </li>
         
@@ -842,7 +842,7 @@
       
         <h1 id="页面打印"><a href="#页面打印" class="headerlink" title="页面打印"></a>页面打印</h1><p>​    打印之前没怎么接触过，最近项目有需求在系统中实现打印合同的功能，系统中的合同是用Bootstrap实现的html页面，因此就查阅资料，发现window.print方法可以在不使用外部打印插件的前提下，可以进行页面的打印操作，这种既简单又好操作，但是存在一个缺点是：<font color="red">页面内容的替换</font></p>
 <h2 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h2><p>实现原理很简单：是通过页面替换到window.document.body中的内容，然后就可以用window.print就可以打印window.document.body中的内容</p>
-<h2 id="实现代码"><a href="#实现代码" class="headerlink" title="实现代码"></a>实现代码</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">...</span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"print-content"</span> <span class="attr">class</span>=<span class="string">"container"</span> <span class="attr">style</span>=<span class="string">"clear: both;width: 210mm;height: 297mm"</span>&gt;</span></span><br><span class="line">    ....</span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">....</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined"> var bdhtml = window.document.body.innerHTML;//获取当前页的html代码</span></span><br><span class="line"><span class="undefined"> //获取需要打印的html代码</span></span><br><span class="line"><span class="undefined"> window.document.body.innerHTML = $("#print-content")[0].innerHTML;</span></span><br><span class="line"><span class="undefined"> window.print();</span></span><br><span class="line"><span class="undefined"> window.document.body.innerHTML = bdhtml;//还原页面内容</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="实现代码"><a href="#实现代码" class="headerlink" title="实现代码"></a>实现代码</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">...</span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"print-content"</span> <span class="attr">class</span>=<span class="string">"container"</span> <span class="attr">style</span>=<span class="string">"clear: both;width: 210mm;height: 297mm"</span>&gt;</span></span><br><span class="line">    ....</span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">....</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript"> <span class="keyword">var</span> bdhtml = <span class="built_in">window</span>.document.body.innerHTML;<span class="comment">//获取当前页的html代码</span></span></span><br><span class="line"><span class="javascript"> <span class="comment">//获取需要打印的html代码</span></span></span><br><span class="line"><span class="javascript"> <span class="built_in">window</span>.document.body.innerHTML = $(<span class="string">"#print-content"</span>)[<span class="number">0</span>].innerHTML;</span></span><br><span class="line"><span class="javascript"> <span class="built_in">window</span>.print();</span></span><br><span class="line"><span class="javascript"> <span class="built_in">window</span>.document.body.innerHTML = bdhtml;<span class="comment">//还原页面内容</span></span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <h2 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h2><h3 id="Chrome"><a href="#Chrome" class="headerlink" title="Chrome"></a>Chrome</h3><img src="/2019/01/23/js-操作页面打印操作（不使用插件）/screenshort_1.png">
 <h3 id="Firfox和IE"><a href="#Firfox和IE" class="headerlink" title="Firfox和IE"></a>Firfox和IE</h3><p>这两个浏览器是没有打印预览的，是直接弹出打印页面的</p>
 <h2 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h2><h3 id="打印的时候出现页眉页脚问题处理"><a href="#打印的时候出现页眉页脚问题处理" class="headerlink" title="打印的时候出现页眉页脚问题处理"></a>打印的时候出现页眉页脚问题处理</h3><p>Chrome打印的时候会出现页眉和页脚中有地址的问题，可以直接点击上图中左侧的页眉页脚中取消勾选</p>
@@ -976,7 +976,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">143</span>
+                    <span class="site-state-item-count">145</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1155,7 +1155,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">83</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">85</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -1506,7 +1510,17 @@
                     
                       
                     
-                    <span class="site-state-item-count">169</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">174</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1588,7 +1602,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2018 – <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; 2018 – <span itemprop="copyrightYear">2020</span>
   <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>
