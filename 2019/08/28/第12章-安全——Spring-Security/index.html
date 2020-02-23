@@ -105,13 +105,13 @@
 <meta property="og:site_name" content="Daniel&#39;s Blog">
 <meta property="og:description" content="安全——Spring Security为了保证系统的安全性，Spring提供了安全框架Spring Security，他是一种能够为基于Spring生态圈，提供安全访问控制解决方案的框架。它提供了一组可以在Spring应用上下文中配置的机制，充分的利用了Spring的强大特性，微应用系统提供声明式的安全访问控制功能，减少了为企业系统安全控制编写大量重复代码的工作。为了使用Spring Secur">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://xydcom.cn/images/banner/banner_62.png">
+<meta property="og:image" content="https://xydcom.cn/images/banner/banner_62.jpg">
 <meta property="og:image" content="https://xydcom.cn/2019/08/28/第12章-安全——Spring-Security/screenshot_1.png">
-<meta property="og:updated_time" content="2019-08-31T09:47:26.535Z">
+<meta property="og:updated_time" content="2020-02-10T02:18:23.451Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第12章 安全——Spring Security">
 <meta name="twitter:description" content="安全——Spring Security为了保证系统的安全性，Spring提供了安全框架Spring Security，他是一种能够为基于Spring生态圈，提供安全访问控制解决方案的框架。它提供了一组可以在Spring应用上下文中配置的机制，充分的利用了Spring的强大特性，微应用系统提供声明式的安全访问控制功能，减少了为企业系统安全控制编写大量重复代码的工作。为了使用Spring Secur">
-<meta name="twitter:image" content="https://xydcom.cn/images/banner/banner_62.png">
+<meta name="twitter:image" content="https://xydcom.cn/images/banner/banner_62.jpg">
 
 
 
@@ -561,7 +561,7 @@
       
     
 
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">174</span></a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">185</span></a>
 
   </li>
         
@@ -580,7 +580,7 @@
       
     
 
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">85</span></a>
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">90</span></a>
 
   </li>
         
@@ -599,7 +599,7 @@
       
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">145</span></a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">152</span></a>
 
   </li>
         
@@ -761,7 +761,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-08-31 17:47:26" itemprop="dateModified" datetime="2019-08-31T17:47:26+08:00">2019-08-31</time>
+                <time title="修改时间：2020-02-10 10:18:23" itemprop="dateModified" datetime="2020-02-10T10:18:23+08:00">2020-02-10</time>
               
             
           </span>
@@ -807,7 +807,7 @@
       
 
       
-        <p><img src="/images/banner/banner_62.png" alt=""></p>
+        <p><img src="/images/banner/banner_62.jpg" alt=""></p>
 <h1 id="安全——Spring-Security"><a href="#安全——Spring-Security" class="headerlink" title="安全——Spring Security"></a>安全——Spring Security</h1><p>为了保证系统的安全性，Spring提供了安全框架Spring Security，他是一种能够为基于Spring生态圈，提供安全访问控制解决方案的框架。它提供了一组可以在Spring应用上下文中配置的机制，充分的利用了Spring的强大特性，微应用系统提供声明式的安全访问控制功能，减少了为企业系统安全控制编写大量重复代码的工作。<br>为了使用Spring Security，需要引入依赖<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--Spring Security--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-security<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
 <p>这样工程就能够把Spring Security的依赖包引入进来</p>
 <h2 id="概述和简单安全认证"><a href="#概述和简单安全认证" class="headerlink" title="概述和简单安全认证"></a>概述和简单安全认证</h2><p>在Java项目中一般使用Servlet过滤器（Filter）队请求进行拦截，然后在Filter中通过自己的验证逻辑来决定是否放行请求。同样Spring Security中也是基于这个原理，在进入到DispatcherServlet钱就可以对Spring MVC的请求进行拦截，然后通过一定的验证，从而决定是否放行请求系统。<br>为了对请求进行拦截，Spring Security提供了过滤器DelegatingFilterProxy类给予开发者配置。传统Web工程中，可以使用web.xml进行配置，在Spring Boot中推荐使用注解。在这里只需要引入上面的pom就可以自动启动Spring Secutiry<br>启动项目你会发现在日志的打印内容会包含如下内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2019-08-31 11:39:06.517  INFO 13924 --- [  restartedMain] .s.s.UserDetailsServiceAutoConfiguration :</span><br><span class="line">Using generated security password: 7f859ab3-d0e6-4676-9b93-253e7865102c</span><br></pre></td></tr></table></figure></p>
@@ -1094,7 +1094,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">145</span>
+                    <span class="site-state-item-count">152</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1277,7 +1277,17 @@
                     
                       
                     
-                    <span class="site-state-item-count">85</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">90</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -1638,7 +1648,29 @@
                     
                       
                     
-                    <span class="site-state-item-count">174</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">185</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1813,7 +1845,7 @@
   <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
 
   
-  <script src="/lib/reading_progress/reading_progress.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-reading-progress@1/reading_progress.min.js"></script>
 
 
   
@@ -2233,7 +2265,9 @@
   
   
   
-  <script src="/lib/bookmark/bookmark.min.js?v=1.0"></script>
+    
+  
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-bookmark@1/bookmark.min.js"></script>
   <script>
   
     bookmark.scrollToMark('auto', "#更多");

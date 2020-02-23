@@ -105,14 +105,14 @@
 <meta property="og:site_name" content="Daniel&#39;s Blog">
 <meta property="og:description" content="部署和运行部署分为连个步骤，第一步是项目打包（war或者jar），第二步是如何运行项目。运行项目又可分为内嵌服务器和第三方服务器。 打包使用IDEA创建项目时，采用的是war打包方式，二十几上还可以使用jar打包，只是这种创建方式不是主流，毕竟Java当前的开发方向是以Web应用为主。使用war创建项目后，IDE会帮助生成Web应用所需要的目录，例如JSP页面的webapp目录，与此同时还会在M">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://xydcom.cn/images/banner/banner_66.png">
+<meta property="og:image" content="https://xydcom.cn/images/banner/banner_66.jpg">
 <meta property="og:image" content="https://xydcom.cn/2019/09/08/第16章-部署、测试和监控/screenshot_1.png">
 <meta property="og:image" content="https://xydcom.cn/2019/09/08/第16章-部署、测试和监控/screenshot_2.png">
-<meta property="og:updated_time" content="2019-10-21T00:52:32.411Z">
+<meta property="og:updated_time" content="2020-02-10T02:18:23.535Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第16章 部署、测试和监控">
 <meta name="twitter:description" content="部署和运行部署分为连个步骤，第一步是项目打包（war或者jar），第二步是如何运行项目。运行项目又可分为内嵌服务器和第三方服务器。 打包使用IDEA创建项目时，采用的是war打包方式，二十几上还可以使用jar打包，只是这种创建方式不是主流，毕竟Java当前的开发方向是以Web应用为主。使用war创建项目后，IDE会帮助生成Web应用所需要的目录，例如JSP页面的webapp目录，与此同时还会在M">
-<meta name="twitter:image" content="https://xydcom.cn/images/banner/banner_66.png">
+<meta name="twitter:image" content="https://xydcom.cn/images/banner/banner_66.jpg">
 
 
 
@@ -562,7 +562,7 @@
       
     
 
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">174</span></a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">185</span></a>
 
   </li>
         
@@ -581,7 +581,7 @@
       
     
 
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">85</span></a>
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">90</span></a>
 
   </li>
         
@@ -600,7 +600,7 @@
       
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">145</span></a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">152</span></a>
 
   </li>
         
@@ -762,7 +762,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-10-21 08:52:32" itemprop="dateModified" datetime="2019-10-21T08:52:32+08:00">2019-10-21</time>
+                <time title="修改时间：2020-02-10 10:18:23" itemprop="dateModified" datetime="2020-02-10T10:18:23+08:00">2020-02-10</time>
               
             
           </span>
@@ -808,7 +808,7 @@
       
 
       
-        <p><img src="/images/banner/banner_66.png" alt=""></p>
+        <p><img src="/images/banner/banner_66.jpg" alt=""></p>
 <h2 id="部署和运行"><a href="#部署和运行" class="headerlink" title="部署和运行"></a>部署和运行</h2><p>部署分为连个步骤，第一步是项目打包（war或者jar），第二步是如何运行项目。运行项目又可分为内嵌服务器和第三方服务器。</p>
 <h3 id="打包"><a href="#打包" class="headerlink" title="打包"></a>打包</h3><p>使用IDEA创建项目时，采用的是war打包方式，二十几上还可以使用jar打包，只是这种创建方式不是主流，毕竟Java当前的开发方向是以Web应用为主。使用war创建项目后，IDE会帮助生成Web应用所需要的目录，例如JSP页面的webapp目录，与此同时还会在Maven的配置文件pom.xml中添加一些内容和，其中需要注意的是其中的打包方式<code>packaging</code>标签中的内容是<code>war</code>。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.xyd<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mc<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">version</span>&gt;</span>0.0.1-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">packaging</span>&gt;</span>war<span class="tag">&lt;/<span class="name">packaging</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">name</span>&gt;</span>mc<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">description</span>&gt;</span>Demo project for Spring Boot<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
 <p>在IDEA中，点击Build，选择<code>Build Artifacts..</code>即可编译打包项目，打包完成后会在项目的target目录下生成打包成的war包<br><img src="/2019/09/08/第16章-部署、测试和监控/screenshot_1.png"><br><img src="/2019/09/08/第16章-部署、测试和监控/screenshot_2.png"></p>
@@ -948,7 +948,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">145</span>
+                    <span class="site-state-item-count">152</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1131,7 +1131,17 @@
                     
                       
                     
-                    <span class="site-state-item-count">85</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">90</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -1492,7 +1502,29 @@
                     
                       
                     
-                    <span class="site-state-item-count">174</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">185</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1667,7 +1699,7 @@
   <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
 
   
-  <script src="/lib/reading_progress/reading_progress.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-reading-progress@1/reading_progress.min.js"></script>
 
 
   
@@ -2087,7 +2119,9 @@
   
   
   
-  <script src="/lib/bookmark/bookmark.min.js?v=1.0"></script>
+    
+  
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-bookmark@1/bookmark.min.js"></script>
   <script>
   
     bookmark.scrollToMark('auto', "#更多");

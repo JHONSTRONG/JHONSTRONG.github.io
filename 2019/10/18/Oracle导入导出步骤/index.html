@@ -106,12 +106,12 @@
 <meta property="og:site_name" content="Daniel&#39;s Blog">
 <meta property="og:description" content="Oracle导入导出步骤导出查看字符集查看下字符集，需要在导出和导入的时候使用123456789101112131415# 切换到oracle用户[oracle@MCDB bin]$ su - oracle# 连接到Oracle数据库[oracle@MCDB bin]$ sqlplus /nologSQL*Plus: Release 11.2.0.4.0 Production on Fri Oc">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://xydcom.cn/images/banner/banner_67.png">
-<meta property="og:updated_time" content="2019-10-18T10:56:03.539Z">
+<meta property="og:image" content="https://xydcom.cn/images/banner/banner_67.jpg">
+<meta property="og:updated_time" content="2020-02-10T02:18:22.277Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Oracle导入导出步骤">
 <meta name="twitter:description" content="Oracle导入导出步骤导出查看字符集查看下字符集，需要在导出和导入的时候使用123456789101112131415# 切换到oracle用户[oracle@MCDB bin]$ su - oracle# 连接到Oracle数据库[oracle@MCDB bin]$ sqlplus /nologSQL*Plus: Release 11.2.0.4.0 Production on Fri Oc">
-<meta name="twitter:image" content="https://xydcom.cn/images/banner/banner_67.png">
+<meta name="twitter:image" content="https://xydcom.cn/images/banner/banner_67.jpg">
 
 
 
@@ -561,7 +561,7 @@
       
     
 
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">174</span></a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">185</span></a>
 
   </li>
         
@@ -580,7 +580,7 @@
       
     
 
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">85</span></a>
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">90</span></a>
 
   </li>
         
@@ -599,7 +599,7 @@
       
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">145</span></a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">152</span></a>
 
   </li>
         
@@ -744,12 +744,24 @@
                 
               
 
-              <time title="创建时间：2019-10-18 17:45:08 / 修改时间：18:56:03" itemprop="dateCreated datePublished" datetime="2019-10-18T17:45:08+08:00">2019-10-18</time>
+              <time title="创建时间：2019-10-18 17:45:08" itemprop="dateCreated datePublished" datetime="2019-10-18T17:45:08+08:00">2019-10-18</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-02-10 10:18:22" itemprop="dateModified" datetime="2020-02-10T10:18:22+08:00">2020-02-10</time>
               
             
           </span>
@@ -820,7 +832,7 @@
       
 
       
-        <p><img src="/images/banner/banner_67.png" alt=""></p>
+        <p><img src="/images/banner/banner_67.jpg" alt=""></p>
 <h1 id="Oracle导入导出步骤"><a href="#Oracle导入导出步骤" class="headerlink" title="Oracle导入导出步骤"></a>Oracle导入导出步骤</h1><h2 id="导出"><a href="#导出" class="headerlink" title="导出"></a>导出</h2><h3 id="查看字符集"><a href="#查看字符集" class="headerlink" title="查看字符集"></a>查看字符集</h3><p>查看下字符集，需要在导出和导入的时候使用<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 切换到oracle用户</span></span><br><span class="line">[oracle@MCDB bin]$ su - oracle</span><br><span class="line"><span class="comment"># 连接到Oracle数据库</span></span><br><span class="line">[oracle@MCDB bin]$ sqlplus /nolog</span><br><span class="line">SQL*Plus: Release 11.2.0.4.0 Production on Fri Oct 18 18:18:06 2019</span><br><span class="line"></span><br><span class="line">Copyright (c) 1982, 2013, Oracle.  All rights reserved.</span><br><span class="line"><span class="comment"># 使用用户登录</span></span><br><span class="line">SQL&gt; conn mgplat/mgplat</span><br><span class="line">Connected.</span><br><span class="line">SQL&gt; select userenv(<span class="string">'language'</span>) from dual;</span><br><span class="line"></span><br><span class="line">USERENV(<span class="string">'LANGUAGE'</span>)</span><br><span class="line">----------------------------------------------------</span><br><span class="line">AMERICAN_AMERICA.ZHS16GBK</span><br></pre></td></tr></table></figure></p>
 <h3 id="查看数据库实例"><a href="#查看数据库实例" class="headerlink" title="查看数据库实例"></a>查看数据库实例</h3><p>用作下面导出命令中的<code>instanceid</code><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt;  select name from v<span class="variable">$database</span>;</span><br><span class="line"></span><br><span class="line">NAME</span><br><span class="line">---------</span><br><span class="line">JNMCDB</span><br></pre></td></tr></table></figure></p>
 <h3 id="（重要）设置环境"><a href="#（重要）设置环境" class="headerlink" title="（重要）设置环境"></a><font color="red">（重要）</font>设置环境</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> ORACLE_HOME=/home/oracle/app/oracle/product/11.2.0/dbhome_1</span><br><span class="line"><span class="built_in">export</span> ORACLE_SID=JNMCDB</span><br><span class="line"><span class="built_in">export</span> NLS_LANG=AMERICAN_AMERICA.ZHS16GBK</span><br></pre></td></tr></table></figure>
@@ -958,7 +970,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">145</span>
+                    <span class="site-state-item-count">152</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1141,7 +1153,17 @@
                     
                       
                     
-                    <span class="site-state-item-count">85</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">90</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -1502,7 +1524,29 @@
                     
                       
                     
-                    <span class="site-state-item-count">174</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">185</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1677,7 +1721,7 @@
   <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
 
   
-  <script src="/lib/reading_progress/reading_progress.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-reading-progress@1/reading_progress.min.js"></script>
 
 
   
@@ -2097,7 +2141,9 @@
   
   
   
-  <script src="/lib/bookmark/bookmark.min.js?v=1.0"></script>
+    
+  
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-bookmark@1/bookmark.min.js"></script>
   <script>
   
     bookmark.scrollToMark('auto', "#更多");

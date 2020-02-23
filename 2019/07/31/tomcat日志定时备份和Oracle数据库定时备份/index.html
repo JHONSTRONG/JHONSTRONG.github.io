@@ -106,12 +106,12 @@
 <meta property="og:site_name" content="Daniel&#39;s Blog">
 <meta property="og:description" content="Oracle数据库备份备份脚本123456789101112131415161718export NLS_LANG=AMERICAN_AMERICA.ZHS16GBK#以上代码为Oracle数据库运行账号oracle的系统环境变量设置，必须添加，否则crontab任务计划不能执行。dateTime=`date +%Y%m%d` #当前系统时间days=7 #删除7天前的备份数据sorsid=si">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://xydcom.cn/images/banner/banner_57.png">
-<meta property="og:updated_time" content="2019-07-31T07:11:03.301Z">
+<meta property="og:image" content="https://xydcom.cn/images/banner/banner_57.jpg">
+<meta property="og:updated_time" content="2020-02-10T02:18:23.062Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Tomcat日志定时备份和Oracle数据库定时备份">
 <meta name="twitter:description" content="Oracle数据库备份备份脚本123456789101112131415161718export NLS_LANG=AMERICAN_AMERICA.ZHS16GBK#以上代码为Oracle数据库运行账号oracle的系统环境变量设置，必须添加，否则crontab任务计划不能执行。dateTime=`date +%Y%m%d` #当前系统时间days=7 #删除7天前的备份数据sorsid=si">
-<meta name="twitter:image" content="https://xydcom.cn/images/banner/banner_57.png">
+<meta name="twitter:image" content="https://xydcom.cn/images/banner/banner_57.jpg">
 
 
 
@@ -561,7 +561,7 @@
       
     
 
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">174</span></a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">185</span></a>
 
   </li>
         
@@ -580,7 +580,7 @@
       
     
 
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">85</span></a>
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">90</span></a>
 
   </li>
         
@@ -599,7 +599,7 @@
       
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">145</span></a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">152</span></a>
 
   </li>
         
@@ -744,12 +744,24 @@
                 
               
 
-              <time title="创建时间：2019-07-31 15:03:36 / 修改时间：15:11:03" itemprop="dateCreated datePublished" datetime="2019-07-31T15:03:36+08:00">2019-07-31</time>
+              <time title="创建时间：2019-07-31 15:03:36" itemprop="dateCreated datePublished" datetime="2019-07-31T15:03:36+08:00">2019-07-31</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-02-10 10:18:23" itemprop="dateModified" datetime="2020-02-10T10:18:23+08:00">2020-02-10</time>
               
             
           </span>
@@ -827,7 +839,7 @@
       
 
       
-        <p><img src="/images/banner/banner_57.png" alt=""></p>
+        <p><img src="/images/banner/banner_57.jpg" alt=""></p>
 <h2 id="Oracle数据库备份"><a href="#Oracle数据库备份" class="headerlink" title="Oracle数据库备份"></a>Oracle数据库备份</h2><h3 id="备份脚本"><a href="#备份脚本" class="headerlink" title="备份脚本"></a>备份脚本</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> NLS_LANG=AMERICAN_AMERICA.ZHS16GBK</span><br><span class="line"><span class="comment">#以上代码为Oracle数据库运行账号oracle的系统环境变量设置，必须添加，否则crontab任务计划不能执行。</span></span><br><span class="line">dateTime=`date +%Y%m%d` <span class="comment">#当前系统时间</span></span><br><span class="line">days=7 <span class="comment">#删除7天前的备份数据s</span></span><br><span class="line">orsid=sid <span class="comment">#oralce连接信息</span></span><br><span class="line">orowner=user <span class="comment"># 备份此用户下面的数据</span></span><br><span class="line">bakuser=user <span class="comment">#用此用户来执行备份，必须要有备份操作的权限</span></span><br><span class="line">bakpass=<span class="string">"password"</span> <span class="comment">#执行备注的用户密码</span></span><br><span class="line">bakdir=/home/oracle/databack <span class="comment">#备份文件路径，需要提前创建好</span></span><br><span class="line">bakdata=<span class="variable">$orowner</span><span class="string">"_"</span><span class="variable">$dateTime</span>.dmp <span class="comment">#备份数据库名称</span></span><br><span class="line">baklog=<span class="variable">$orowner</span><span class="string">"_"</span><span class="variable">$dateTime</span>.<span class="built_in">log</span> <span class="comment">#备份执行时候生成的日志文件名称</span></span><br><span class="line">ordatabak=<span class="variable">$orowner</span><span class="string">"_"</span><span class="variable">$dateTime</span>.tar.gz <span class="comment">#最后保存的Oracle数据库备份文件</span></span><br><span class="line">remotePath=/home/databack/ <span class="comment">#上传到远程服务器的路径</span></span><br><span class="line"><span class="built_in">cd</span> <span class="variable">$bakdir</span> <span class="comment">#进入备份目录</span></span><br><span class="line">mkdir -p <span class="variable">$orowner</span> <span class="comment">#按需要备份的Oracle用户创建目录</span></span><br><span class="line"><span class="built_in">cd</span> <span class="variable">$orowner</span> <span class="comment">#进入目录</span></span><br><span class="line"><span class="built_in">export</span> ORACLE_HOME=/home/oracle/app/oracle/product/11.2.0/dbhome_1</span><br><span class="line">exp <span class="string">'user/"password"@orsid'</span> owner=<span class="variable">$orowner</span> file=<span class="variable">$bakdir</span>/<span class="variable">$orowner</span>/<span class="variable">$bakdata</span> <span class="built_in">log</span>=<span class="variable">$bakdir</span>/<span class="variable">$orowner</span>/<span class="variable">$baklog</span> direct=y <span class="comment">#执行备份</span></span><br></pre></td></tr></table></figure>
 <h3 id="使用crontab添加定时任务"><a href="#使用crontab添加定时任务" class="headerlink" title="使用crontab添加定时任务"></a>使用crontab添加定时任务</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0 1 * * * . ~/.bash_profile; /home/oracle/databack/ordatabak.sh</span><br></pre></td></tr></table></figure>
 <h2 id="日志备份"><a href="#日志备份" class="headerlink" title="日志备份"></a>日志备份</h2><h3 id="日志备份脚本"><a href="#日志备份脚本" class="headerlink" title="日志备份脚本"></a>日志备份脚本</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#! /bin/bash</span></span><br><span class="line">logdir=<span class="string">"/home/MGPLAT/logs"</span></span><br><span class="line">DATE=`date <span class="string">"+%Y%m%d%H%M"</span>`</span><br><span class="line"><span class="built_in">export</span> DATE</span><br><span class="line"><span class="built_in">cd</span> <span class="variable">$&#123;logdir&#125;</span></span><br><span class="line"><span class="built_in">cd</span> /home/mgplat-logbak</span><br><span class="line"><span class="built_in">test</span> -d <span class="variable">$&#123;DATE&#125;</span> || mkdir <span class="variable">$&#123;DATE&#125;</span></span><br><span class="line">cp /home/MGPLAT/logs/catalina.out /home/mgplat-logbak/<span class="variable">$&#123;DATE&#125;</span>/catalina.out</span><br><span class="line"><span class="built_in">cd</span> /home/mgplat-logbak/<span class="variable">$&#123;DATE&#125;</span></span><br><span class="line">tar -zcvf <span class="variable">$&#123;DATE&#125;</span>.tar catalina.out</span><br><span class="line">rm -rf catalina.out</span><br><span class="line">sleep 2</span><br><span class="line"><span class="built_in">cd</span> /home/MGPLAT/logs</span><br><span class="line"><span class="built_in">echo</span> &gt; catalina.out</span><br></pre></td></tr></table></figure>
@@ -962,7 +974,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">145</span>
+                    <span class="site-state-item-count">152</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1145,7 +1157,17 @@
                     
                       
                     
-                    <span class="site-state-item-count">85</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">90</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -1506,7 +1528,29 @@
                     
                       
                     
-                    <span class="site-state-item-count">174</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">185</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1681,7 +1725,7 @@
   <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
 
   
-  <script src="/lib/reading_progress/reading_progress.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-reading-progress@1/reading_progress.min.js"></script>
 
 
   
@@ -2101,7 +2145,9 @@
   
   
   
-  <script src="/lib/bookmark/bookmark.min.js?v=1.0"></script>
+    
+  
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-bookmark@1/bookmark.min.js"></script>
   <script>
   
     bookmark.scrollToMark('auto', "#更多");

@@ -106,14 +106,14 @@
 <meta property="og:site_name" content="Daniel&#39;s Blog">
 <meta property="og:description" content="身份认证: 在应用中证明自己是谁；一般提供用户自己的ID证明自己是谁，比如用户名和密码在Shiro中，用户需要提供principals(身份)和credentials（证明）给shiro，从而验证用户的身份principals: 身份，主体的标识属性，可以是任何东西：邮箱，用户名等等，但必须唯一。一个主体可以有多个principals，但只有一个Primary principalscredenti">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://xydcom.cn/images/banner/banner_14.png">
+<meta property="og:image" content="https://xydcom.cn/images/banner/banner_14.jpg">
 <meta property="og:image" content="https://xydcom.cn/2019/01/25/第二章-身份认证/screenshot_1.png">
 <meta property="og:image" content="https://xydcom.cn/2019/01/25/第二章-身份认证/screenshot_2.png">
-<meta property="og:updated_time" content="2019-01-25T13:51:57.473Z">
+<meta property="og:updated_time" content="2020-02-10T02:18:23.768Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第二章 身份认证">
 <meta name="twitter:description" content="身份认证: 在应用中证明自己是谁；一般提供用户自己的ID证明自己是谁，比如用户名和密码在Shiro中，用户需要提供principals(身份)和credentials（证明）给shiro，从而验证用户的身份principals: 身份，主体的标识属性，可以是任何东西：邮箱，用户名等等，但必须唯一。一个主体可以有多个principals，但只有一个Primary principalscredenti">
-<meta name="twitter:image" content="https://xydcom.cn/images/banner/banner_14.png">
+<meta name="twitter:image" content="https://xydcom.cn/images/banner/banner_14.jpg">
 
 
 
@@ -563,7 +563,7 @@
       
     
 
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">174</span></a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">185</span></a>
 
   </li>
         
@@ -582,7 +582,7 @@
       
     
 
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">85</span></a>
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">90</span></a>
 
   </li>
         
@@ -601,7 +601,7 @@
       
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">145</span></a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">152</span></a>
 
   </li>
         
@@ -746,12 +746,24 @@
                 
               
 
-              <time title="创建时间：2019-01-25 21:48:21 / 修改时间：21:51:57" itemprop="dateCreated datePublished" datetime="2019-01-25T21:48:21+08:00">2019-01-25</time>
+              <time title="创建时间：2019-01-25 21:48:21" itemprop="dateCreated datePublished" datetime="2019-01-25T21:48:21+08:00">2019-01-25</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-02-10 10:18:23" itemprop="dateModified" datetime="2020-02-10T10:18:23+08:00">2020-02-10</time>
               
             
           </span>
@@ -829,7 +841,7 @@
       
 
       
-        <p><img src="/images/banner/banner_14.png" alt=""><br><strong>身份认证:</strong> 在应用中证明自己是谁；一般提供用户自己的ID证明自己是谁，比如用户名和密码<br>在Shiro中，用户需要提供<code>principals</code>(身份)和<code>credentials</code>（证明）给shiro，从而验证用户的身份<br><strong>principals:</strong> 身份，主体的标识属性，可以是任何东西：邮箱，用户名等等，但必须唯一。一个主体可以有多个<code>principals</code>，但只有一个Primary principals<br><strong>credentials:</strong> 证明，凭据，即主体对应的安全值，如密码/数字证书等。</p>
+        <p><img src="/images/banner/banner_14.jpg" alt=""><br><strong>身份认证:</strong> 在应用中证明自己是谁；一般提供用户自己的ID证明自己是谁，比如用户名和密码<br>在Shiro中，用户需要提供<code>principals</code>(身份)和<code>credentials</code>（证明）给shiro，从而验证用户的身份<br><strong>principals:</strong> 身份，主体的标识属性，可以是任何东西：邮箱，用户名等等，但必须唯一。一个主体可以有多个<code>principals</code>，但只有一个Primary principals<br><strong>credentials:</strong> 证明，凭据，即主体对应的安全值，如密码/数字证书等。</p>
 <h2 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h2><h3 id="Maven配置"><a href="#Maven配置" class="headerlink" title="Maven配置"></a>Maven配置</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.12<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>commons-logging<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>commons-logging<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.shiro<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>shiro-core<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.4.0-RC2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <h2 id="登录-退出"><a href="#登录-退出" class="headerlink" title="登录/退出"></a>登录/退出</h2><ol>
 <li><p>用户身份凭据（shior.ini）<br>在<code>shiro-test\src\test\resources</code>下创建文件<code>shiro.ini</code>，用来保存用户信息,通过<code>[users]</code>制定了两个主体</p>
@@ -1021,7 +1033,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">145</span>
+                    <span class="site-state-item-count">152</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1204,7 +1216,17 @@
                     
                       
                     
-                    <span class="site-state-item-count">85</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">90</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -1565,7 +1587,29 @@
                     
                       
                     
-                    <span class="site-state-item-count">174</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">185</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1740,7 +1784,7 @@
   <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
 
   
-  <script src="/lib/reading_progress/reading_progress.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-reading-progress@1/reading_progress.min.js"></script>
 
 
   
@@ -2160,7 +2204,9 @@
   
   
   
-  <script src="/lib/bookmark/bookmark.min.js?v=1.0"></script>
+    
+  
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-bookmark@1/bookmark.min.js"></script>
   <script>
   
     bookmark.scrollToMark('auto', "#更多");
