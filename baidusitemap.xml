@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://xydcom.cn/2019/02/20/%E8%BD%AF%E4%BB%B6%E6%95%B4%E7%90%86/</loc>
+    <lastmod>2020-03-16</lastmod>
+  </url>  <url>
+    <loc>https://xydcom.cn/2020/02/25/%E5%A6%82%E4%BD%95%E6%AD%A3%E7%A1%AE%E7%9A%84%E6%8A%8A%E6%95%B0%E7%BB%84%E8%BD%AC%E6%8D%A2%E6%88%90ArrayList/</loc>
+    <lastmod>2020-02-25</lastmod>
+  </url>  <url>
     <loc>https://xydcom.cn/2020/02/23/%E5%88%86%E5%B8%83%E5%BC%8F%E7%94%9F%E6%88%90ID%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/</loc>
-    <lastmod>2020-02-23</lastmod>
+    <lastmod>2020-02-24</lastmod>
   </url>  <url>
     <loc>https://xydcom.cn/2020/02/23/Cookie%E3%80%81Session%E3%80%81Token%E3%80%81OAuth2%E8%A7%A3%E6%9E%90/</loc>
     <lastmod>2020-02-23</lastmod>
-  </url>  <url>
-    <loc>https://xydcom.cn/2019/02/20/%E8%BD%AF%E4%BB%B6%E6%95%B4%E7%90%86/</loc>
-    <lastmod>2020-02-22</lastmod>
   </url>  <url>
     <loc>https://xydcom.cn/2020/02/22/fastjson%E4%B8%ADSerializerFeature%E7%9A%84%E7%94%A8%E6%B3%95%E5%8F%8A%E4%B8%AD%E6%96%87%E6%B3%A8%E8%A7%A3/</loc>
     <lastmod>2020-02-22</lastmod>

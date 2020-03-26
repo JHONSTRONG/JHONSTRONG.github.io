@@ -109,7 +109,7 @@
 <meta property="og:image" content="https://xydcom.cn/2020/02/23/分布式生成ID的几种方式/generate_id.jpg">
 <meta property="og:image" content="https://xydcom.cn/2020/02/23/分布式生成ID的几种方式/snowflake_id_generate.jpg">
 <meta property="og:image" content="https://xydcom.cn/2020/02/23/分布式生成ID的几种方式/tinyid_id_generate.jpg">
-<meta property="og:updated_time" content="2020-02-23T09:01:54.211Z">
+<meta property="og:updated_time" content="2020-02-24T01:22:03.968Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="分布式生成ID的几种方式">
 <meta name="twitter:description" content="为什么要用分布式什么是分布式ID拿MySQL数据库举个例子：在业务数据量不大的时候，单库单表完全可以支撑现有业务，数据量再大点可以弄MySQL主从同步读写分离来对付。但是随着数据日渐增长，主从也扛不住了，就需要对数据库进行分库分表，但分库分表需要有一个唯一ID来标识一条数据，数据库的自增ID显然是不能满足需求；特别一点的如订单、优惠券也都需要唯一ID作为标识。此时一个能够生成全局唯一ID的系统是">
@@ -563,7 +563,7 @@
       
     
 
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">185</span></a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">188</span></a>
 
   </li>
         
@@ -601,7 +601,7 @@
       
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">152</span></a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">153</span></a>
 
   </li>
         
@@ -746,12 +746,24 @@
                 
               
 
-              <time title="创建时间：2020-02-23 12:48:51 / 修改时间：17:01:54" itemprop="dateCreated datePublished" datetime="2020-02-23T12:48:51+08:00">2020-02-23</time>
+              <time title="创建时间：2020-02-23 12:48:51" itemprop="dateCreated datePublished" datetime="2020-02-23T12:48:51+08:00">2020-02-23</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-02-24 09:22:03" itemprop="dateModified" datetime="2020-02-24T09:22:03+08:00">2020-02-24</time>
               
             
           </span>
@@ -850,9 +862,9 @@
 <li>生成足够简单，本地生成无网络小号，具有唯一性<br><strong>缺点</strong></li>
 <li>无序的字符串，不具备趋势自增特性</li>
 <li>没有具体的业务含义</li>
-<li>长度过长，对数据性能消耗过大，MySQL官方明确建议主键应该尽量越短越好，作为数据库主键UUID的无序性会导致数据位置频繁变动，影响性能<h2 id="基于数据库自增ID"><a href="#基于数据库自增ID" class="headerlink" title="基于数据库自增ID"></a>基于数据库自增ID</h2>基于数据库的<code>auto_increment</code>自增ID完全可以充当分布式ID，具体实现需要一个单独的MySQL实例来完成，建表结构如下<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">DATABASE</span> <span class="string">'SEQ_ID'</span>;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`sequence_id`</span> (</span><br><span class="line">  <span class="string">`id`</span> <span class="built_in">bigint</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT,</span><br><span class="line">  <span class="string">`value`</span> <span class="built_in">char</span>(<span class="number">10</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="string">`id`</span>)</span><br><span class="line">) <span class="keyword">ENGINE</span>=MyISAM <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8;</span><br></pre></td></tr></table></figure>
-</li>
+<li>长度过长，对数据性能消耗过大，MySQL官方明确建议主键应该尽量越短越好，作为数据库主键UUID的无序性会导致数据位置频繁变动，影响性能  </li>
 </ul>
+<h2 id="基于数据库自增ID"><a href="#基于数据库自增ID" class="headerlink" title="基于数据库自增ID"></a>基于数据库自增ID</h2><p>基于数据库的<code>auto_increment</code>自增ID完全可以充当分布式ID，具体实现需要一个单独的MySQL实例来完成，建表结构如下<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">DATABASE</span> <span class="string">'SEQ_ID'</span>;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`sequence_id`</span> (</span><br><span class="line">  <span class="string">`id`</span> <span class="built_in">bigint</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT,</span><br><span class="line">  <span class="string">`value`</span> <span class="built_in">char</span>(<span class="number">10</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="string">`id`</span>)</span><br><span class="line">) <span class="keyword">ENGINE</span>=MyISAM <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8;</span><br></pre></td></tr></table></figure></p>
 <p>当我们需要一个ID的时候，向表中插入一条记录返回主键ID，但是这种方式由一个致命的缺点，访问量激增时MySQL本身就是系统的瓶颈，用它来实现分布式服务风险比较大，不推荐</p>
 <p><strong>优点</strong></p>
 <ul>
@@ -975,6 +987,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2020/02/25/如何正确的把数组转换成ArrayList/" rel="prev" title="如何正确的把数组转换成ArrayList">
+                如何正确的把数组转换成ArrayList <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -1051,7 +1067,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">152</span>
+                    <span class="site-state-item-count">153</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1627,7 +1643,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">185</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">188</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
