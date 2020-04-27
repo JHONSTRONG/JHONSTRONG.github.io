@@ -1,6 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[IDEA 自定义注释模板]]></title>
+    <url>%2F2020%2F04%2F23%2FIDEA-%E8%87%AA%E5%AE%9A%E4%B9%89%E6%B3%A8%E9%87%8A%E6%A8%A1%E6%9D%BF%2F</url>
+    <content type="text"><![CDATA[之前每次添加注释模板的时候，都会去网上查一遍，但是每个人写的教程都不一样，出现注释模板百花齐放，因此在这里记录下自己认为比较好的一套模板，适应@JavaDoc编写的，支持多参数分别列出的一套模板，下面首先介绍下自定义模板组和模板的创建过程 创建模板组 首先第一步打开Idea的Setting界面，步骤：打开Idea–&gt;菜单选择File–&gt;选择Setting 不再描述，自己看图吧 需要说明的几点： 上图中的Abbreviation是调起注释的快捷输入内容，再加上Expand with中选择的快捷键（个人使用的是Tab，看个人喜好进行选择，可选择Enter） 上图中最下面有一排小字，显示最末尾有个Change，是选择注释快捷输入的作用域，也就是在什么地方你可以通过快捷字母进行输入，这个地方是可以修改的，默认的时候这个地方显示的是No Applicable context yet.Define，点击打开可以选择作用域，我这里选择的是Java，也可以选择第一个，全部选择，如果不选的话，在变量编辑界面会出现系统提供下拉选择变量没有的情况 模板框中一定得现有内容，例如下面的代码注释模板，否则Edit variables按钮是不可点击状态的 123456789/** * *$params$ * @return $returns$ * @exception $exception$ * @author $author$ * @date $date$ $time$ */ 上面的变量配置截图和内容如下 1234567891011params:groovyScript("def result=''; def params=\"$&#123;_1&#125;\".replaceAll('[\\\\[|\\\\]|\\\\s]', '').split(',').toList(); for(i = 0; i &lt; params.size(); i++) &#123;result+=' * @param ' + params[i] + ((i &lt; params.size() - 1) ? '\\r\\n' : '')&#125;; return result", methodParameters())returns:methodReturnType()exception:expressionType(Expression)author:user()date:date()time:time() 变量录入完的效果见下图，这个地方有个比较奇怪的地方，在输入groovy代码的时候会出现切换后变成空的，这里可以输入完之后，直接点击OK，就能够保存下来了]]></content>
+      <categories>
+        <category>办公知识</category>
+      </categories>
+      <tags>
+        <tag>IDEA</tag>
+        <tag>自定义注释模板</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux设置环境变量]]></title>
+    <url>%2F2020%2F04%2F17%2FLinux%E8%AE%BE%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%2F</url>
+    <content type="text"><![CDATA[临时设置环境变量这种设置办法一般用在临时使用，比如说导出数据库的时候需要设置字符集之类的1# export PATH=$PATH:/usr/local/htop/bin 永久生效设置这种是永久生效的设置环境变量，比如说JAVA的环境变量等等1# vim /etc/profile 在文件最后添加上对应的变量1export PATH="$PATH:/usr/local/htop/bin" 添加完成后，还需要执行下面命令使之生效1source /etc/profile 验证是否成功下面代码中第10行显示的declare -x OLDPWD=&quot;/usr/local/htop&quot;表示设置成功123456789101112131415161718192021[root@xxxxxx bin]# exportdeclare -x HISTCONTROL="ignoredups"declare -x HISTSIZE="3000"declare -x HISTTIMEFORMAT="%F %T "declare -x HOME="/root"declare -x HOSTNAME="VM_0_12_centos"declare -x LANG="en_US.utf8"declare -x LESSOPEN="||/usr/bin/lesspipe.sh %s"declare -x LOGNAME="root"declare -x MAIL="/var/spool/mail/root"declare -x OLDPWD="/usr/local/htop"declare -x PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin:/usr/local/htop/bin"declare -x PROMPT_COMMAND="history -a; printf \"\\033]0;%s@%s:%s\\007\" \"\$&#123;USER&#125;\" \"\$&#123;HOSTNAME%%.*&#125;\" \"\$&#123;PWD/#\$HOME/~&#125;\""declare -x PWD="/usr/local/htop/bin"declare -x SHELL="/bin/bash"declare -x SHLVL="1"declare -x SSH_TTY="/dev/pts/0"declare -x TERM="xterm"declare -x USER="root"declare -x XDG_RUNTIME_DIR="/run/user/0"declare -x XDG_SESSION_ID="102676"]]></content>
+      <categories>
+        <category>服务器</category>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>环境变量</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux下安装htop及htop的使用]]></title>
+    <url>%2F2020%2F04%2F17%2FLinux%E4%B8%8B%E5%AE%89%E8%A3%85htop%E5%8F%8Ahtop%E7%9A%84%E4%BD%BF%E7%94%A8%2F</url>
+    <content type="text"><![CDATA[今天服务器又出问题了，内存32个G竟然被吃光了，就像准备排查下，使用top命令，想应该有更好用的，百度了下，果然找到了一个htop htop下载去sourceforge搜索htop，看了下从2012年之后就没再更新，直接可以使用下面的命令进行下载即可1wget http://sourceforge.net/projects/htop/files/htop/1.0.2/htop-1.0.2.tar.gz htop解压、编译、安装12345# tar -zxvf htop-1.0.2.tar.gz# cd htop-1.0.2/# ./configure --prefix=/usr/local/htop //这里如果报错了，看下面的报错异常处理# make# make install 添加环境变量1234编辑环境变量文件# vim /etc/profile# export PATH="$PATH:/usr/local/htop/bin"# source /etc/profile 界面解析首先执行下htop命令看下是否安装成功上图主要分为四个区域： 左上角：显示CPU、物理内存、交换分区信息 右上角：任务数量、平均负载、运行时间等信息 进程区域：显示当前系统中的所有进程 底部区域：操作提示，分别是F1-F10功能键 左上角区域解析CPU、内存、交换区的使用情况及占比，没有太多可以说的 右上角区域解析Tasks：使用逗号隔开，分别是运行着的进程和进程总数Load average:平均负载 1分钟 5分钟 10分钟Uptime：开机时间 进程区域 PID：进程的标识号 USER：运行此进程的用户 PRI：进程的优先级 NI：进程的优先级别值，默认为0，可进行调整 VIRT：进程占用的虚拟内存值 RES：进程占用的物理内存值 SHR：进程占用的共享内存值 S：进程运行情况R表示运行、S表示休眠等待唤醒、Z表示僵尸 %CPU：该进程占用CPU百分比 %MEM：该进程占用的物理内存和总内存的百分比 TIME+：该进程启动后占用的总CPU时间 COMMAND：启动该进程使用的命令名称 使用底部区域那是有F1-F10功能键的，通过这些功能键是能实现一个功能的，具体的功能描述如下 F1:显示帮助信息 F2:配置界面中的显示信息 F3:进程搜索 F4:过滤进程从下图可以清楚的看到，搜索和过滤的区别，搜索是光标定位到对应的进程上，但是过滤是只显示符合的进程 F5:以进程树的形式进行展示效果和F3和F4的一样，就是进程按照树的形式进行展示 F6:排序 F7/F8:修改进程Nice值（进程的优先级）F7是降低进程的优先级，F8是提升进程的优先级 F9：杀掉指定的进程 F10:退出htop。其他 空格键：用于标记选中的进程，用于实现对多个进程的同时操作 U：取消所有选中的额进程 s: 显示光标所在进程执行的系统调用命令 |：显示光标所在进程的文件列表 I:对排序顺序进行反序排列 a:绑定进程到指定的CPU u:显示指定用户的进程 M:按照内存使用百分比进行排序，对应的列是MEM% P:按照CPU使用百分比排序，对应CPU% T:按照进程运行时间排序，对应TIME+ K:隐藏内核线程 H:隐藏用户线程 #：快速定位光标到PID所指定的进程上 htop参数d：设置刷新时间单位不是很确定，设置为5的时候刷新的很快，50又不是5s1# htop -d 50 u:显示指定用户进程1# htop -u oracle s:按照指定列进行排序报错异常处理安装过程中在执行configure的时候，有可能会报下面这个错误，这说明缺少lib包，只需要执行这个命令安装即可yum install ncurses-devel1configure: error: You may want to use --disable-unicode or install libncursesw.]]></content>
+      <categories>
+        <category>服务器</category>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>htop</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[如何正确的把数组转换成ArrayList]]></title>
     <url>%2F2020%2F02%2F25%2F%E5%A6%82%E4%BD%95%E6%AD%A3%E7%A1%AE%E7%9A%84%E6%8A%8A%E6%95%B0%E7%BB%84%E8%BD%AC%E6%8D%A2%E6%88%90ArrayList%2F</url>
     <content type="text"><![CDATA[发现问题Arrays.asList()在平时开发中还是比较常见的，我们可以使用它将一个数组转换为一个List集合，但其实底层是没有转换成List的还是一个数组，假的转换完成后是没法使用List的相关方法的，比如说add/remove/clear，会抛出异常UnsupportedOperationException异常1234String[] strArr = &#123;"zhangsan","lisi","wangwu"&#125;;List&lt;String&gt; strList = Arrays.asList(strArr);//上面两句等价于下面这一句List&lt;String&gt; strList = Arrays.asList("zhangsan","lisi","wangwu"); Arrays.asList()的源码如下123456/** *返回由指定数组支持的固定大小的列表。此方法作为基于数组和基于集合的API之间的桥梁，与Collection.toArray()结合使用。返回的List是可序列化并实现RandomAccess接口。 */public static &lt;T&gt; List&lt;T&gt; asList(T... a) &#123; return new ArrayList&lt;&gt;(a);&#125; 解决方案如何正确的将数组转化为集合List呢，下面有几种方式 （只是教育目的，不推荐使用）自己动手通过泛型实现 1234567public static &lt;T&gt; List&lt;T&gt; arrayToList(final T[] array)&#123; final List&lt;T&gt; l = new ArrayList&lt;&gt;(array.length); for(final T t:array)&#123; l.add(t); &#125; return l;&#125; （推荐）最简便的方法 1List l = new ArrayList&lt;&gt;(Arrays.asList("a","b","c")) (推荐)使用Java8的Stream 12345Integer[] myArray1 = &#123;1,2,3&#125;;List myList1 = Arrays.stream(myArray1).collect(Collectors.toList());//基本类型也可以实现转换（依赖boxed的装箱操作）int [] myArray2 = &#123; 1, 2, 3 &#125;;List myList2 = Arrays.stream(myArray2).boxed().collect(Collectors.toList()); 使用Guava对于不可变集合，你可以使用ImmutableList类及其of()与copyOf()工厂方法：（参数不能为空） 12List&lt;String&gt; il = ImmutableList.of("string", "elements"); // from varargsList&lt;String&gt; il = ImmutableList.copyOf(aStringArray); // from array 对于可变集合，你可以使用Lists类及其newArrayList()工厂方法：123List&lt;String&gt; l1 = Lists.newArrayList(anotherListOrCollection); // from collectionList&lt;String&gt; l2 = Lists.newArrayList(aStringArray); // from arrayList&lt;String&gt; l3 = Lists.newArrayList("or", "string", "elements"); // from varargs]]></content>
@@ -733,8 +769,8 @@
         <category>SVN</category>
       </categories>
       <tags>
-        <tag>软件安装</tag>
         <tag>SVN</tag>
+        <tag>软件安装</tag>
         <tag>Windows</tag>
       </tags>
   </entry>
@@ -747,9 +783,9 @@
         <category>SVN</category>
       </categories>
       <tags>
-        <tag>软件安装</tag>
         <tag>CentOS7</tag>
         <tag>SVN</tag>
+        <tag>软件安装</tag>
       </tags>
   </entry>
   <entry>
@@ -774,8 +810,8 @@
         <category>Git</category>
       </categories>
       <tags>
-        <tag>Git</tag>
         <tag>软件安装</tag>
+        <tag>Git</tag>
       </tags>
   </entry>
   <entry>
@@ -855,8 +891,8 @@
         <category>IDEA</category>
       </categories>
       <tags>
-        <tag>插件安装</tag>
         <tag>IDEA</tag>
+        <tag>插件安装</tag>
         <tag>服务免重启</tag>
       </tags>
   </entry>
@@ -1063,7 +1099,7 @@
   <entry>
     <title><![CDATA[Nginx+Tomcat 负载均衡配置]]></title>
     <url>%2F2019%2F02%2F19%2FNginx-Tomcat-%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E9%85%8D%E7%BD%AE%2F</url>
-    <content type="text"><![CDATA[Nginx 安装依赖安装首先由于nginx的一些模块依赖一些lib库，所以在安装nginx之前，必须先安装这些lib库，这些依赖库主要有g++、gcc、openssl-devel、pcre-devel和zlib-devel 所以执行如下命令安装1234$ yum install gcc-c++ $ yum install pcre pcre-devel $ yum install zlib zlib-devel $ yum install openssl openssl--devel 安装步骤验证是否安装过ngnix如果已经安装过，需要进行卸载 yum remove nginx$ find -name nginx 下载Ngnix$ wget http://nginx.org/download/nginx-1.7.4.tar.gz 解压压缩包$ tar -zxvf nginx-1.7.4.tar.gz 安装进入解压的文件夹，接下来安装，使用–prefix参数指定nginx安装的目录,make、make install安装123$ ./configure $默认安装在/usr/local/nginx $ make $ make install 查看安装位置$ whereis nginx 负载均衡配置修改nginx的配置文件修改/usr/local/nginx/conf文件夹下面的nginx.conf文件12cd /usr/local/nginx/confvim nginx.conf 定义一个mysite，然后定义这个mysite对应需要负载均衡的服务器12345upstream mysite&#123;server 192.168.1.148:8080;server 192.168.1.148:8081;ip_hash;&#125; ip_hash 是为了保证访问的时候只对一个服务器，使session能够保持住 启动、停止nginx进入nginx的安装文件夹下123456cd /usr/local/nginx/sbin./nginx //启动./nginx -s stop //停止./nginx -s reload //重新加载./nginx -s quit:此方式停止步骤是待nginx进程处理任务完毕进行停止。./nginx -s stop:此方式相当于先查出nginx进程id再使用kill命令强制杀掉进程]]></content>
+    <content type="text"><![CDATA[Nginx 安装依赖安装首先由于nginx的一些模块依赖一些lib库，所以在安装nginx之前，必须先安装这些lib库，这些依赖库主要有g++、gcc、openssl-devel、pcre-devel和zlib-devel 所以执行如下命令安装1234$ yum install gcc-c++ $ yum install pcre pcre-devel $ yum install zlib zlib-devel $ yum install openssl openssl--devel 安装步骤验证是否安装过ngnix如果已经安装过，需要进行卸载 yum remove nginx$ find -name nginx 下载Ngnix$ wget http://nginx.org/download/nginx-1.7.4.tar.gz 解压压缩包$ tar -zxvf nginx-1.7.4.tar.gz 安装进入解压的文件夹，接下来安装，使用--prefix参数指定nginx安装的目录,make、make install安装123$ ./configure #默认安装在/usr/local/nginx $ make $ make install 查看安装位置$ whereis nginx 负载均衡配置修改nginx的配置文件修改/usr/local/nginx/conf文件夹下面的nginx.conf文件12cd /usr/local/nginx/confvim nginx.conf 定义一个mysite，然后定义这个mysite对应需要负载均衡的服务器12345upstream mysite&#123;server 192.168.1.148:8080;server 192.168.1.148:8081;ip_hash;&#125; ip_hash 是为了保证访问的时候只对一个服务器，使session能够保持住 启动、停止nginx进入nginx的安装文件夹下123456cd /usr/local/nginx/sbin./nginx //启动./nginx -s stop //停止./nginx -s reload //重新加载./nginx -s quit:此方式停止步骤是待nginx进程处理任务完毕进行停止。./nginx -s stop:此方式相当于先查出nginx进程id再使用kill命令强制杀掉进程]]></content>
       <categories>
         <category>中间件</category>
       </categories>
@@ -1135,8 +1171,8 @@
         <category>Android</category>
       </categories>
       <tags>
-        <tag>服务</tag>
         <tag>Android</tag>
+        <tag>服务</tag>
         <tag>Activity</tag>
       </tags>
   </entry>
@@ -1149,8 +1185,8 @@
         <category>Android</category>
       </categories>
       <tags>
-        <tag>Android</tag>
         <tag>连续触发</tag>
+        <tag>Android</tag>
       </tags>
   </entry>
   <entry>
@@ -1476,8 +1512,8 @@
         <category>SSM框架搭建</category>
       </categories>
       <tags>
-        <tag>SSM</tag>
         <tag>搭建</tag>
+        <tag>SSM</tag>
         <tag>多模块</tag>
       </tags>
   </entry>
@@ -1520,8 +1556,8 @@
         <category>SSM框架搭建</category>
       </categories>
       <tags>
-        <tag>SSM</tag>
         <tag>搭建</tag>
+        <tag>SSM</tag>
       </tags>
   </entry>
   <entry>
@@ -1576,8 +1612,8 @@
         <category>Maven</category>
       </categories>
       <tags>
-        <tag>搭建</tag>
         <tag>Maven</tag>
+        <tag>搭建</tag>
         <tag>Idea15</tag>
       </tags>
   </entry>
@@ -1796,7 +1832,7 @@
   <entry>
     <title><![CDATA[Json树组装TreeBuilder(适用在bootstrap_treeview)]]></title>
     <url>%2F2019%2F01%2F25%2FJson%E6%A0%91%E7%BB%84%E8%A3%85TreeBuilder-%E8%AF%95%E7%94%A8%E5%9C%A8bootstrap-treeview%2F</url>
-    <content type="text"><![CDATA[数据的结构如下： 节点ID 父节点ID 显示的内容 其他内容 01 “” 01 “” 02 “” 02 “” 0101 01 0101 “” 0102 01 0102 “” 010101 0101 010101 “” 12345SELECT ID, ORG_NO, ORG_NAME, P_LEVEL, PARENT_ID FROM SYS_ORG START WITH PARENT_ID = '0'CONNECT BY PRIOR ID = PARENT_IDORDER SIBLINGS BY LEVEL_SORT 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123124125126127128129130131132133134135136137138139140141142143144145146147148149150151152153154155156157158159160161162163164165166167168169170171172173174175176177178179180package com.ms.module.fw.biki;import java.util.*;import net.sf.json.JSONArray;public class TreeBuilder &#123; List&lt;TreeBuilder.Node&gt; nodes = new ArrayList&lt;TreeBuilder.Node&gt;(); public TreeBuilder(List&lt;Node&gt; nodes) &#123; super(); this.nodes = nodes; &#125; /** * 构建JSON树形结构 * @return */ public String buildJSONTree() &#123; List&lt;Node&gt; nodeTree = buildTree(); JSONArray jsonArray = JSONArray.fromObject(nodeTree); return jsonArray.toString(); &#125; /** * 构建树形结构 * @return */ public List&lt;Node&gt; buildTree() &#123; List&lt;Node&gt; treeNodes = new ArrayList&lt;Node&gt;(); List&lt;Node&gt; rootNodes = getRootNodes(); for (Node rootNode : rootNodes) &#123; buildChildNodes(rootNode); treeNodes.add(rootNode); &#125; return treeNodes; &#125; /** * 递归子节点 * @param node */ public void buildChildNodes(Node node) &#123; List&lt;Node&gt; children = getChildNodes(node); if (!children.isEmpty()) &#123; for (Node child : children) &#123; buildChildNodes(child); &#125; node.setMenus(children); &#125; &#125; /** * 获取父节点下所有的子节点 * @param nodes * @param pnode * @return */ public List&lt;Node&gt; getChildNodes(Node pnode) &#123; List&lt;Node&gt; childNodes = new ArrayList&lt;Node&gt;(); for (Node n : nodes) &#123; if (pnode.getId().equals(n.getPid())) &#123; childNodes.add(n); &#125; &#125; return childNodes; &#125; /** * 判断是否为根节点 * 遍历所有节点，如果能找到他们的节点ID = 当前节点的父节点ID，说明不是root节点 * @param nodes * @param inNode * @return */ public boolean rootNode(Node node) &#123; boolean isRootNode = true; for (Node n : nodes) &#123; if (node.getPid().equals(n.getId())) &#123; isRootNode = false; break; &#125; &#125; return isRootNode; &#125; /** * 获取集合中所有的根节点 * @param nodes * @return */ public List&lt;Node&gt; getRootNodes() &#123; List&lt;Node&gt; rootNodes = new ArrayList&lt;Node&gt;(); for (Node n : nodes) &#123; if (rootNode(n)) &#123; rootNodes.add(n); &#125; &#125; return rootNodes; &#125; public static class Node &#123; private String id; private String pid; private String text; private String url; private List&lt;Node&gt; menus; public Node() &#123; &#125; public Node(String id, String pid, String text, String url) &#123; super(); this.id = id; this.pid = pid; this.text = text; this.url = url; &#125; public String getId() &#123; return id; &#125; public void setId(String id) &#123; this.id = id; &#125; public String getPid() &#123; return pid; &#125; public void setPid(String pid) &#123; this.pid = pid; &#125; public String getText() &#123; return text; &#125; public void setText(String text) &#123; this.text = text; &#125; public String getUrl() &#123; return url; &#125; public void setUrl(String url) &#123; this.url = url; &#125; public List&lt;Node&gt; getMenus() &#123; return menus; &#125; public void setMenus(List&lt;Node&gt; menus) &#123; this.menus = menus; &#125; &#125; public static void main(String[] args) &#123; List&lt;Node&gt; nodes = new ArrayList&lt;Node&gt;(); Node p1 = new Node("01", "", "01", ""); Node p6 = new Node("02", "", "02", ""); Node p7 = new Node("0201", "02", "0201", ""); Node p2 = new Node("0101", "01", "0101", ""); Node p3 = new Node("0102", "01", "0102", ""); Node p4 = new Node("010101", "0101", "010101", ""); Node p5 = new Node("010102", "0101", "010102", ""); nodes.add(p1); nodes.add(p2); nodes.add(p3); nodes.add(p4); nodes.add(p5); nodes.add(p6); nodes.add(p7); TreeBuilder treeBuilder = new TreeBuilder(nodes); System.out.println(treeBuilder.buildJSONTree()); &#125;&#125;]]></content>
+    <content type="text"><![CDATA[数据的结构如下 节点ID 父节点ID 显示的内容 其他内容 01 “” 01 “” 02 “” 02 “” 0101 01 0101 “” 0102 01 0102 “” 010101 0101 010101 “” 查询的SQL（Oracle版本）因牵扯到排序的问题，因此这里使用了开窗函数start with12345SELECT ID, ORG_NO, ORG_NAME, P_LEVEL, PARENT_ID FROM SYS_ORG START WITH PARENT_ID = '0'CONNECT BY PRIOR ID = PARENT_IDORDER SIBLINGS BY LEVEL_SORT TreeBuilder123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123124125126127128129130131132133134135136137138139140141142143144145146147148149150151152153154155156157158159160161162163164165166167168169170171172173174175176177178179180package com.ms.module.fw.biki;import java.util.*;import net.sf.json.JSONArray;public class TreeBuilder &#123; List&lt;TreeBuilder.Node&gt; nodes = new ArrayList&lt;TreeBuilder.Node&gt;(); public TreeBuilder(List&lt;Node&gt; nodes) &#123; super(); this.nodes = nodes; &#125; /** * 构建JSON树形结构 * @return */ public String buildJSONTree() &#123; List&lt;Node&gt; nodeTree = buildTree(); JSONArray jsonArray = JSONArray.fromObject(nodeTree); return jsonArray.toString(); &#125; /** * 构建树形结构 * @return */ public List&lt;Node&gt; buildTree() &#123; List&lt;Node&gt; treeNodes = new ArrayList&lt;Node&gt;(); List&lt;Node&gt; rootNodes = getRootNodes(); for (Node rootNode : rootNodes) &#123; buildChildNodes(rootNode); treeNodes.add(rootNode); &#125; return treeNodes; &#125; /** * 递归子节点 * @param node */ public void buildChildNodes(Node node) &#123; List&lt;Node&gt; children = getChildNodes(node); if (!children.isEmpty()) &#123; for (Node child : children) &#123; buildChildNodes(child); &#125; node.setMenus(children); &#125; &#125; /** * 获取父节点下所有的子节点 * @param nodes * @param pnode * @return */ public List&lt;Node&gt; getChildNodes(Node pnode) &#123; List&lt;Node&gt; childNodes = new ArrayList&lt;Node&gt;(); for (Node n : nodes) &#123; if (pnode.getId().equals(n.getPid())) &#123; childNodes.add(n); &#125; &#125; return childNodes; &#125; /** * 判断是否为根节点 * 遍历所有节点，如果能找到他们的节点ID = 当前节点的父节点ID，说明不是root节点 * @param nodes * @param inNode * @return */ public boolean rootNode(Node node) &#123; boolean isRootNode = true; for (Node n : nodes) &#123; if (node.getPid().equals(n.getId())) &#123; isRootNode = false; break; &#125; &#125; return isRootNode; &#125; /** * 获取集合中所有的根节点 * @param nodes * @return */ public List&lt;Node&gt; getRootNodes() &#123; List&lt;Node&gt; rootNodes = new ArrayList&lt;Node&gt;(); for (Node n : nodes) &#123; if (rootNode(n)) &#123; rootNodes.add(n); &#125; &#125; return rootNodes; &#125; public static class Node &#123; private String id; private String pid; private String text; private String url; private List&lt;Node&gt; menus; public Node() &#123; &#125; public Node(String id, String pid, String text, String url) &#123; super(); this.id = id; this.pid = pid; this.text = text; this.url = url; &#125; public String getId() &#123; return id; &#125; public void setId(String id) &#123; this.id = id; &#125; public String getPid() &#123; return pid; &#125; public void setPid(String pid) &#123; this.pid = pid; &#125; public String getText() &#123; return text; &#125; public void setText(String text) &#123; this.text = text; &#125; public String getUrl() &#123; return url; &#125; public void setUrl(String url) &#123; this.url = url; &#125; public List&lt;Node&gt; getMenus() &#123; return menus; &#125; public void setMenus(List&lt;Node&gt; menus) &#123; this.menus = menus; &#125; &#125; public static void main(String[] args) &#123; List&lt;Node&gt; nodes = new ArrayList&lt;Node&gt;(); Node p1 = new Node("01", "", "01", ""); Node p6 = new Node("02", "", "02", ""); Node p7 = new Node("0201", "02", "0201", ""); Node p2 = new Node("0101", "01", "0101", ""); Node p3 = new Node("0102", "01", "0102", ""); Node p4 = new Node("010101", "0101", "010101", ""); Node p5 = new Node("010102", "0101", "010102", ""); nodes.add(p1); nodes.add(p2); nodes.add(p3); nodes.add(p4); nodes.add(p5); nodes.add(p6); nodes.add(p7); TreeBuilder treeBuilder = new TreeBuilder(nodes); System.out.println(treeBuilder.buildJSONTree()); &#125;&#125; 使用1234567891011List&lt;BusiTypeTreeBuilder.Node&gt; nodes = new ArrayList&lt;&gt;();String finalStr = "";if (treeList != null &amp;&amp; treeList.size() &gt; 0) &#123; for (Map&lt;String, Object&gt; treeNodeMap : treeList) &#123; nodes.add(new BusiTypeTreeBuilder.Node(treeNodeMap.get("SYSTEMID").toString(), treeNodeMap.get("UPSYSID").toString(), treeNodeMap.get("ITEMID").toString(), treeNodeMap.get("ITEMVAL").toString())); &#125; finalStr = new BusiTypeTreeBuilder(nodes).buildJSONTree();&#125;return JSONArray.parseArray(finalStr);]]></content>
       <categories>
         <category>后端开发语言</category>
         <category>Java</category>
